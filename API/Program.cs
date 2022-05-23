@@ -7,7 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the DI container so they are available to our controllers
 builder.Services.AddDbContext<MyDbContext>();
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+    options.ReturnHttpNotAcceptable = true // Allow only JSON in the Accept header, not XML or plain text etc.
+);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
