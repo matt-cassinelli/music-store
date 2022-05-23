@@ -75,10 +75,11 @@ public class TagsController : ControllerBase
         return NoContent();
     }
 
-    // [HttpGet("{id}/Sounds")]
-    // public async Task<ActionResult<SoundSimpleDto>> GetSoundsByTag(short tagId)
+    // [HttpGet("{id}/sounds")]
+    // public async Task<ActionResult<SoundSimpleDto>> GetSoundsByTag(short id)
     // {
-    //     var sounds = await _context.Sounds.Where(s => s.Tags.Id == tagId).ToListAsync();
+    //     var tag = _context.Tags.FirstOrDefault(t => t.Id == id); // Return 404 if Tag doesn't exist
+    //     var sounds = await _context.Sounds.Where(s => s.Tags.Id == id).ToListAsync();
     //     return Ok(_mapper.Map<IEnumerable<SoundSimpleDto>>(sounds));
     // }
 }

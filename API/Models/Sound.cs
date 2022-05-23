@@ -6,11 +6,6 @@ namespace API.Models;
 
 public class Sound
 {
-    // public Sound()
-    // {
-    //     Tags = new HashSet<Tag>(); // HashSet is type of ICollection that optimises insert & delete and enforces referential integrity.
-    // }
-
     [Key] public Guid Id { get; set; } // TODO: Use int instead for shorter urls?
     [Required] [Column(TypeName="datetime2(0)")] public DateTime CreatedOn { get; set; }
     [Required(ErrorMessage = "Title is required")] [Column(TypeName="varchar(255)")] /*[MaxLength(255)]*/ public string Title { get; set; } = null!; // = null! silences the null warning
@@ -20,7 +15,8 @@ public class Sound
     [Column(TypeName="varchar(255)")] public string? Preview { get; set; }
     [Column(TypeName="varchar(255)")] public string? Picture { get; set; }
     [Column(TypeName="varchar(255)")] public string? Structure { get; set; }
-    public virtual ICollection<TagSimpleDto>? Tags { get; set; } // Navigation property containing list of 'simple' tags. The TagSimpleDto doesn't contain a list of sounds - this prevents recursion (a Tag has Sounds, which have Tags...)
+    public virtual ICollection<TagSimpleDto>? Tags { get; set; } // Navigation property containing list of 'simple' tags. TagSimpleDto doesn't contain a list of sounds - this prevents recursion (a Tag has Sounds, which have Tags...)
+        = new HashSet<TagSimpleDto>(); // Initialise to an empty collection to avoid null reference issues. A HashSet is type of ICollection that optimises insert & delete and enforces referential integrity. This seems to be better than a List which can't be added to / modified?
     // TODO: Add 'Rank' and have it appear throughout all Dto's
 }
 

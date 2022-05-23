@@ -5,7 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<MyDbContext>(); // Register the DB context with the DI container so it's available to controllers.
+// Add services to the DI container so they are available to our controllers
+builder.Services.AddDbContext<MyDbContext>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -28,6 +29,6 @@ app.UseSwaggerUI();              // TODO: Enable these features only in dev env.
 app.UseDeveloperExceptionPage(); //
 app.UseHttpsRedirection();
 app.UseAuthorization();
-app.MapControllers();
+app.MapControllers(); // Configure routing for the controller actions. They are specified through Attributes instead of here. Before NET 6 you had to write UseRouting() and UseEndpoints() instead.
 
 app.Run();

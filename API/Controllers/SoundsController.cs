@@ -7,9 +7,10 @@ using AutoMapper;
 using API.Models;
 namespace API.Controllers;
 
-[ApiController] // Enable automatic model validation, automatic HTTP 5XX status code when there's an error, and other useful features.
-[Route("[controller]")] // Define the base URL route. "[controller]" gets replaced with the controller's class name minus "Controller" at the end, so in this case: https://host/sounds
-public class SoundsController : ControllerBase // Web API instantiates a controller when it routes the request and disposes it when finished.
+// Web API instantiates a controller when it routes the request and disposes it when finished.
+[ApiController] // Enable automatic model validation, automatic HTTP 4XX / 5XX status codes for errors, and other useful features.
+[Route("[controller]")] // Define a prefix for all other routes. "[controller]" gets replaced with the controller's class name minus "Controller" at the end, so in this case: https://host/sounds
+public class SoundsController : ControllerBase // ControllerBase gives us commonly used API features such as access to the current user and IActionResult reponse code methods.
 {
     private readonly MyDbContext _context;
     private readonly IMapper _mapper;
@@ -20,14 +21,14 @@ public class SoundsController : ControllerBase // Web API instantiates a control
         _mapper = mapper;   // They will be disposed automatically because their Service Lifetime is set to Scoped.
     }
 
-    [HttpGet]
+    [HttpGet] // Match the route https://host/sounds
     public async Task<ActionResult<IEnumerable<SoundSimpleDto>>> GetAll()
     {
         var sounds = await _context.Sounds.Select(s => _mapper.Map<SoundSimpleDto>(s)).ToListAsync();
-        return Ok(sounds);
+        return Ok(sounds); // No need for a NotFound() because we consider an empty list to be a valid response.
     }
 
-    [HttpGet("{id}")] // Append "/(id)" to the base URL route.
+    [HttpGet("{id}")] // Match the route https://host/sounds/(id)
     public async Task<ActionResult<Sound>> Get(Guid id)
     {
         var sound = await _context.Sounds.FindAsync(id);
