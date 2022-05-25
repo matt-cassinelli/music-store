@@ -22,7 +22,7 @@ public class SoundsController : ControllerBase // ControllerBase gives us common
     }
 
     [HttpGet] // Match the route https://host/sounds
-    public async Task<ActionResult<IEnumerable<SoundSimpleDto>>> GetAll()
+    public async Task<ActionResult<IEnumerable<SoundSimpleDto>>> GetAll() // TODO: Return top 15 results, impliment paging.
     {
         var sounds = await _context.Sounds.Select(s => _mapper.Map<SoundSimpleDto>(s)).ToListAsync();
         return Ok(sounds); // No need for a NotFound() because we consider an empty list to be a valid response.

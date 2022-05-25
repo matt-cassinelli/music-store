@@ -28,7 +28,8 @@ public class SoundSimpleDto
     public string? Title { get; set; }
     public byte? Duration { get; set; }
     public string? Preview { get; set; }
-    public string? Picture { get; set; }
+    public string? Picture { get; set; } // TODO: Rename to ImageThumbnail.
+    // TODO: Add ImageFull.
 }
 
 public class SoundPostDto

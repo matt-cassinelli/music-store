@@ -23,7 +23,7 @@ public class TagsController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<TagSimpleDto>>> GetAll()
     {
-        var tags = await _context.Tags.Select(s => _mapper.Map<TagSimpleDto>(s)).ToListAsync();
+        var tags = await _context.Tags.Select(t => _mapper.Map<TagSimpleDto>(t)).ToListAsync();
         // TODO: Try "= _mapper.Map<TagSimpleDto>(_context.Tags.ToList)" instead
 
         return Ok(tags);

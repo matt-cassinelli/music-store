@@ -1,6 +1,8 @@
-**/bin
-**/obj
-**/.vscode
-**/.vs
-**/Migrations
-**/Hidden
+.vscode
+.vs
+Hidden
+Files/**
+API/bin
+API/obj
+API/Migrations
+Client
