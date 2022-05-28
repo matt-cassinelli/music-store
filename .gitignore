@@ -1,8 +1,7 @@
 .vscode
 .vs
 Hidden
-Files/**
 API/bin
 API/obj
 API/Migrations
-Client
+Client/media/img-sounds-full
