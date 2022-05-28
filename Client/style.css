@@ -8,6 +8,10 @@
     font-family: "Roboto", sans-serif;
 }
 
+body {
+    background: #2c302d;
+}
+
 
 /*_______________________________Header_______________________________*/
 
@@ -15,9 +19,6 @@ header {
     display: block;
     width: 100%;
     background-color: #000000;
-    position: fixed;
-    top: 0;
-    z-index: 100;
 }
 
 header div {
@@ -29,7 +30,7 @@ header div {
     padding: 20px 0;
 }
 
-header div a {
+header div a { /* Hyperlink */
     text-decoration: none;
     color: #ffffff;
     font-size: 20px;
@@ -51,25 +52,25 @@ header div a:hover {
 
 /*_______________________________Cards_______________________________*/
 
-.container {
+.container { /* TODO: Stack vertically. */
     position: absolute;
     width: 100%;
     height: 100vh;
-    background: #2c302d;
+    padding-top: 25px; /* Add space between header and content */
 }
 
 .card_container {
     display: grid;
     width: 100%;
     height: 100%;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     align-items: center;
     justify-items: center;
     color: white;
 }
 
 .card {
-    width: 65%;
+    width: 70%;
     height: 85%;
     max-height: 300px;
     text-align: center;
@@ -107,19 +108,40 @@ header div a:hover {
 
 /*_______________________________Responsiveness_______________________________*/
 
-/* TODO */
+@media only screen and (max-width: 1400px) { /* For screens between 1100-1400px, show 4 images side by side. Above 1400 = 5. */
+    .card_container {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+}
+  
+@media only screen and (max-width: 1100px) { /* For screens between 800-1100px, show 3 images side by side. */
+    .card_container {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
 
+@media only screen and (max-width: 800px) { /* For screens between 550-800px, show 2 images side by side. */
+    .card_container {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+  
+@media only screen and (max-width: 550px) { /* For screens smaller than 550px, stack the images vertically (100%). */
+    .card_container {
+        grid-template-columns: 1fr;
+    }
+}
 
 /*_______________________________Other_______________________________*/
 
-#loading img {
+#loading {
     display: block;
     width: 3em;
     margin: auto;
-    animation: loading 0.8s infinite linear;
+    animation: spin 0.8s infinite linear;
 }
 
-@keyframes loading {
+@keyframes spin {
     to {
         transform: rotate(360deg);
     }
