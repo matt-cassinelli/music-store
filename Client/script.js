@@ -1,16 +1,12 @@
 const host = "https://localhost:5001";
-// const soundsNode = document.getElementById("card_container");
 const soundsNode = document.querySelector('.card_container');
-const container = document.querySelector('.container');
-var sounds = Array();
+var soundsAreLoaded = false;
+var tagsAreLoaded = false;
 
-function renderSounds() {
-    fetch(`${host}/sounds`, {
-        method: "GET"
-    })
-    .then(response => response.json())
-    // .then(resp => console.log(resp.json()))
-    .then(data => 
+async function readSounds () {
+    try {
+        const response = await fetch(`${host}/sounds`); // TODO: Check response.ok / response.status and throw errors accordingly.
+        const data = await response.json(); // Is await needed here?
         data.forEach(sound => {
             soundsNode.innerHTML += // TODO: Add Price instead of duration. Put to the left of/inside button.
                 `<div class="card"> 
@@ -21,14 +17,21 @@ function renderSounds() {
                 </div>`
             ;
         })
-    )
-    .catch(err => console.log(err))
-    .finally( () => document.querySelector('#loading').style.display = "none" )
-};
+    }
+    catch(error) {
+        console.log(error);
+    }
+    finally {
+        soundsAreLoaded = true;
+        if (soundsLoaded === true/* && tagsLoaded === true*/) {
+            document.querySelector('#loading').style.display = "none";
+        }
+    }
+}
 
-function renderTags() {};
+function readTags() {};
 
 document.addEventListener("DOMContentLoaded", () => {
-    renderSounds();
-    renderTags();
+    readSounds(); // TODO: Test that these don't run one after the other. If so then "promise.all" may be needed.
+    readTags();
 });
