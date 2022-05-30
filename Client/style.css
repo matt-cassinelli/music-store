@@ -1,7 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap");
-*,
-*::before,
-*::after {
+
+*, *::before, *::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -16,21 +15,20 @@ body {
 /*_______________________________Header_______________________________*/
 
 header {
-    display: block;
     width: 100%;
     background-color: #000000;
+    text-align: center;
 }
 
 header div {
     display: flex;
-    width: 320px;
-    margin: auto;
     flex-wrap: nowrap;
-    justify-content: space-between;
-    padding: 20px 0;
+    justify-content: center;
+    /* padding: 20px 0; */
 }
 
 header div a { /* Hyperlink */
+    padding: 1rem;
     text-decoration: none;
     color: #ffffff;
     font-size: 20px;
@@ -44,7 +42,7 @@ header div a:hover {
 }
 
 #header_active {
-    color: #707070;
+    color: #9b9b9b; /* TODO: Fix. */
     transition-duration: 0.3s;
     cursor: context-menu;
 }
@@ -52,83 +50,104 @@ header div a:hover {
 
 /*_______________________________Cards_______________________________*/
 
-.container { /* TODO: Stack vertically. */
-    position: absolute;
-    width: 100%;
-    height: 100vh;
+.main-container { /* TODO: Stack vertically. */
+    width: 100%; /* 100vw */
+    height: 100%; /* 100vh */
     padding-top: 25px; /* Add space between header and content */
+    margin: 0; /* Old: margin: 0 auto; */
 }
 
-.card_container {
-    display: grid;
-    width: 100%;
-    height: 100%;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    align-items: center;
-    justify-items: center;
+.card-container {
+    /* width: auto;
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
     color: white;
+    padding: 0 1rem;
+    gap: 2rem 2rem; https://stackoverflow.com/questions/20626685
+    flex-direction: row;
+    justify-items: center; */
+
+    display: grid;
+    width: auto;
+    margin: auto;
+    height: auto;
+    grid-template-columns: 1fr;
+    color: white;
+    padding: 3rem;
+    max-width: 110rem;
 }
 
 .card {
-    width: 70%;
-    height: 85%;
-    max-height: 300px;
+    width: 90%;
+    height: 14rem;
+    margin: 1rem; /* The space around an element's border */
+    /* padding: auto; /* The space between an element's border and its content */
+
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    justify-content: space-evenly;
+    align-items: center;
+    justify-items: center;
+
     text-align: center;
-    background: #191a19;
-    margin: 10px auto;
-    border-radius: 5px;
-    padding: 20px;
-    cursor: pointer;
-    box-shadow: 16px 16px 44px #0a0a0a80, -16px -16px 44px #282a2880;
+    background: linear-gradient(to bottom left, #191a19 40%, #0c6121 100%); /* TODO: Fix */
+    border-radius: 1.2rem;
+    box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25);
     transition: 0.3s all ease-in-out;
-    border-radius: 10px;
 }
 
 .card:hover {
     margin-top: -10px;
 }
 
-.card__header { /* TODO: Use inheritance instead of seperate classes */
-    text-transform: uppercase;
+.card-title { /* TODO: Use inheritance instead of seperate classes */
+    /* text-transform: uppercase; */
     font-size: 20px;
-    margin: 40px auto;
+    /* margin: 30px auto; */
 }
 
-.card__button { /* TODO: Use inheritance instead of seperate classes */
-    padding: 10px;
+.card-button { /* TODO: Use inheritance instead of seperate classes */
+    padding: 0.6rem 0.8rem;
+    width: auto;
     border-radius: 50px;
-    background: #2dad1c;
+    background: #2dad1c0e;
     color: white;
-    font-weight: bold;
     cursor: pointer;
     border: none;
-    margin: 50px auto;
+    /* margin: 50px auto; */
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+.card-button:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+}
 
 /*_______________________________Responsiveness_______________________________*/
 
-@media only screen and (max-width: 1400px) { /* For screens between 1100-1400px, show 4 images side by side. Above 1400 = 5. */
-    .card_container {
-        grid-template-columns: 1fr 1fr 1fr 1fr;
-    }
-}
-  
-@media only screen and (max-width: 1100px) { /* For screens between 800-1100px, show 3 images side by side. */
-    .card_container {
-        grid-template-columns: 1fr 1fr 1fr;
-    }
-}
-
-@media only screen and (max-width: 800px) { /* For screens between 550-800px, show 2 images side by side. */
-    .card_container {
+@media (min-width: 40rem) {
+    .card-container {
         grid-template-columns: 1fr 1fr;
     }
 }
   
-@media only screen and (max-width: 550px) { /* For screens smaller than 550px, stack the images vertically (100%). */
-    .card_container {
-        grid-template-columns: 1fr;
+@media (min-width: 58rem) {
+    .card-container {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+@media (min-width: 76rem) {
+    .card-container {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+}
+
+@media (min-width: 94rem) {
+    .card-container {
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     }
 }
 
