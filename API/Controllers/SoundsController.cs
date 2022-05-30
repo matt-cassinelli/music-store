@@ -41,7 +41,7 @@ public class SoundsController : ControllerBase // ControllerBase gives us common
     {
         if (input == null) { throw new ArgumentException(nameof(input)); }
 
-        if (input.CreatedOn == null) { input.CreatedOn = DateTime.Now; } // TODO: Is DateTime.UtcNow better?
+        if (input.CreatedOn == null) { input.CreatedOn = DateTime.Now; } // TODO: Is DateTime.UtcNow or a timespan better?
 
         var sound = _mapper.Map<Sound>(input);
 
@@ -92,7 +92,4 @@ public class SoundsController : ControllerBase // ControllerBase gives us common
 
         return NoContent();
     }
-
-    // TODO: Create GetByTag ?
-    // TODO: Create Login
 }

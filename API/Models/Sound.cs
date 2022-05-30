@@ -26,7 +26,7 @@ public class SoundSimpleDto
 {
     public Guid? Id { get; set; }
     public string? Title { get; set; }
-    public byte? Duration { get; set; }
+    public decimal? Price { get; set; }
     public string? Preview { get; set; }
     public string? Picture { get; set; } // TODO: Rename to ImageThumbnail.
     // TODO: Add ImageFull.
