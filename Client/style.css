@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap");
 
-*, *::before, *::after {
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -53,8 +53,9 @@ header div a:hover {
 #main-container { /* TODO: Stack vertically. */
     width: 100%; /* 100vw */
     height: 100%; /* 100vh */
-    /* padding-top: 25px; /* Add space between header and content */
+    padding-top: 2rem; /* Add space between header and content */
     margin: 0; /* Old: margin: 0 auto; */
+    /* align-items:center; */
 }
 
 #card-container { /* Target by id */
@@ -71,18 +72,17 @@ header div a:hover {
 
     display: grid;
     width: auto;
-    margin: auto;
     height: auto;
     grid-template-columns: 1fr;
     color: white;
-    padding: 3rem;
+    padding: 2rem;
     max-width: 110rem;
 }
 
 .card { /* Target by class */
     width: 90%;
     height: 14rem;
-    margin: 1rem; /* The space around an element's border */
+    margin: 1rem; /* The space around an element's border. In this case only seems to control bottom/top spacing */
     /* padding: auto; /* The space between an element's border and its content */
 
     display: flex;
@@ -107,14 +107,14 @@ header div a:hover {
     height: 14.7rem;
 }
 
-.card-title { /* TODO: Use inheritance instead of seperate classes */
+h3.card {
     /* text-transform: uppercase; */
     font-size: 20px;
     /* margin: 30px auto; */
 }
 
-.card-button { /* TODO: Use inheritance instead of seperate classes */
-    padding: 0.6rem 0.8rem;
+.details-button {
+    padding: 0.6rem 1rem;
     width: auto;
     border-radius: 50px;
     background: #2dad1c0e;
@@ -125,7 +125,7 @@ header div a:hover {
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.card-button:hover {
+.details-button:hover {
     background-color: rgba(255, 255, 255, 0.12);
 }
 
@@ -157,26 +157,26 @@ header div a:hover {
 
 /*_______________________________Play Button Icons_______________________________*/
 
-.media-button {
+.play-button {
     border: 0;
     background: transparent;
     box-sizing: border-box;
     width: 0;
     height: 3.5rem;
-    border-color: transparent transparent transparent #202020;
+    border-color: transparent transparent transparent #404040;
     transition: 100ms all ease;
     cursor: pointer;
     border-style: solid;
     border-width: 2rem 0 2rem 3.5rem;
-    margin-left: 0.4rem;
+    margin-left: 0.4rem; /* Shift slightly to the right */
   }
-  .media-button.playing {
+  .play-button.playing {
     border-style: double;
     border-width: 0 0 0 3rem;
     margin-left: 0;
   }
-  .media-button:hover {
-    border-color: transparent transparent transparent #404040;
+  .play-button:hover {
+    border-color: transparent transparent transparent #606060;
   }
 
 /*_______________________________Other_______________________________*/
@@ -184,7 +184,7 @@ header div a:hover {
 #loading {
     display: block;
     width: 3em;
-    margin: 1rem auto; /* Add space above and below element. The sides are set to auto so that it gets centred. */
+    margin: 2rem auto; /* Add space above and below element. The sides are set to auto so that it gets centred. */
     animation: spin 0.8s infinite linear;
 }
 
