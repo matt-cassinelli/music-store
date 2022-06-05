@@ -1,23 +1,28 @@
 const host = "https://localhost:5001";
 const soundsContainerNode = document.querySelector('#card-container');
+const tagsContainerNode = document.querySelector('#tag-container');
 var soundsAreLoaded = false;
 var tagsAreLoaded = false;
 
 function playOrStopSound () {
-    // Button icons are controlled via classes.
-    if (this.classList.contains("playing")) { // If the clicked button's icon is showing as playing,
-        this.classList.remove("playing"); // Set it to stopped.
-        // TODO: Stop the audible sound.
+
+    var audioNode = document.getElementById("audio");
+
+    if (this.classList.contains("playing")) { // We use the 'playing' class to control visuals (through CSS) and audio.
+        this.classList.remove("playing");
+        audioNode.pause();
     }
-    else { // But if not,
-        document.querySelectorAll('.play-button') // Set all play button icons to stopped,
-            .forEach(mb => {mb.classList.remove("playing");})
+    else {
+        document.querySelectorAll('.play-button').forEach(b => {b.classList.remove("playing");})
+        audioNode.pause();
 
-        // TODO: Stop the audible sounds.
+        if (!audioNode.src || audioNode.src !== "./media/mp3/21-10-06.mp3") {
+            audioNode.src = "./media/mp3/21-10-06.mp3"; // TODO: Get the source with "this.parentNode.data-preview"
+        }
 
-        this.classList.add("playing"); // Set the clicked play button icon to 'playing'.
+        this.classList.add("playing"); // TODO: Add Try/Catch so if it doesn't play, visuals don't change.
+        audioNode.play(); // Play the audible sound 
         // ARCHIVE: this.classList.toggle("playing");
-        // TODO: Play the audible sound using this.parentNode.data-preview
     }
     
     // DEBUG: console.log(this.id);
@@ -31,19 +36,6 @@ async function readSounds () {
         }
         const data = await response.json(); // Is await needed here?
         data.forEach(sound => {
-
-            // soundsContainer.innerHTML +=
-            //     `<div class="card"> 
-            //         <h3 class="card-title">${sound.title}</h3>
-            //         <!-- <img src="media/img-sounds-thumb/2.jpg" /> -->
-            //         <button id="${sound.id}" class='play-button' onclick="playSound(${this.id});" data-preview="${sound.preview}"></button>
-            //         <p class="price">£${sound.price}</p>
-            //         <button class="details-button" onclick="readSound(${sound.id})">Customise</button>
-            //     </div>`
-            // ;
-
-            // The innerHTML method above has been commented out in favour of the DOM methods below.
-            // This takes up more lines, but allows us to add event listeners inline rather than using event delegation.
 
             let cardDivNode = document.createElement('DIV'); 
             cardDivNode.classList.add('card'); // TODO: Test if you can add attributes on one line e.g. document.createElement("div").classList.add...
@@ -93,7 +85,14 @@ function readSound() { // TODO
     console.log(this.parentNode); // "this.parentNode" allows us to access the parent element's attributes.
 };
 
-function readTags() { // TODO
+function readTags() { // DOING
+
+    let tagNode = document.createElement('BUTTON');
+    tagNode.textContent = "test tag"
+    tagNode.setAttribute('data-id',   "1");
+    tagNode.setAttribute('data-rank', "1");
+    tagsContainerNode.appendChild(tagNode);
+
     tagsAreLoaded = true;
     if (soundsAreLoaded && tagsAreLoaded) {
         document.querySelector('#loading').style.display = "none";
