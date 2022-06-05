@@ -24,9 +24,11 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(profile =>
 { //                   ___FROM___     _____TO_____
     profile.CreateMap<Sound,        SoundSimpleDto>();
+    profile.CreateMap<Sound,        SoundDetailDto>();
     profile.CreateMap<SoundPostDto, Sound>();
     profile.CreateMap<SoundPutDto,  Sound>();
     profile.CreateMap<Tag,          TagSimpleDto>();
+    profile.CreateMap<Tag,          TagDetailDto>();
     profile.CreateMap<Tag,          TagIdOnlyDto>();
     profile.CreateMap<TagPostDto,   Tag>();
     profile.CreateMap<TagSimpleDto, Tag>();

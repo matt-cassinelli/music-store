@@ -29,28 +29,28 @@ public class SoundsController : ControllerBase // ControllerBase gives us common
     }
 
     [HttpGet("{id}")] // Match the route https://host/sounds/(id)
-    public async Task<ActionResult<Sound>> Get(Guid id)
+    public async Task<ActionResult<SoundDetailDto>> Get(Guid id)
     {
         var sound = await _context.Sounds.FindAsync(id);
         if (sound == null) { return NotFound(); }
-        return Ok(sound);
+        return Ok(_mapper.Map<SoundDetailDto>(sound));
     }
 
     [HttpPost]
-    public async Task<ActionResult<Sound>> Post([FromBody] SoundPostDto input)
+    public async Task<ActionResult<SoundDetailDto>> Post([FromBody] SoundPostDto input)
     {
         if (input == null) { throw new ArgumentException(nameof(input)); }
 
         if (input.CreatedOn == null) { input.CreatedOn = DateTime.Now; } // TODO: Is DateTime.UtcNow or a timespan better?
 
-        var sound = _mapper.Map<Sound>(input);
+        var sound = _mapper.Map<Sound>(input); // TODO: Are there too many maps here? Could be more efficient...
 
         _context.Sounds.Add(sound);
 
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction(nameof(Get), new {id = sound.Id}, sound);
-        // CreatedAtAction: Returns a 201 status code.
+        return CreatedAtAction(nameof(Get), new {id = sound.Id}, _mapper.Map<SoundDetailDto>(sound));
+        // CreatedAtAction returns a 201 status code.
         // 1st arg: The action you can use to get the resource.
         // 2nd arg: The id or route.
         // 3rd arg: The newly created resource.
@@ -77,7 +77,7 @@ public class SoundsController : ControllerBase // ControllerBase gives us common
 
         await _context.SaveChangesAsync();
 
-        return NoContent();
+        return NoContent(); // Returns 204 status code.
     }
 
     [HttpDelete("{id}")]

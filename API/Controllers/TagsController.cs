@@ -30,16 +30,18 @@ public class TagsController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Tag>> Get(short id)
+    public async Task<ActionResult<TagDetailDto>> Get(short id)
     {
         var tag = await _context.Tags.FindAsync(id);
-        if (tag != null) { return Ok(tag); }
+        if (tag != null) {
+            return Ok(_mapper.Map<TagDetailDto>(tag));
+        }
 
         return NotFound();
     }
 
     [HttpPost]
-    public async Task<ActionResult> Post([FromBody] TagPostDto input)
+    public async Task<ActionResult<TagSimpleDto>> Post([FromBody] TagPostDto input)
     {
         if (input == null) { throw new ArgumentException(nameof(input)); }
 
@@ -47,7 +49,7 @@ public class TagsController : ControllerBase
 
         _context.Tags.Add(tag);
         await _context.SaveChangesAsync();
-        return CreatedAtAction(nameof(Get), new { id = tag.Id }, tag);
+        return CreatedAtAction(nameof(Get), new { id = tag.Id }, _mapper.Map<TagSimpleDto>(tag));
     }
 
     [HttpPut("{id}")]
