@@ -4,8 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
-using API.Models;
-namespace API.Controllers;
+using SoundStore.API.Models;
+namespace SoundStore.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
@@ -21,27 +21,37 @@ public class TagsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<TagSimpleDto>>> GetAll()
+    public async Task<ActionResult<IEnumerable<TagSimpleDto>>> ReadList()
     {
-        var tags = await _context.Tags.Select(t => _mapper.Map<TagSimpleDto>(t)).ToListAsync();
-        // TODO: Try "= _mapper.Map<TagSimpleDto>(_context.Tags.ToList)" instead
-
+        // ARCHIVE: var tags = await _context.Tags.Select(t => _mapper.Map<TagSimpleDto>(t)).ToListAsync();
+        
+        var query = _context.Tags
+            .AsNoTracking()
+            .OrderByDescending(s => s.Rank);
+        var tags = await _mapper.ProjectTo<TagSimpleDto>(query).ToListAsync();
         return Ok(tags);
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<TagDetailDto>> Get(short id)
+    public async Task<ActionResult<TagSimpleDto>> Read(short id)
     {
-        var tag = await _context.Tags.FindAsync(id);
-        if (tag != null) {
-            return Ok(_mapper.Map<TagDetailDto>(tag));
-        }
+        // ARCHIVE:
+        // var tag = await _context.Tags.FindAsync(id);
+        // if (tag != null) {
+        //     return Ok(_mapper.Map<ReadTagDto>(tag));
+        // }
+        // return NotFound();
 
-        return NotFound();
+        var query = _context.Tags
+            .AsNoTracking()
+            .Where(s => s.Id == id);
+        var tag = await _mapper.ProjectTo<TagSimpleDto>(query).FirstOrDefaultAsync();
+        if (tag == null) { return NotFound(); }
+        return Ok(tag);
     }
 
     [HttpPost]
-    public async Task<ActionResult<TagSimpleDto>> Post([FromBody] TagPostDto input)
+    public async Task<ActionResult<TagSimpleDto>> Create([FromBody] CreateTagDto input)
     {
         if (input == null) { throw new ArgumentException(nameof(input)); }
 
@@ -49,11 +59,12 @@ public class TagsController : ControllerBase
 
         _context.Tags.Add(tag);
         await _context.SaveChangesAsync();
-        return CreatedAtAction(nameof(Get), new { id = tag.Id }, _mapper.Map<TagSimpleDto>(tag));
+
+        return CreatedAtAction(nameof(Read), new { id = tag.Id }, _mapper.Map<TagSimpleDto>(tag));
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult> Put([FromBody] TagSimpleDto input, short id)
+    public async Task<ActionResult> Update([FromBody] TagSimpleDto input, short id)
     {
         if (id != input.Id) { return BadRequest("Id's must match."); }
 
@@ -76,12 +87,4 @@ public class TagsController : ControllerBase
         await _context.SaveChangesAsync();
         return NoContent();
     }
-
-    // [HttpGet("{id}/sounds")]
-    // public async Task<ActionResult<SoundSimpleDto>> GetSoundsByTag(short id)
-    // {
-    //     var tag = _context.Tags.FirstOrDefault(t => t.Id == id); // Return 404 if Tag doesn't exist
-    //     var sounds = await _context.Sounds.Where(s => s.Tags.Id == id).ToListAsync();
-    //     return Ok(_mapper.Map<IEnumerable<SoundSimpleDto>>(sounds));
-    // }
 }

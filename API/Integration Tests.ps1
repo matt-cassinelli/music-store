@@ -1,4 +1,4 @@
-#_____________________________SETUP_____________________________#
+#____________________________ SETUP/ BEFORE ALL ____________________________#
 
 function Get-CurrentFilePath {
   if ($PSScriptRoot) { 
@@ -29,18 +29,22 @@ function Test-DatabaseConnection {
 }
 
 function Disable-SslCertificateChecks {
-  add-type @"
-      using System.Net;
-      using System.Security.Cryptography.X509Certificates;
-      public class TrustAllCertsPolicy : ICertificatePolicy {
-          public bool CheckValidationResult(
-              ServicePoint srvPoint, X509Certificate certificate,
-              WebRequest request, int certificateProblem) {
-              return true;
-          }
-      }
+Add-Type @"
+using System.Net;
+using System.Security.Cryptography.X509Certificates;
+public class TrustAllCertsPolicy : ICertificatePolicy
+{
+    public bool CheckValidationResult(
+        ServicePoint srvPoint,
+        X509Certificate certificate,
+        WebRequest request,
+        int certificateProblem)
+    {
+        return true;
+    }
+}
 "@
-  [System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
+[System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
 }
 
 # Halt the script at any error.
@@ -68,7 +72,7 @@ dotnet ef migrations add v1
 # Execute migration / create database.
 dotnet ef database update
 
-# Start API in new window (for logging)
+# Start API in new window (for logging). Alternatively, manually run in new window
 Start-Process powershell {dotnet run}
 
 # Tell Invoke-WebRequest not to check certificates. Equivalant to "-k" in curl
@@ -80,131 +84,180 @@ $PSDefaultParameterValues.Add('Invoke-WebRequest:DisableKeepAlive', $true)
 
 $baseUri = 'https://localhost:5001'
 
-#____________________________CREATE TAG____________________________#
+
+#_______________________________ CREATE TAG _______________________________#
+
 
 $body = '{
-  "name": "Grime",
-  "rank": 70
+  "name": "Ambient",
+  "rank": 50
 }'
+$response = Invoke-WebRequest -Method 'POST' -Uri "$baseUri/tags" -Body $body
+if ($response.StatusCode -ne 201) {throw}
 
-Invoke-WebRequest -Method 'POST' -Uri "$baseUri/tags" -Body $body
+$body = '{
+  "name": "Cinematic",
+  "rank": 60
+}'
+$response = Invoke-WebRequest -Method 'POST' -Uri "$baseUri/tags" -Body $body
+if ($response.StatusCode -ne 201) {throw}
 
 $body = '{
   "name": "Hiphop",
-  "rank": 50
+  "rank": 70
 }'
-
-Invoke-WebRequest -Method 'POST' -Uri "$baseUri/tags" -Body $body
-
-$body = '{
-  "name": "Garage",
-  "rank": 60
-}'
-
-Invoke-WebRequest -Method 'POST' -Uri "$baseUri/tags" -Body $body
-
-$body = '{
-  "name": "Soul",
-  "rank": 40
-}'
-
 $response = Invoke-WebRequest -Method 'POST' -Uri "$baseUri/tags" -Body $body
-
 if ($response.StatusCode -ne 201) {throw}
 
 
-#____________________________READ TAG____________________________#
+#_______________________________ READ TAG ________________________________#
 
 $tempId = ($response.Content | ConvertFrom-Json).id
 
-$response = Invoke-WebRequest -Method 'GET' -Uri "$baseUri/tags/$tempId"
+#$response = Invoke-WebRequest -Method 'GET' -Uri "$baseUri/tags/$tempId"
+$response = Invoke-WebRequest -Method 'GET' -Uri "$baseUri/tags/1"
 
 if ($response.StatusCode -ne 200) {throw}
 
 if (-not $response.Content) {throw}
 
 
-#____________________________READ TAGS____________________________#
+#_______________________________ READ TAGS _______________________________#
 
 $response = Invoke-WebRequest -Method 'GET' -Uri "$baseUri/tags"
-
-if ($response.StatusCode -ne 200) {throw}
-
-if ( ($response.Content | ConvertFrom-Json).Count -ne 4 ) {throw}
-
-
-#__________________________CREATE SOUND__________________________#
-
-$body = '{
-    "title": "Test Sound 1",
-    "description": "Test description 1",
-    "duration": 50,
-    "price": 7.00,
-    "preview": "/media/mp3/21-10-06.mp3",
-    "imagethumb": "/media/img-thumb/blabla.jpg",
-    "structure": "aba"
-}'
-
-$response = Invoke-WebRequest -Method 'POST' -Uri "$baseUri/sounds" -Body $body
-
-if ($response.StatusCode -ne 201) {throw}
-
-if (-not $response.Content) {throw}
-
-$body = '{
-  "title": "Test Sound 2",
-  "description": "Test description 2",
-  "duration": 88,
-  "price": 5.00,
-  "preview": "/media/mp3/21-10-06.mp3",
-  "imgthumb": "/media/img-thumb/21-10-06.jpg",
-  "structure": "abaca"
-}'
-
-$response = Invoke-WebRequest -Method 'POST' -Uri "$baseUri/sounds" -Body $body
-
-if ($response.StatusCode -ne 201) {throw}
-
-if (-not $response.Content) {throw}
-
-$body = '{
-  "title": "Test Sound 3",
-  "description": "Test description 3",
-  "duration": 54,
-  "price": 10.00,
-  "preview": "/media/mp3/21-10-12.mp3",
-  "imgthumb": "/media/img-thumb/21-10-12.jpg",
-  "structure": "ababa"
-}'
-
-$response = Invoke-WebRequest -Method 'POST' -Uri "$baseUri/sounds" -Body $body
-
-if ($response.StatusCode -ne 201) {throw}
-
-if (-not $response.Content) {throw}
-
-
-#____________________________READ SOUND____________________________#
-
-$tempId = ($response.Content | ConvertFrom-Json).id
-
-$response = Invoke-WebRequest -Method 'GET' -Uri "$baseUri/sounds/$tempId"
-
-if ($response.StatusCode -ne 200) {throw}
-
-if (-not $response.Content) {throw}
-
-
-#____________________________READ SOUNDS____________________________#
-
-$response = Invoke-WebRequest -Method 'GET' -Uri "$baseUri/sounds"
 
 if ($response.StatusCode -ne 200) {throw}
 
 if ( ($response.Content | ConvertFrom-Json).Count -ne 3 ) {throw}
 
 
-#___________________________UPDATE SOUND___________________________#
+#______________________________ CREATE SOUND ______________________________#
+
+$body = '{
+    "title": "Test Sound 0",
+    "description": "No tags",
+    "preview": "/media/mp3/blabla.mp3"
+}'
+$response = Invoke-WebRequest -Method 'POST' -Uri "$baseUri/sounds" -Body $body
+if ($response.StatusCode -ne 201) {throw}
+if (-not $response.Content) {throw}
+
+$body = '{
+    "title": "Test Sound 1",
+    "description": "No tags",
+    "duration": 28,
+    "price": 5.00,
+    "preview": "/media/mp3/blabla.mp3",
+    "imagethumb": "/media/img-thumb/21-10-06.jpg",
+    "structure": "aba",
+    "rank": 100
+}'
+$response = Invoke-WebRequest -Method 'POST' -Uri "$baseUri/sounds" -Body $body
+if ($response.StatusCode -ne 201) {throw}
+if (-not $response.Content) {throw}
+
+$body = '{
+    "title": "Test Sound 2",
+    "description": "This sound has only tag 1",
+    "duration": 50,
+    "rank": 123,
+    "tags": [
+        1
+    ]
+}'
+$response = Invoke-WebRequest -Method 'POST' -Uri "$baseUri/sounds" -Body $body
+if ($response.StatusCode -ne 201) {throw}
+if (-not $response.Content) {throw}
+
+$body = '{
+  "title": "Test Sound 3",
+  "description": "Tags 1 and 2.",
+  "duration": 88,
+  "price": 7.00,
+  "preview": "/media/mp3/21-10-06.mp3",
+  "imagethumb": "/media/img-thumb/21-10-06.jpg",
+  "structure": "aba",
+  "rank": 140,
+  "tags":[
+    1,
+    2
+  ]
+}'
+$response = Invoke-WebRequest -Method 'POST' -Uri "$baseUri/sounds" -Body $body
+if ($response.StatusCode -ne 201) {throw}
+if (-not $response.Content) {throw}
+
+$body = '{
+  "title": "Test Sound 4",
+  "description": "Tags 1, 2 & 3.",
+  "duration": 43,
+  "price": 5.00,
+  "preview": "/media/mp3/21-10-06.mp3",
+  "imagethumb": "/media/img-thumb/21-10-06.jpg",
+  "structure": "a",
+  "rank": 200,
+  "tags":[
+    1,
+    2,
+    3
+  ]
+}'
+$response = Invoke-WebRequest -Method 'POST' -Uri "$baseUri/sounds" -Body $body
+if ($response.StatusCode -ne 201) {throw}
+if (-not $response.Content) {throw}
+
+$body = '{
+  "title": "Test Sound 5",
+  "description": "Only tag 3.",
+  "duration": 54,
+  "price": 10.00,
+  "preview": "/media/mp3/21-10-12.mp3",
+  "imagethumb": "/media/img-thumb/21-10-12.jpg",
+  "structure": "abaca",
+  "rank": 49,
+  "tags":[
+    3
+  ]
+}'
+$response = Invoke-WebRequest -Method 'POST' -Uri "$baseUri/sounds" -Body $body
+if ($response.StatusCode -ne 201) {throw}
+if (-not $response.Content) {throw}
+
+
+#_______________________________ READ SOUND _______________________________#
+
+$tempId = ($response.Content | ConvertFrom-Json).id
+
+$response = Invoke-WebRequest -Method 'GET' -Uri "$baseUri/sounds/$tempId"
+if ($response.StatusCode -ne 200) {throw}
+if (-not $response.Content) {throw}
+
+
+#____________________________ READ ALL SOUNDS ____________________________#
+
+$response = Invoke-WebRequest -Method 'GET' -Uri "$baseUri/sounds"
+if ($response.StatusCode -ne 200) {throw}
+if ( ($response.Content | ConvertFrom-Json).Count -ne 6 ) {throw}
+
+
+#__________________________ READ SOUNDS BY TAGS __________________________#
+
+$response = Invoke-WebRequest -Method 'GET' -Uri "$baseUri/sounds?tagId=1"
+$response.Content | ConvertFrom-Json
+
+$response = Invoke-WebRequest -Method 'GET' -Uri "$baseUri/sounds?tagId=2"
+$response.Content | ConvertFrom-Json
+
+$response = Invoke-WebRequest -Method 'GET' -Uri "$baseUri/sounds?tagId=3"
+$response.Content | ConvertFrom-Json
+
+$response = Invoke-WebRequest -Method 'GET' -Uri "$baseUri/sounds?tagId=1&tagId=2"
+$response.Content | ConvertFrom-Json
+# TODO: Describe / check what they should each return
+
+
+
+#______________________________ UPDATE SOUND ______________________________#
 
 # Change price and add tags
 $body = '{
@@ -236,13 +289,7 @@ $response = Invoke-WebRequest -Method 'PUT' -Uri "$baseUri/sounds/$tempId" -Body
 
 if ($response.StatusCode -ne 204) {throw}
 
-
-#______________________CREATE SOUND WITH TAGS______________________#
-
-# TODO
-
-
-#_____________________________READING_____________________________#
+#________________________________ READING ________________________________#
 
 # https://gist.github.com/bryan-c-oconnell/4ae84d5253cf6f434750#file-restapitest-ps1
 # https://spr.com/test-your-restful-api-using-powershell/

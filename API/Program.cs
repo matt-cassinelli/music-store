@@ -1,7 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
-using API.Models;
+using SoundStore.API.Models;
 using Microsoft.AspNetCore.Mvc;
+using SoundStore.API.AutoMapperProfiles;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,29 +18,18 @@ builder.Services.AddCors(options => // Configure CORS
 });
 
 builder.Services.AddControllers(options =>
-    options.ReturnHttpNotAcceptable = true // Allow only JSON in the Accept header, not XML or plain text etc.
-);
+{
+    options.ReturnHttpNotAcceptable = true; // Allow only JSON. TODO: Is this is for the input (Content-Type header) or output (Accept header)?
+}).AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-builder.Services.AddAutoMapper(profile =>
-{ //                   ___FROM___     _____TO_____
-    profile.CreateMap<Sound,        SoundSimpleDto>();
-    profile.CreateMap<Sound,        SoundDetailDto>();
-    profile.CreateMap<SoundPostDto, Sound>();
-    profile.CreateMap<SoundPutDto,  Sound>();
-    profile.CreateMap<Tag,          TagSimpleDto>();
-    profile.CreateMap<Tag,          TagDetailDto>();
-    profile.CreateMap<Tag,          TagIdOnlyDto>();
-    profile.CreateMap<TagPostDto,   Tag>();
-    profile.CreateMap<TagSimpleDto, Tag>();
-});
+builder.Services.AddAutoMapper(cfg => cfg.AddProfile<MyAutoMapperProfile>());
 
 var app = builder.Build();
 
 app.UseSwagger();                //
-app.UseSwaggerUI();              // TODO: Enable these features only in dev env.
+app.UseSwaggerUI();              // Dev only.
 app.UseDeveloperExceptionPage(); //
 app.UseHttpsRedirection();
 app.UseRouting();                // Configure CORS
