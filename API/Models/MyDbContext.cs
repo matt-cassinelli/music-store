@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-namespace API.Models;
+using AutoMapper;
+namespace SoundStore.API.Models;
 
 public class MyDbContext : DbContext // EF uses this class to access the database & perform migrations.
 {
@@ -13,5 +14,8 @@ public class MyDbContext : DbContext // EF uses this class to access the databas
     {
         optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=SoundStore;Integrated Security=true");
         // TODO: Move this out of the source code. https://docs.microsoft.com/en-gb/ef/core/miscellaneous/connection-strings
+
+        optionsBuilder.EnableSensitiveDataLogging(); // See Id conflicts. Dev only.
+        optionsBuilder.LogTo(Console.WriteLine); // Log SQL queries that EF generates. Dev only.
     }
 }
