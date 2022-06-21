@@ -12,7 +12,7 @@ body {
 }
 
 
-/*_______________________________Header_______________________________*/
+/*___________________________________ Header ___________________________________*/
 
 header {
     width: 100%;
@@ -48,7 +48,7 @@ header div a:hover {
 }
 
 
-/*_______________________________Cards_______________________________*/
+/*____________________________________ Cards____________________________________*/
 
 #main-container { /* TODO: Stack vertically. */
     width: 100%; /* 100vw */
@@ -75,7 +75,7 @@ header div a:hover {
     height: auto;
     grid-template-columns: 1fr;
     color: white;
-    padding: 2rem;
+    padding: 1rem;
     max-width: 110rem;
 }
 
@@ -129,7 +129,7 @@ h3.card {
     background-color: rgba(255, 255, 255, 0.12);
 }
 
-/*_______________________________Responsiveness_______________________________*/
+/*________________________________ Responsiveness ________________________________*/
 
 @media (min-width: 40rem) {
     #card-container {
@@ -155,7 +155,7 @@ h3.card {
     }
 }
 
-/*_______________________________Play Button Icons_______________________________*/
+/*_______________________________ Play Button Icons _______________________________*/
 
 .play-button {
     border: 0;
@@ -179,7 +179,57 @@ h3.card {
     border-color: transparent transparent transparent #606060;
   }
 
-/*_______________________________Other_______________________________*/
+
+/*__________________________________ Tag Chips __________________________________*/
+
+#tag-container {
+    display: flex;
+    flex-wrap: wrap; /* TODO: Check that it overflows nicely */
+    padding: 1rem;
+    max-width: 110rem;
+}
+
+.tag input { /* Hide the default radio button. Will use a label element for display instead. */
+    display: none;
+}
+
+/* #tag-container .tag label {
+    display: inline-block;
+    width:8em;
+    background-color: #42b4d6;
+    border-radius: 6px;
+    color: #ffffff;
+    padding: 0.5em;
+} */
+
+.tag label{
+    transition: all 0.3s ease-in-out;
+    background-color: #fff;
+    border-radius: 30px;
+    /* border: 1px solid #d3d2d2; */
+    display: inline-flex;
+    align-items:center;
+    padding: 0.4em 0.6em;
+    cursor: pointer;
+    /* margin-right: 0.5em;
+    margin-left: 0.5em; */
+    margin: 0.6em;
+    color: #5d5d5d;
+}
+
+.tag label:hover, label:focus {
+    background-color: #afafaf;
+}
+
+.tag input[type=radio]:checked + label {
+    background-color: #5fc0dc;
+    /* border-color:#c3c2c2; */
+    /* border: 1px solid #5fc0dc; */
+    box-shadow: 0 1px 1px rgba(0,0,0,0.12)
+}
+
+
+/*____________________________________ Other ____________________________________*/
 
 #loading {
     display: block;

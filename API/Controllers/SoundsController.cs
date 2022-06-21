@@ -23,60 +23,19 @@ public class SoundsController : ControllerBase // ControllerBase gives us common
     }
 
     [HttpGet] // Match the route https://host/sounds with optional ?tagId=1&tagId=2
-    public async Task<ActionResult<IEnumerable<ReadSoundsDto>>> ReadList([FromQuery] short[] tagId) // TODO: Implement paging, top 15 results. TODO: Allow requests for other ordering options e.g. price.
+    public async Task<ActionResult<IEnumerable<ReadSoundsDto>>> ReadList([FromQuery] short? tagId) // TODO: Implement paging, top 15 results. TODO: Allow requests for other ordering options e.g. price.
     {
         IQueryable<Sound> query; // Initialise empty query chain that we will build up.
 
-        if (tagId.Any())
+        if (tagId == null) // Get all sounds.
         {
-            // Get sounds that contain all of the supplied tags (or more).
-
-            // Attempt 1 - This is the ideal solution but EF throws 'could not be translated' error.
-            // query = _context.Sounds
-            //     .Where(s => tagIdArgs.All(tia => s.Tags.Any(t => t.Id == tia)))
-
-            // Attempt 2 - No error but it gives us sounds with any of the tags - too many results.
-            // query = _context.Sounds
-            //     .Where(s => s.Tags.Any(t => tagIdArgs.Contains(t.Id)));
-
-            // Attempt 3 - Only exact matches - not enough results.
-            // query = _context.Sounds
-            //     .Where(s => s.Tags.All(t => tagIdArgs.Contains(t.Id)))
-            //     .Where(s => s.Tags.Any()) // Filter out sounds with no tags
-            //     .ToList();
-
-            // Attempt 4 - Close but not quite right.
-            // query = _context.Sounds
-            //     .Where(s => s.Tags.All(t => tagIdArgs.Contains(t.Id)) && tagId.Count == s.Tags.Count);
-
-            // Attempt 5
-            // query = _context.Tags
-            //     .Where(t => tagIdArgs.All(tia => t.Id == tia))
-            //     .SelectMany(t => t.Sounds)
-            //     .ToList();
-            //  .Include(s => s.Tags)
-            //  .Distinct();
-
-            // Attempt 6 - Works! It turns out that EF can't use the ".All" operator on in-memory collections: https://stackoverflow.com/a/67699864/18855608
-            // As an alternative to .All, we can combine .Count and .Contains for the same result:
-            // query = _context.Sounds
-            //     .Where(s => s.Tags.Count(t => tagId.Contains(t.Id)) == tagId.Count());
-
-            // Attempt 7 - Another successful method is to first retrieve the tags from the database so they become IQueryable rather than in-memory.
-            var tags = _context.Tags.Where(t => tagId.Contains(t.Id));
-            query = _context.Sounds
-                .AsNoTracking()
-                .Where(s => tags.All(t => s.Tags.Contains(t)))
-                .OrderByDescending(s => s.Rank);
-        }
-        else // Get all sounds.
-        {
-            // Attempt 1 - Dto column mapping happens in memory - bad performance.
-            // query = _context.Sounds.Select(s => _mapper.Map<ReadSoundsDto>(s))
-
-            // Attempt 2 - Dto column mapping happens in db - much better.
             query = _context.Sounds
                 .AsNoTracking();
+        }
+        else // Get sounds with the specified tag.
+        {
+            query = _context.Sounds
+                .Where(s => s.Tags.Any(t => tagId == t.Id));
         }
 
         query = query
