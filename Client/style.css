@@ -8,7 +8,48 @@
 }
 
 body {
-    background: #2c302d;
+    /* background: #2c302d; */
+    background: var(--bg);
+    transition: all ease 0.4s;
+}
+
+
+/*__________________________________ Themes __________________________________*/
+
+:root {
+    --primary: #13ad37;
+    --secondary: #e77421;
+    --font: #424242;
+    --bg: rgb(235, 235, 235);
+    --panel: #fff;
+    --hover: #606060;
+    --theme-label-image: url('./media/img-app/moon.png');
+    --loading-image: url('media/img-app/loading-light.png');
+}
+
+[data-theme="dark"] {
+    --primary: #12852d; /* --primary: #9A97F3; */
+    --secondary: #818cab;
+    --font: #e1e1ff;
+    --bg: #242424;
+    --panel: #111111;
+    --hover: #606060;
+    --theme-label-image: url('./media/img-app/sun.webp');
+    --loading-image: url('media/img-app/loading-dark.png');
+}
+
+#theme-checkbox {
+	display:none;
+}
+
+#theme-label {
+	display: block;
+	width: 2.5rem;
+	height: 2.5rem;
+	cursor: pointer;	
+	background: var(--theme-label-image) no-repeat;
+    background-size: 100%;
+    text-align: center;
 }
 
 
@@ -37,14 +78,15 @@ header div a { /* Hyperlink */
 }
 
 header div a:hover {
-    color: #52cf47;
+    color: var(--hover);
     transition-duration: 0.3s;
 }
 
-#header_active {
-    color: #9b9b9b; /* TODO: Fix. */
+#header-active {
+    color: var(--primary); /* TODO: Fix. */
     transition-duration: 0.3s;
     cursor: context-menu;
+    /* font-size: 24px; */
 }
 
 
@@ -74,7 +116,7 @@ header div a:hover {
     width: auto;
     height: auto;
     grid-template-columns: 1fr;
-    color: white;
+    color: var(--font);
     padding: 1rem;
     max-width: 110rem;
 }
@@ -94,9 +136,9 @@ header div a:hover {
 
     text-align: center;
     /* background: linear-gradient(15deg, #191a19 40%, #02271c); */
-    background: #191a19;
+    background: var(--panel);
     border-radius: 1.2rem;
-    box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.15);
     transition: 0.2s all ease-in-out;
 }
 
@@ -118,7 +160,7 @@ h3.card {
     width: auto;
     border-radius: 50px;
     background: #2dad1c0e;
-    color: white;
+    color: var(--font);
     cursor: pointer;
     border: none;
     /* margin: 50px auto; */
@@ -163,7 +205,7 @@ h3.card {
     box-sizing: border-box;
     width: 0;
     height: 3.5rem;
-    border-color: transparent transparent transparent #404040;
+    border-color: transparent transparent transparent var(--font);
     transition: 100ms all ease;
     cursor: pointer;
     border-style: solid;
@@ -176,7 +218,7 @@ h3.card {
     margin-left: 0;
   }
   .play-button:hover {
-    border-color: transparent transparent transparent #606060;
+    border-color: transparent transparent transparent var(--hover);
   }
 
 
@@ -185,7 +227,7 @@ h3.card {
 #tag-container {
     display: flex;
     flex-wrap: wrap; /* TODO: Check that it overflows nicely */
-    padding: 1rem;
+    padding: 1.2rem;
     max-width: 110rem;
 }
 
@@ -202,19 +244,20 @@ h3.card {
     padding: 0.5em;
 } */
 
-.tag label{
+.tag label {
     transition: all 0.3s ease-in-out;
-    background-color: #fff;
+    background-color: var(--panel);
     border-radius: 30px;
     /* border: 1px solid #d3d2d2; */
     display: inline-flex;
-    align-items:center;
-    padding: 0.4em 0.6em;
+    align-items: center;
+    padding: 0.5em 1em;
     cursor: pointer;
     /* margin-right: 0.5em;
     margin-left: 0.5em; */
     margin: 0.6em;
-    color: #5d5d5d;
+    color: var(--font);
+    box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.15)
 }
 
 .tag label:hover, label:focus {
@@ -222,7 +265,7 @@ h3.card {
 }
 
 .tag input[type=radio]:checked + label {
-    background-color: #5fc0dc;
+    background-color: var(--primary);
     /* border-color:#c3c2c2; */
     /* border: 1px solid #5fc0dc; */
     box-shadow: 0 1px 1px rgba(0,0,0,0.12)
@@ -231,10 +274,11 @@ h3.card {
 
 /*____________________________________ Other ____________________________________*/
 
-#loading {
+#loading { /* TODO: Dark mode */
     display: block;
     width: 3em;
     margin: 2rem auto; /* Add space above and below element. The sides are set to auto so that it gets centred. */
+    content: var(--loading-image); /* Equivalent to "src" in html */
     animation: spin 0.8s infinite linear;
 }
 

@@ -158,6 +158,23 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
+
+
+const toggleSwitch = document.querySelector('#theme-checkbox');
+
+function switchTheme(e) {
+    if (e.target.checked) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+    }
+    else {
+        document.documentElement.setAttribute('data-theme', 'light');
+    }    
+}
+
+toggleSwitch.addEventListener('change', switchTheme, false);
+
+
+
 // ARCHIVE (event delegation attempts)
 
 // document.querySelector('#card-container').addEventListener('click', function (event) { // Event delegation. https://www.reddit.com/r/learnjavascript/comments/dyw03u/
