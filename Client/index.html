@@ -9,10 +9,17 @@
 </head>
 <body>
     <header>
-        <div>
-            <a href="index.html" id="header-active">SOUNDS</a>
+        <div id="header-left">
+            <img id="logo" alt="logo" src="media/img-app/icon.png"/>
+        </div>
+        <div id="nav">
+            <a href="index.html" id="nav-active">SOUNDS</a>
             <a href="services.html">SERVICES</a>
             <a href="contact.html">CONTACT</a>
+        </div>
+        <div id="header-right">
+            <input id="theme-checkbox" type="checkbox"/>
+            <label id="theme-label" for="theme-checkbox"></label>
         </div>
     </header>
     <div id="main-container">
@@ -30,8 +37,6 @@
     </div>
     <audio id="audio"></audio>
     <img id="loading" alt="loading" />
-    <input id="theme-checkbox" type="checkbox"/>
-    <label id="theme-label" for="theme-checkbox"></label>
     <script src="script.js"></script>
 </body>
 </html>

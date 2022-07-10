@@ -1,20 +1,47 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap");
+/*#region _____________________________ Reset / Defaults ______________________________*/
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Roboto", sans-serif;
+    margin: 0; /* Remove default margin */
+    box-sizing: border-box; /* A more intuitive box-sizing model */
+    font-family: 'Montserrat', sans-serif;
+}
+
+html, body { 
+    height: 100%; /* Allow percentage-based heights in the app */
 }
 
 body {
-    /* background: #2c302d; */
+    min-height: 100vh; /* TODO: Test on mobile devices - percentage might need to be used instead */
+    text-rendering: optimizeSpeed;
+    line-height: 1.5;
     background: var(--bg);
     transition: all ease 0.4s;
+    -webkit-font-smoothing: antialiased; /* Disable subpixel antialiasing on MacOS */
+}
+
+img, picture, video, canvas, svg {
+    max-width: 100%; /* Stop images from overflowing & fix weird spacing */
+    display: block;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+    overflow-wrap: break-word; /* Stop text from overflowing */
+}
+
+ul[role='list'], ol[role='list'] {
+    list-style: none;
 }
 
 
-/*__________________________________ Themes __________________________________*/
+input, button, textarea, select {
+  font: inherit; /* Inputs and buttons should inheret font styles */
+}
+
+/*#endregion*/
+
+/*#region __________________________________ Themes ___________________________________*/
 
 :root {
     --primary: #13ad37;
@@ -22,88 +49,138 @@ body {
     --font: #424242;
     --bg: rgb(235, 235, 235);
     --panel: #fff;
-    --hover: #606060;
-    --theme-label-image: url('./media/img-app/moon.png');
+    --hover: #afafaf; /* #606060; */
+    --theme-label-image: url('./media/img-app/moon.svg');
     --loading-image: url('media/img-app/loading-light.png');
+    --details-bg: #00ff513a;
 }
 
 [data-theme="dark"] {
-    --primary: #12852d; /* --primary: #9A97F3; */
+    --primary: #12852d; /* #9A97F3; */
     --secondary: #818cab;
     --font: #e1e1ff;
-    --bg: #242424;
+    --bg: #242424; /* #2c302d; */
     --panel: #111111;
     --hover: #606060;
-    --theme-label-image: url('./media/img-app/sun.webp');
+    --theme-label-image: url('./media/img-app/sun.svg');
     --loading-image: url('media/img-app/loading-dark.png');
+    --details-bg: #00ff513a;
 }
 
-#theme-checkbox {
-	display:none;
-}
+/*#endregion*/
 
-#theme-label {
-	display: block;
-	width: 2.5rem;
-	height: 2.5rem;
-	cursor: pointer;	
-	background: var(--theme-label-image) no-repeat;
-    background-size: 100%;
-    text-align: center;
-}
-
-
-/*___________________________________ Header ___________________________________*/
+/*#region __________________________________ Header ___________________________________*/
 
 header {
     width: 100%;
     background-color: #000000;
     text-align: center;
-}
-
-header div {
     display: flex;
+    justify-content: space-evenly; /* Horizontal centre */
+    align-items: center; /* Vertical centre */
+    /* overflow:hidden; */
     flex-wrap: nowrap;
-    justify-content: center;
+    /* padding: 20px 10px; */
     /* padding: 20px 0; */
+    padding: 0px 1rem;
 }
 
-header div a { /* Hyperlink */
+#header-left, #nav, #header-right {
+    flex: 1; /* Each of these items should take up 1 unit of space */
+}
+
+#header-left {
+    display: flex;
+    justify-content: left;
+}
+
+#logo {
+    width: 3em;
+    height: 3em;
+    object-fit: cover;
+    /* height:auto; */
+    /* margin-left: auto; */
+    /* margin-right: auto; */
+    /* position: absolute; */
+	/* top: calc(50% - 20px); */
+}
+
+#nav {
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+}
+
+#nav a { /* Hyperlinks */
     padding: 1rem;
     text-decoration: none;
     color: #ffffff;
-    font-size: 20px;
+    font-size: 1.3rem;
     font-weight: 600;
     transition-duration: 0.3s;
 }
 
-header div a:hover {
+#nav a:hover {
     color: var(--hover);
     transition-duration: 0.3s;
 }
 
-#header-active {
-    color: var(--primary); /* TODO: Fix. */
+#nav-active { /* TODO: Fix. */
+    color: var(--primary);
     transition-duration: 0.3s;
     cursor: context-menu;
-    /* font-size: 24px; */
 }
 
+#header-right {
+    display: flex;
+    justify-content: right;
+}
 
-/*____________________________________ Cards____________________________________*/
+#theme-checkbox {
+	display: none;
+    /* float: right; */
+}
 
-#main-container { /* TODO: Stack vertically. */
+#theme-label {
+	width: 2.5rem;
+	height: 2.5rem;
+	cursor: pointer;	
+	background: var(--theme-label-image) no-repeat;
+    /* display: block; */
+    /* background-size: 100%; */
+    /* text-align: center; */
+    /* float: right; */
+    /* margin-right: 10px; */
+}
+
+/*#endregion*/
+
+/*#region __________________________________ Cards ____________________________________*/
+
+#main-container {
     width: 100%; /* 100vw */
     height: 100%; /* 100vh */
     padding-top: 2rem; /* Add space between header and content */
-    margin: 0; /* Old: margin: 0 auto; */
-    /* align-items:center; */
+    margin: 0; /* ARCHIVE: 0 auto; */
+    /* align-items: center; */
+    /* justify-content: center; */
+    
 }
 
-#card-container { /* Target by id */
+#card-container {
+    margin: auto; /* Centre the container */
+    display: grid;
+    width: auto;
+    height: auto;
+    grid-template-columns: 1fr;
+    color: var(--font);
+    padding: 0.6rem;
+    max-width: 100rem;
+    justify-content: center;
+    /* align-items: center; */
+
     /* width: auto;
     max-width: 1200px;
-    margin: auto;
     display: flex;
     flex-wrap: wrap;
     color: white;
@@ -111,47 +188,38 @@ header div a:hover {
     gap: 2rem 2rem; https://stackoverflow.com/questions/20626685
     flex-direction: row;
     justify-items: center; */
-
-    display: grid;
-    width: auto;
-    height: auto;
-    grid-template-columns: 1fr;
-    color: var(--font);
-    padding: 1rem;
-    max-width: 110rem;
 }
 
-.card { /* Target by class */
+.card {
     width: 90%;
     height: 14rem;
-    margin: 1rem; /* The space around an element's border. In this case only seems to control bottom/top spacing */
-    /* padding: auto; /* The space between an element's border and its content */
+    margin: 1rem;
+    /* padding: auto; */
 
     display: flex;
     flex-direction: column;
-    overflow: hidden;
     justify-content: space-evenly;
     align-items: center;
     justify-items: center;
 
     text-align: center;
-    /* background: linear-gradient(15deg, #191a19 40%, #02271c); */
     background: var(--panel);
+    /* background: linear-gradient(15deg, #191a19 40%, #02271c); */
     border-radius: 1.2rem;
     box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.15);
     transition: 0.2s all ease-in-out;
 }
 
 .card:hover {
-    /* margin-top: -5px; */
     margin: 0.6rem;
     width: 94%;
     height: 14.7rem;
+    /* margin-top: -5px; */
 }
 
 h3.card {
-    /* text-transform: uppercase; */
     font-size: 20px;
+    /* text-transform: uppercase; */
     /* margin: 30px auto; */
 }
 
@@ -159,23 +227,107 @@ h3.card {
     padding: 0.6rem 1rem;
     width: auto;
     border-radius: 50px;
-    background: #2dad1c0e;
+    background-color: var(--details-bg);
     color: var(--font);
     cursor: pointer;
     border: none;
-    /* margin: 50px auto; */
     border: 1px solid rgba(255, 255, 255, 0.2);
+    /* margin: 50px auto; */
 }
 
 .details-button:hover {
-    background-color: rgba(255, 255, 255, 0.12);
+    background-color: var(--hover);
 }
 
-/*________________________________ Responsiveness ________________________________*/
+/*#endregion*/
+
+/*#region _______________________________ Play Buttons ________________________________*/
+
+.play-button {
+    border: 0;
+    background: transparent;
+    box-sizing: border-box;
+    width: 0;
+    height: 3.5rem;
+    border-color: transparent transparent transparent var(--font);
+    transition: 100ms all ease;
+    cursor: pointer;
+    border-style: solid;
+    border-width: 2rem 0 2rem 3.5rem;
+    margin-left: 0.4rem; /* Shift slightly to the right */
+}
+.play-button.playing {
+    border-style: double;
+    border-width: 0 0 0 3rem;
+    margin-left: 0;
+}
+.play-button:hover {
+    border-color: transparent transparent transparent var(--hover);
+}
+
+/*#endregion*/
+
+/*#region ________________________________ Tag Chips __________________________________*/
+
+#tag-container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 1.7rem;
+    max-width: 110rem;
+    column-gap: 1.1rem;
+    row-gap: 0.8rem;
+    margin: auto;
+    max-width: 100rem;
+    /* justify-content: center; */
+}
+
+/* #tag-container .tag label {
+    display: inline-block;
+    width:8em;
+    background-color: #42b4d6;
+    border-radius: 6px;
+    color: #ffffff;
+    padding: 0.5em;
+} */
+
+.tag input { /* Hide the default radio buttons. Label elements are displayed instead. */
+    display: none;
+}
+
+.tag label {
+    transition: all 0.3s ease-in-out;
+    background-color: var(--panel);
+    border-radius: 12px;
+    /* border: 1px solid #d3d2d2; */
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5em 1em; /* Space between button's content & border */
+    cursor: pointer;
+    color: var(--font);
+    box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.15)
+    /* margin-right: 0.5em; */
+    /* margin-left: 0.5em; */
+    /* margin: 0.6em; */
+}
+
+.tag label:hover, label:focus {
+    background-color: var(--hover);
+}
+
+.tag input[type=radio]:checked + label {
+    background-color: var(--primary);
+    box-shadow: 0 1px 1px rgba(0,0,0,0.12)
+    /* border-color:#c3c2c2; */
+    /* border: 1px solid #5fc0dc; */
+}
+
+/*#endregion*/
+
+/*#region ______________________________ Responsiveness _______________________________*/
 
 @media (min-width: 40rem) {
     #card-container {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr; /* TODO: This could be done with repeat(auto-fit, minmax(40rem, 1fr)); */
     }
 }
   
@@ -197,84 +349,11 @@ h3.card {
     }
 }
 
-/*_______________________________ Play Button Icons _______________________________*/
+/*#endregion*/
 
-.play-button {
-    border: 0;
-    background: transparent;
-    box-sizing: border-box;
-    width: 0;
-    height: 3.5rem;
-    border-color: transparent transparent transparent var(--font);
-    transition: 100ms all ease;
-    cursor: pointer;
-    border-style: solid;
-    border-width: 2rem 0 2rem 3.5rem;
-    margin-left: 0.4rem; /* Shift slightly to the right */
-  }
-  .play-button.playing {
-    border-style: double;
-    border-width: 0 0 0 3rem;
-    margin-left: 0;
-  }
-  .play-button:hover {
-    border-color: transparent transparent transparent var(--hover);
-  }
+/*#region __________________________________ Other ____________________________________*/
 
-
-/*__________________________________ Tag Chips __________________________________*/
-
-#tag-container {
-    display: flex;
-    flex-wrap: wrap; /* TODO: Check that it overflows nicely */
-    padding: 1.2rem;
-    max-width: 110rem;
-}
-
-.tag input { /* Hide the default radio button. Will use a label element for display instead. */
-    display: none;
-}
-
-/* #tag-container .tag label {
-    display: inline-block;
-    width:8em;
-    background-color: #42b4d6;
-    border-radius: 6px;
-    color: #ffffff;
-    padding: 0.5em;
-} */
-
-.tag label {
-    transition: all 0.3s ease-in-out;
-    background-color: var(--panel);
-    border-radius: 30px;
-    /* border: 1px solid #d3d2d2; */
-    display: inline-flex;
-    align-items: center;
-    padding: 0.5em 1em;
-    cursor: pointer;
-    /* margin-right: 0.5em;
-    margin-left: 0.5em; */
-    margin: 0.6em;
-    color: var(--font);
-    box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.15)
-}
-
-.tag label:hover, label:focus {
-    background-color: #afafaf;
-}
-
-.tag input[type=radio]:checked + label {
-    background-color: var(--primary);
-    /* border-color:#c3c2c2; */
-    /* border: 1px solid #5fc0dc; */
-    box-shadow: 0 1px 1px rgba(0,0,0,0.12)
-}
-
-
-/*____________________________________ Other ____________________________________*/
-
-#loading { /* TODO: Dark mode */
+#loading {
     display: block;
     width: 3em;
     margin: 2rem auto; /* Add space above and below element. The sides are set to auto so that it gets centred. */
@@ -287,3 +366,12 @@ h3.card {
         transform: rotate(360deg);
     }
 }
+
+/* Debugging tools */
+/* * {
+    outline: 1px solid red;
+    outline-offset: -1px;
+    background-color: #ff000010;
+} */
+
+/*#endregion*/
