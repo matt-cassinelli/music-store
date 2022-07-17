@@ -4,15 +4,10 @@
 
 # Dependencies:
 
-* .NET 6
-    * Download [here](https://dotnet.microsoft.com/en-us/download)
-* SQL Server
-    * Get the free Express edition [here](https://go.microsoft.com/fwlink/?linkid=866658).
-* Entity Framework
-    * Install with ```dotnet tool install --global dotnet-ef```
-* AutoMapper
-    * Install by running ```dotnet restore``` in the ```./API/``` directory.
-
+* .NET 6 (download [here](https://dotnet.microsoft.com/en-us/download))
+* SQL Server (free Express edition [here](https://go.microsoft.com/fwlink/?linkid=866658))
+* Entity Framework (install with ```dotnet tool install --global dotnet-ef```)
+* AutoMapper (install with ```dotnet restore``` in the ```./API/``` directory)
 
 # How to run
 
