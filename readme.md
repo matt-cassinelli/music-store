@@ -5,17 +5,21 @@
 # Dependencies:
 
 * .NET 6
-* EF
-* AutoMapper
+    * Download [here](https://dotnet.microsoft.com/en-us/download)
 * SQL Server
+    * Get the free Express edition [here](https://go.microsoft.com/fwlink/?linkid=866658).
+* Entity Framework
+    * Install with ```dotnet tool install --global dotnet-ef```
+* AutoMapper
+    * Install by running ```dotnet restore``` in the ```./API/``` directory.
+
 
 # How to run
 
-1. Install & start SQL Server.
-2. Adjust the connection string in API/Models/MyDbContext.cs to match your SQL server.
-3. In CMD / PowerShell, navigate to the API folder and call:
-    1. ```dotnet tool install --global dotnet-ef```
-    2. ```dotnet ef migrations add v1```
-    3. ```dotnet ef database update```
-    4. ```dotnet run```
-4. Open index.html in your web browser.
+1. Start SQL Server.
+2. Change the connection string in ```./API/Models/MyDbContext.cs``` to point to your server.
+3. In CMD or PowerShell, navigate to the ```./API/``` folder and call:
+    1. ```dotnet ef migrations add v1```
+    2. ```dotnet ef database update```
+    3. ```dotnet run```
+4. Open ```./Client/index.html``` in your web browser.
