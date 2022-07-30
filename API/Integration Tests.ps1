@@ -1,6 +1,6 @@
 #____________________________ SETUP/ BEFORE ALL ____________________________#
 
-function Get-CurrentFilePath {
+function Get-ScriptRoot {
   if ($PSScriptRoot) { 
     $PSScriptRoot
   }
@@ -11,7 +11,7 @@ function Get-CurrentFilePath {
     Split-Path $psEditor.GetEditorContext().CurrentFile.Path
   }
   else { 
-    throw "Current path not detected"
+    throw "Script path not detected"
   } 
 }
 
@@ -58,7 +58,7 @@ if ( (Test-DatabaseConnection) -eq $false ) {
   }
 }
 
-Set-Location (Get-CurrentFilePath)
+Set-Location (Get-ScriptRoot)
 
 # Delete database.
 dotnet ef database drop
@@ -87,27 +87,85 @@ $baseUri = 'https://localhost:5001'
 
 #_______________________________ CREATE TAG _______________________________#
 
-
 $body = '{
   "name": "Ambient",
-  "rank": 50
+  "rank": 30
 }'
 $response = Invoke-WebRequest -Method 'POST' -Uri "$baseUri/tags" -Body $body
 if ($response.StatusCode -ne 201) {throw}
 
 $body = '{
   "name": "Cinematic",
-  "rank": 60
+  "rank": 50
 }'
 $response = Invoke-WebRequest -Method 'POST' -Uri "$baseUri/tags" -Body $body
 if ($response.StatusCode -ne 201) {throw}
 
 $body = '{
   "name": "Hiphop",
+  "rank": 80
+}'
+$response = Invoke-WebRequest -Method 'POST' -Uri "$baseUri/tags" -Body $body
+if ($response.StatusCode -ne 201) {throw}
+
+$body = '{
+  "name": "Upbeat",
+  "rank": 40
+}'
+$response = Invoke-WebRequest -Method 'POST' -Uri "$baseUri/tags" -Body $body
+if ($response.StatusCode -ne 201) {throw}
+
+$body = '{
+  "name": "Epic",
   "rank": 70
 }'
 $response = Invoke-WebRequest -Method 'POST' -Uri "$baseUri/tags" -Body $body
 if ($response.StatusCode -ne 201) {throw}
+
+$body = '{
+  "name": "Calming",
+  "rank": 35
+}'
+$response = Invoke-WebRequest -Method 'POST' -Uri "$baseUri/tags" -Body $body
+if ($response.StatusCode -ne 201) {throw}
+
+$body = '{
+  "name": "Folk",
+  "rank": 20
+}'
+$response = Invoke-WebRequest -Method 'POST' -Uri "$baseUri/tags" -Body $body
+if ($response.StatusCode -ne 201) {throw}
+
+$body = '{
+  "name": "Uplifting",
+  "rank": 75
+}'
+$response = Invoke-WebRequest -Method 'POST' -Uri "$baseUri/tags" -Body $body
+if ($response.StatusCode -ne 201) {throw}
+
+$body = '{
+  "name": "Electronic",
+  "rank": 23
+}'
+$response = Invoke-WebRequest -Method 'POST' -Uri "$baseUri/tags" -Body $body
+if ($response.StatusCode -ne 201) {throw}
+
+# Happy
+# Motivational
+# Corporate
+# Children
+# Cute
+# Vlog
+# Cooking
+# Bright
+# Intro
+# Piano
+# Technology
+# Chill
+# Funky
+# Christmas
+# Energetic
+# Acoustic
 
 
 #_______________________________ READ TAG ________________________________#
@@ -253,33 +311,24 @@ $response.Content | ConvertFrom-Json
 
 $response = Invoke-WebRequest -Method 'GET' -Uri "$baseUri/sounds?tagId=1&tagId=2"
 $response.Content | ConvertFrom-Json
-# TODO: Describe / check what they should each return
+# TODO: Describe / check what each should return
 
 
 
 #______________________________ UPDATE SOUND ______________________________#
 
-# Change price and add tags
 $body = '{
   "id":"$tempId",
-  "uploadedOn":"2022-06-07T00:53:20",
-  "title":"Test Sound 3",
-  "description":
-  "Test description 3",
-  "duration":54,
-  "price":12.00,
-  "preview":
-  "/media/mp3/21-10-12.mp3",
-  "imageThumb":null,
-  "structure":"ababa",
-  "rank":null,
+  "title": "Test Sound 5",
+  "description": "Only tag 7.",
+  "duration": 54,
+  "price": 12.34,
+  "preview": "/media/mp3/21-10-12.mp3",
+  "imagethumb": "/media/img-thumb/21-10-12.jpg",
+  "structure": "abaca",
+  "rank": 49,
   "tags":[
-    {
-      "id": 1
-    },
-    {
-      "id": 2
-    }
+    7
   ]
 }'
 

@@ -100,25 +100,23 @@ public class SoundsController : ControllerBase // ControllerBase gives us common
     {
         if (id != input.Id) { return BadRequest("Id's must match."); }
 
-        var entityToUpdate = await _context.Sounds.FindAsync(id); // TODO: Does this have to be async? Without async, will the next line execute before the data is loaded?
-        // ARCHIVE:        = await _context.Sounds.FirstOrDefaultAsync(x => x.Id == id);
-        // ARCHIVE:                _context.Sounds.Where(s => s.Id == id);
+        var entityToUpdate = await _context.Sounds // Does this have to be async? Without async, will the next line execute before the data is loaded?
+            .Include(s => s.Tags) // Eagerly load the tags, otherwise the engine think there are none.
+            .FirstOrDefaultAsync(s => s.Id == id); // For some reason FindAsync() was incompatible with .Include()
 
         if (entityToUpdate == null) { return NotFound(); }
 
         _mapper.Map(input, entityToUpdate); // We can do this instead of writing "entityToUpdate.Title = input.Title" and so on...
 
-        // foreach (var tag in input.Tags)
-        // {
-        //     var tagFromDb = await _context.Tags.FindAsync(tag.Id);
-        //     if (tagFromDb == null) { return NotFound(); }
-        //     entityToUpdate.Tags.Add(tagFromDb);
-        // }
+        entityToUpdate.Tags.Clear();
+        // entityToUpdate.Tags.ToList().ForEach(t => _context.Remove(t)); // This deletes from the Tag rather than SoundTag table
 
-        // _context.Entry(entityToUpdate).State = EntityState.Modified; // Tell EF that the entity has been changed (unnecessary most of the time).
-
-        // _context.Sounds.Attach(entityToUpdate);
-        // _context.Sounds.Update(entityToUpdate);
+        foreach (var tagId in input.Tags)
+        {
+            var tag = await _context.Tags.FirstOrDefaultAsync(t => t.Id == tagId);
+            if (tag == null) { return NotFound(); }
+            entityToUpdate.Tags.Add(tag);
+        }
 
         await _context.SaveChangesAsync();
 
@@ -128,11 +126,11 @@ public class SoundsController : ControllerBase // ControllerBase gives us common
     [HttpDelete("{id}")]
     public async Task<ActionResult> Delete(Guid id)
     {
-        var toDelete = await _context.Sounds.FindAsync(id);
+        var entityToDelete = await _context.Sounds.FindAsync(id);
 
-        if (toDelete == null) { return NotFound(); }
+        if (entityToDelete == null) { return NotFound(); }
 
-        _context.Sounds.Remove(toDelete);
+        _context.Sounds.Remove(entityToDelete);
         await _context.SaveChangesAsync();
 
         return NoContent();
