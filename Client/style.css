@@ -92,17 +92,21 @@ header {
 #header-left {
     display: flex;
     justify-content: left;
+    width: 2.5em;
+    height: 2.5em;
 }
 
 #logo {
-    width: 3em;
-    height: 3em;
     object-fit: cover;
+    min-width: 2.5em;
     /* height:auto; */
     /* margin-left: auto; */
     /* margin-right: auto; */
     /* position: absolute; */
 	/* top: calc(50% - 20px); */
+    /* width: 2.5rem;
+	height: 2.5rem;
+    display: block; */
 }
 
 #nav {
@@ -119,6 +123,12 @@ header {
     font-weight: 600;
     transition-duration: 0.3s;
 }
+
+/* @media only screen and (max-width:600px) {
+    #nav a {
+        font-size:1rem;
+    }
+} */
 
 #nav a:hover {
     color: var(--hover);
@@ -164,10 +174,9 @@ header {
     margin: 0; /* ARCHIVE: 0 auto; */
     /* align-items: center; */
     /* justify-content: center; */
-    
 }
 
-#card-container {
+#sounds {
     margin: auto; /* Centre the container */
     display: grid;
     width: auto;
@@ -269,7 +278,7 @@ h3.card {
 
 /*#region ________________________________ Tag Chips __________________________________*/
 
-#tag-container {
+#tags {
     display: flex;
     flex-wrap: wrap;
     padding: 1.7rem;
@@ -281,7 +290,7 @@ h3.card {
     /* justify-content: center; */
 }
 
-/* #tag-container .tag label {
+/* #tags .tag label {
     display: inline-block;
     width:8em;
     background-color: #42b4d6;
@@ -326,25 +335,25 @@ h3.card {
 /*#region ______________________________ Responsiveness _______________________________*/
 
 @media (min-width: 40rem) {
-    #card-container {
+    #sounds {
         grid-template-columns: 1fr 1fr; /* TODO: This could be done with repeat(auto-fit, minmax(40rem, 1fr)); */
     }
 }
   
 @media (min-width: 58rem) {
-    #card-container {
+    #sounds {
         grid-template-columns: 1fr 1fr 1fr;
     }
 }
 
 @media (min-width: 76rem) {
-    #card-container {
+    #sounds {
         grid-template-columns: 1fr 1fr 1fr 1fr;
     }
 }
 
 @media (min-width: 94rem) {
-    #card-container {
+    #sounds {
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     }
 }

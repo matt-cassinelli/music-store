@@ -1,80 +1,84 @@
-const host = "https://localhost:5001";
-const soundsContainerNode = document.querySelector('#card-container');
-const tagsContainerNode = document.querySelector('#tag-container');
+const host        = "https://localhost:5001";
+const soundsDiv   = document.querySelector('#sounds');
+const tagsDiv     = document.querySelector('#tags');
+const audioElem   = document.querySelector('#audio');
+const loadingElem = document.querySelector('#loading')
 var soundsAreLoaded = false;
-var tagsAreLoaded = false;
+var tagsAreLoaded   = false;
 
-function playOrStopSound () {
+function showLoading() {
+    loadingElem.style.display = "block";
+}
 
-    var audioNode = document.getElementById("audio");
+function hideLoading() {
+    loadingElem.style.display = "none";
+}
 
+function playOrStopSound() {
     if (this.classList.contains("playing")) { // We use the 'playing' class to control visuals/CSS and audio playback.
         this.classList.remove("playing");
-        audioNode.pause();
+        audioElem.pause();
     }
     else {
         document.querySelectorAll('.play-button').forEach(b => {b.classList.remove("playing");})
-        audioNode.pause();
+        audioElem.pause();
 
-        if (!audioNode.src || audioNode.src !== "./media/mp3/21-10-06.mp3") {
-            audioNode.src = "./media/mp3/21-10-06.mp3"; // TODO: Get the source with "this.parentNode.data-preview".
+        if (!audioElem.src || audioElem.src !== "./media/mp3/21-10-06.mp3") {
+            audioElem.src = "./media/mp3/21-10-06.mp3"; // TODO: Get the source with "this.parentNode.data-preview".
         }
 
         this.classList.add("playing"); // TODO: Add Try/Catch so if it doesn't play, visuals don't change.
-        audioNode.play(); // Play the audible sound.
+        audioElem.play(); // Play the audible sound.
         // ARCHIVE: this.classList.toggle("playing");
     }
     // DEBUG: console.log(this.id);
 }
 
 async function renderSounds(tagId) {
-
-    soundsContainerNode.innerHTML = ""; // Clear existing sounds from screen.
-
-    document.querySelector('#loading').style.display = "block"; // Show loading animation. // TODO: Make a function that handles loading.
-
+    soundsDiv.innerHTML = ""; // Clear existing sounds from screen.
+    showLoading();
     const url = (tagId === undefined) ? `${host}/sounds` : `${host}/sounds?tagId=${tagId}`
 
     try {
-        const response = await fetch(url);
+        const promise = await fetch(url);
 
-        if (response.ok === false) { // Fetch doesn't throw errors for unsuccesful status codes, so we have to throw them manually.
-            throw Error(response.status);  // TODO: Add more detail to the error messages.
+        if (promise.ok === false) { // Throw an error on unsuccesful status code because this doesn't happen automatically.
+            throw Error('Fetching sounds returned status code: ' + promise.status); // TODO: Add more detail to the error messages.
         }
 
-        const data = await response.json(); // Is await needed here?
+        const data = await promise.json();
 
         data.forEach(sound => {
-            let cardDivNode = document.createElement('DIV'); 
-            cardDivNode.classList.add('card');
-            cardDivNode.setAttribute('data-id',      sound.id);
-            cardDivNode.setAttribute('data-title',   sound.title);
-            cardDivNode.setAttribute('data-price',   sound.price);
-            cardDivNode.setAttribute('data-preview', sound.preview); // TODO: Expose createdOn & rating
-            soundsContainerNode.appendChild(cardDivNode);
+            let cardDiv = document.createElement('DIV'); 
+            cardDiv.classList.add('card');
+            cardDiv.setAttribute('data-id',      sound.id);
+            cardDiv.setAttribute('data-title',   sound.title);
+            cardDiv.setAttribute('data-price',   sound.price);
+            cardDiv.setAttribute('data-preview', sound.preview); // TODO: Expose createdOn & rating
+            soundsDiv.appendChild(cardDiv);
 
-            let titleNode = document.createElement('H3');
-            titleNode.textContent = sound.title;
-            cardDivNode.appendChild(titleNode);
+            let titleElem = document.createElement('H3');
+            titleElem.textContent = sound.title;
+            cardDiv.appendChild(titleElem);
 
-            let playButtonNode = document.createElement('BUTTON');
-            playButtonNode.classList.add('play-button');
-            playButtonNode.addEventListener('click', playOrStopSound);
-            playButtonNode.title = "Preview" // Tooltip. TODO: Remove when playing.
-            cardDivNode.appendChild(playButtonNode);
+            let playButtonElem = document.createElement('BUTTON');
+            playButtonElem.classList.add('play-button');
+            playButtonElem.addEventListener('click', playOrStopSound);
+            playButtonElem.title = "Preview" // Tooltip. TODO: Remove when playing.
+            cardDiv.appendChild(playButtonElem);
 
-            let priceNode = document.createElement('P'); // TODO: Position the price to left of or inside the button.
-            priceNode.classList.add('price');
-            priceNode.textContent = sound.price;
-            cardDivNode.appendChild(priceNode);
+            // let priceElem = document.createElement('P'); // TODO: Position the price to left of or inside the button.
+            // priceElem.classList.add('price');
+            // priceElem.textContent = sound.price;
+            // cardDiv.appendChild(priceElem);
 
-            let detailsButtonNode = document.createElement('BUTTON');
-            detailsButtonNode.classList.add('details-button');
-            detailsButtonNode.textContent = "Details";
-            detailsButtonNode.addEventListener('click', function() { // Closure.
-                renderSound(sound.id)
+            let detailsButtonElem = document.createElement('BUTTON');
+            detailsButtonElem.classList.add('details-button');
+            detailsButtonElem.textContent = "Details";
+            detailsButtonElem.addEventListener('click', function() {
+                showSoundDetails(sound.id) // Closure.
             });
-            cardDivNode.appendChild(detailsButtonNode);
+            cardDiv.appendChild(detailsButtonElem);
         });
     }
     catch(error) {
@@ -83,62 +87,59 @@ async function renderSounds(tagId) {
     finally {
         soundsAreLoaded = true;
         if (soundsAreLoaded && tagsAreLoaded) {
-            document.querySelector('#loading').style.display = "none";
+            hideLoading();
         }
     }
 }
 
-function renderSound() { // TODO
+function showSoundDetails() { // DOING
     console.log(this.parentNode); // "this.parentNode" allows us to access the parent element's attributes.
 };
 
-// function renderTag() {
+// function renderTag(tagData) {
 // }
 
-async function renderTags() { // DOING
+async function renderTags() {
+
+    function renderTag(tag) {
+        let tagDiv = document.createElement('DIV'); 
+        let tagInputElem = document.createElement('INPUT');
+        let tagLabelElem = document.createElement('label');
+        if (tag === 'All') {
+            tagInputElem.setAttribute('id', 'all');
+            tagInputElem.setAttribute('checked', true);
+            tagLabelElem.setAttribute('for', 'all');
+            tagLabelElem.innerHTML = 'All';
+            tagLabelElem.addEventListener('click', function() { renderSounds(); }); // Closure
+        }
+        else {
+            tagDiv.setAttribute('data-id',   tag.id);
+            tagDiv.setAttribute('data-rank', tag.rank);
+            tagInputElem.setAttribute('id', tag.id);
+            tagLabelElem.setAttribute('for',   tag.id);
+            tagLabelElem.innerHTML = tag.name;
+            tagLabelElem.addEventListener('click', function() { renderSounds(tag.id); }); // An anonymous closure is used to keep the scope alive.
+            // Without it, renderSounds would execute immediately and its result ('undefined') would be set as the event handler.
+        }
+        tagDiv.classList.add('tag');
+        tagInputElem.setAttribute('name', 'group1');
+        tagInputElem.setAttribute('type', 'radio');
+        // TODO: Expose soundCount
+        tagDiv.appendChild(tagInputElem);
+        tagDiv.appendChild(tagLabelElem);
+        tagsDiv.appendChild(tagDiv);
+    }
+
     try {
         const response = await fetch(`${host}/tags`); // TODO: Filter by page
         if (response.ok === false) {
-            throw Error(response.status); 
+            throw Error('Fetching tags returned status code: ' + response.status); 
         }
         const data = await response.json();
 
-        // Render the 'All' tag.
-        let tagDivNode = document.createElement('DIV'); 
-        tagDivNode.classList.add('tag');
-        let tagInputNode = document.createElement('INPUT');
-        tagInputNode.setAttribute('id',     'all');
-        tagInputNode.setAttribute('name',   'group1');
-        tagInputNode.setAttribute('type',   'radio');
-        tagInputNode.setAttribute('checked', true);
-        tagDivNode.appendChild(tagInputNode);
-        let tagLabelNode = document.createElement('LABEL');
-        tagLabelNode.setAttribute('for', 'all');
-        tagLabelNode.innerHTML = 'All';
-        tagLabelNode.addEventListener('click', function() { renderSounds(); }); // Closure
-        tagDivNode.appendChild(tagLabelNode);
-        tagsContainerNode.appendChild(tagDivNode);
-
+        renderTag('All'); // Render the 'All' tag.
         data.forEach(tag => {
-            let tagDivNode = document.createElement('DIV'); 
-            tagDivNode.classList.add('tag');
-            tagDivNode.setAttribute('data-id',   tag.id);
-            tagDivNode.setAttribute('data-rank', tag.rank);
-
-            let tagInputNode = document.createElement('INPUT');
-            tagInputNode.setAttribute('id',    tag.id);
-            tagInputNode.setAttribute('name', 'group1');
-            tagInputNode.setAttribute('type', 'radio');
-            tagDivNode.appendChild(tagInputNode);
-
-            let tagLabelNode = document.createElement('LABEL');
-            tagLabelNode.setAttribute('for',   tag.id);
-            tagLabelNode.innerHTML = tag.name;
-            tagLabelNode.addEventListener('click', function() { renderSounds(tag.id); }); // An anonymous closure is used to keep the scope alive. Without it, renderSounds would execute immediately and its result ('undefined') would be set as the event handler.
-            tagDivNode.appendChild(tagLabelNode);
-            // TODO: Expose soundCount
-            
-            tagsContainerNode.appendChild(tagDivNode);
+            renderTag(tag); // Render the other (actual) tags.
         });
     }
     catch(error) {
@@ -147,7 +148,7 @@ async function renderTags() { // DOING
     finally {
         tagsAreLoaded = true;
         if (soundsAreLoaded && tagsAreLoaded) {
-            document.querySelector('#loading').style.display = "none";
+            hideLoading();
         }
     }
 };
@@ -157,10 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderTags();   //
 });
 
-
-
-
-const toggleSwitch = document.querySelector('#theme-checkbox');
+const themeCheckboxElem = document.querySelector('#theme-checkbox');
 
 function switchTheme(e) {
     if (e.target.checked) {
@@ -171,8 +169,7 @@ function switchTheme(e) {
     }    
 }
 
-toggleSwitch.addEventListener('change', switchTheme, false);
-
+themeCheckboxElem.addEventListener('change', switchTheme, false);
 
 
 // ARCHIVE (event delegation attempts)
