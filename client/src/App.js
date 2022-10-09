@@ -1,22 +1,13 @@
+// Top level component - where all other components meet
+
 import logo from './logo.svg';
 import './App.css';
 
-function App() {
+function App() { // React Components must start with a capital letter.
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <header className="myclass">
+        <img src={logo} className="logo" alt="logo" />
       </header>
     </div>
   );
