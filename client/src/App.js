@@ -1,6 +1,9 @@
 import './App.css';
-import SoundList from './components/SoundList';
 import React, { useState, useEffect } from "react";
+import SoundList from './components/SoundList';
+import TagList from './components/TagList';
+import Header from './components/Header';
+
 
 const HOST = "https://localhost:5001";
 
@@ -25,7 +28,9 @@ export default function App() {
 
   return (
     <div id="main-container">
-      <SoundList sounds={sounds}/>
+      <Header />
+      <TagList />
+      <SoundList sounds={sounds} />
     </div>
   );
 }

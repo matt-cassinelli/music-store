@@ -5,7 +5,7 @@ export default function Tag(props) {
 
   return (
     <div className="tag">
-      <input name='group1' type='radio' checked={true}/>
+      <input name='group1' type='radio' defaultChecked={true}/>
       <label htmlFor='all'>All</label>
     </div>
   );

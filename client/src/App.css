@@ -40,8 +40,7 @@ font: inherit; /* Inputs and buttons should inheret font styles */
 #main-container {
   width: 100%; /* 100vw */
   height: 100%; /* 100vh */
-  padding-top: 2rem; /* Add space between header and content */
-  margin: 0; /* ARCHIVE: 0 auto; */
+  margin: 0; /* [old] 0 auto; */
   /* align-items: center; */
   /* justify-content: center; */
   /* text-align: center; */
@@ -57,9 +56,9 @@ font: inherit; /* Inputs and buttons should inheret font styles */
   --bg: #282c34; /* #2c302d; #242424; */
   --panel: #171717;
   --hover: #606060;
-  /* --theme-label-image: url('./media/img-app/sun.svg');
-  --loading-image: url('media/img-app/loading-dark.png'); */
-  --details-bg: #09c6454c;
+  --theme-label-image: url('./assets/img-app/sun.svg');
+  /*--loading-image: url('media/img-app/loading-dark.png'); */
+  /* --details-bg: #09c6454c; */
 }
 
 [data-theme="light"] {
@@ -69,48 +68,15 @@ font: inherit; /* Inputs and buttons should inheret font styles */
   --bg: rgb(235, 235, 235);
   --panel: #fff;
   --hover: #afafaf; /* #606060; */
-  /* --theme-label-image: url('./media/img-app/moon.svg');
-  --loading-image: url('media/img-app/loading-light.png'); */
-  --details-bg: #21d65a94;
+  --theme-label-image: url('./assets/img-app/moon.svg');
+  /* --loading-image: url('media/img-app/loading-light.png'); */
+  /* --details-bg: #21d65a94; */
 }
 
 /*#endregion*/
 
 
-/*#region ______________________________ Responsiveness _______________________________*/
-
-@media (min-width: 40rem) {
-  #sounds {
-      grid-template-columns: 1fr 1fr; /* TODO: This could be done with repeat(auto-fit, minmax(40rem, 1fr)); */
-  }
-}
-
-@media (min-width: 58rem) {
-  #sounds {
-      grid-template-columns: 1fr 1fr 1fr;
-  }
-}
-
-@media (min-width: 76rem) {
-  #sounds {
-      grid-template-columns: 1fr 1fr 1fr 1fr;
-  }
-}
-
-@media (min-width: 94rem) {
-  #sounds {
-      grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  }
-}
-
-
 /*#region ___________________________ From React Template ____________________________*/
-
-.logo {
-  height: 40vmin;
-  pointer-events: none;
-  animation: spin infinite 20s linear;
-}
 
 .myclass {
   /* background-color: #282c34; */
@@ -135,5 +101,16 @@ font: inherit; /* Inputs and buttons should inheret font styles */
     transform: rotate(360deg);
   }
 }
+
+/*#endregion*/
+
+
+/*#region _____________________________ Debugging Tools ______________________________*/
+
+/* * {
+    outline: 1px solid red;
+    outline-offset: -1px;
+    background-color: #ff000010;
+} */
 
 /*#endregion*/
