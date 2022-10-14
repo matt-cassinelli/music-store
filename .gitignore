@@ -3,5 +3,23 @@
 Hidden
 API/bin
 API/obj
+node_modules
 API/Migrations
 Client/media/img-sounds-full
+
+client/build
+package-lock.json
+client/node_modules
+
+# inserted by create-react-app:
+/.pnp
+.pnp.js
+/coverage
+.DS_Store
+.env.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.env.test.local
+.env.production.local
+.env.development.local
