@@ -12,8 +12,8 @@
 # Start the API
 
 1. Start SQL Server.
-2. Change the connection string in ```./API/Models/MyDbContext.cs``` to point to your server.
-3. In CMD or PowerShell, navigate to the ```./API/``` folder and call:
+2. Change the connection string in ```./server/Models/MyDbContext.cs``` to point to your server.
+3. In CMD or PowerShell, navigate to the ```./server/``` folder and call:
     1. ```dotnet ef migrations add v1```
     2. ```dotnet ef database update```
     3. ```dotnet run```

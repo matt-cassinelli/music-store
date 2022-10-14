@@ -1,10 +1,11 @@
 .vs
-Hidden
 .vscode
-API/bin
-API/obj
+private
+
+server/bin
+server/obj
+server/Migrations
+
 client/build
-API/Migrations
-package-lock.json
 client/node_modules
-Client/media/img-sounds-full
+client/package-lock.json
