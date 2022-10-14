@@ -1,3 +1,5 @@
+import './Sound.css';
+
 export default function Sound(props) {
   //console.log(sound)
 

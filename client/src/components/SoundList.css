@@ -1,0 +1,22 @@
+#sounds {
+    margin: auto; /* Centre the container */
+    display: grid;
+    width: auto;
+    height: auto;
+    grid-template-columns: 1fr;
+    color: var(--font);
+    padding: 0.6rem;
+    max-width: 100rem;
+    justify-content: center;
+    /* align-items: center; */
+
+    /* width: auto;
+    max-width: 1200px;
+    display: flex;
+    flex-wrap: wrap;
+    color: white;
+    padding: 0 1rem;
+    gap: 2rem 2rem; https://stackoverflow.com/questions/20626685
+    flex-direction: row;
+    justify-items: center; */
+}

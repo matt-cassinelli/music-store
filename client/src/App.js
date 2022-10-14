@@ -1,4 +1,4 @@
-//import './App.css';
+import './App.css';
 import SoundList from './components/SoundList';
 import React, { useState, useEffect } from "react";
 
