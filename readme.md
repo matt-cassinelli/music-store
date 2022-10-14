@@ -9,7 +9,7 @@
 * Entity Framework (install with ```dotnet tool install --global dotnet-ef```)
 * AutoMapper (install with ```dotnet restore``` in the ```./API/``` directory)
 
-# How to run
+# Start the API
 
 1. Start SQL Server.
 2. Change the connection string in ```./API/Models/MyDbContext.cs``` to point to your server.
@@ -17,4 +17,8 @@
     1. ```dotnet ef migrations add v1```
     2. ```dotnet ef database update```
     3. ```dotnet run```
-4. Open ```./client/index.html``` in your web browser.
+
+# Start the frontend
+
+1. npm install
+2. npm start
