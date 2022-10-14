@@ -1,0 +1,30 @@
+.tag input { /* Hide the default radio buttons. Label elements are displayed instead. */
+    display: none;
+}
+
+.tag label {
+    transition: all 0.3s ease-in-out;
+    background-color: var(--panel);
+    border-radius: 12px;
+    /* border: 1px solid #d3d2d2; */
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5em 1em; /* Space between button's content & border */
+    cursor: pointer;
+    color: var(--font);
+    box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.15)
+    /* margin-right: 0.5em; */
+    /* margin-left: 0.5em; */
+    /* margin: 0.6em; */
+}
+
+.tag label:hover, label:focus {
+    background-color: var(--hover);
+}
+
+.tag input[type=radio]:checked + label {
+    background-color: var(--primary);
+    box-shadow: 0 1px 1px rgba(0,0,0,0.12)
+    /* border-color:#c3c2c2; */
+    /* border: 1px solid #5fc0dc; */
+}

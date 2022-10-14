@@ -50,6 +50,8 @@ public class TagsController : ControllerBase
         return Ok(tag);
     }
 
+    // TODO: Implement get tags by page.
+
     [HttpPost]
     public async Task<ActionResult<TagSimpleDto>> Create([FromBody] CreateTagDto input)
     {
