@@ -13,8 +13,13 @@ builder.Services.AddDbContext<MyDbContext>();
 
 builder.Services.AddCors(options => // Configure CORS
 {
-    options.AddPolicy(name: "MyCorsPolicy",
-        policy  => { policy.WithOrigins("http://127.0.0.1:5500"); });
+    options.AddPolicy(name: "MyCorsPolicy", policy => {
+        policy.WithOrigins("http://127.0.0.1:5500");
+        policy.WithOrigins("http://127.0.0.1:5501");
+        policy.WithOrigins("http://127.0.0.1:3000");
+        policy.WithOrigins("http://192.168.0.15:3000");
+        policy.WithOrigins("http://localhost:3000");
+    });
 });
 
 builder.Services.AddControllers(options =>

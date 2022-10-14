@@ -1,8 +1,268 @@
+/*#region _____________________________ Reset / Defaults ______________________________*/
+
+* {
+  margin: 0; /* Remove default margin */
+  /* padding: 0; */
+  box-sizing: border-box; /* A more intuitive box-sizing model */
+  font-family: 'Montserrat', sans-serif;
+}
+
 body {
-  margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg);
 }
+
+img, picture, video, canvas, svg {
+  max-width: 100%; /* Stop images from overflowing & fix weird spacing */
+  display: block;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word; /* Stop text from overflowing */
+}
+
+ul[role='list'], ol[role='list'] {
+  list-style: none;
+}
+
+
+input, button, textarea, select {
+font: inherit; /* Inputs and buttons should inheret font styles */
+}
+
+/*#endregion*/
+
+
+/*#region __________________________________ Themes ___________________________________*/
+
+:root {
+  --primary: #12852d; /* #9A97F3; */
+  --secondary: #818cab;
+  --font: #e1e1ff;
+  --bg: #282c34; /* #2c302d; #242424; */
+  --panel: #171717;
+  --hover: #606060;
+  /* --theme-label-image: url('./media/img-app/sun.svg');
+  --loading-image: url('media/img-app/loading-dark.png'); */
+  --details-bg: #09c6454c;
+}
+
+[data-theme="light"] {
+  --primary: #13ad37;
+  --secondary: #e77421;
+  --font: #424242;
+  --bg: rgb(235, 235, 235);
+  --panel: #fff;
+  --hover: #afafaf; /* #606060; */
+  /* --theme-label-image: url('./media/img-app/moon.svg');
+  --loading-image: url('media/img-app/loading-light.png'); */
+  --details-bg: #21d65a94;
+}
+
+/*#endregion*/
+
+
+/*#region __________________________________ Sounds ____________________________________*/
+
+#main-container {
+  width: 100%; /* 100vw */
+  height: 100%; /* 100vh */
+  padding-top: 2rem; /* Add space between header and content */
+  margin: 0; /* ARCHIVE: 0 auto; */
+  /* align-items: center; */
+  /* justify-content: center; */
+  /* text-align: center; */
+}
+
+#sounds {
+  margin: auto; /* Centre the container */
+  display: grid;
+  width: auto;
+  height: auto;
+  grid-template-columns: 1fr;
+  color: var(--font);
+  padding: 0.6rem;
+  max-width: 100rem;
+  justify-content: center;
+  /* align-items: center; */
+
+  /* width: auto;
+  max-width: 1200px;
+  display: flex;
+  flex-wrap: wrap;
+  color: white;
+  padding: 0 1rem;
+  gap: 2rem 2rem; https://stackoverflow.com/questions/20626685
+  flex-direction: row;
+  justify-items: center; */
+}
+
+.card {
+  /* width: 90%; */
+  height: 14rem;
+  margin: 1rem;
+  /* padding: auto; */
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  /* justify-items: center; */
+
+  text-align: center;
+  background: var(--panel);
+  /* background: linear-gradient(15deg, #191a19 40%, #02271c); */
+  border-radius: 1.2rem;
+  box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.15);
+  transition: 0.2s all ease-in-out;
+}
+
+.card:hover {
+  margin: 0.6rem;
+  width: 94%;
+  height: 14.7rem;
+  /* margin-top: -5px; */
+}
+
+.card-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  align-self: stretch;
+  margin: 0 10%;
+}
+
+.price {
+  /* float: left; */
+  color: #FF3100;
+  font-size: 22px;
+  font-weight: 900;
+  transition: color .3s ease-in-out;
+}
+
+.button {
+  /* 
+  width: auto;
+  background-color: var(--details-bg);
+  color: var(--font);
+  border: 1px solid rgba(255, 255, 255, 0.2); */
+
+  /* margin: 50px auto; */
+
+  /* position: relative; */
+  /* z-index: 1; */
+  /* float: right; */
+  /* display: inline-block; */
+  font-size: 13px;
+  font-weight: 900;
+  color: #FF3100;
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+  transition: all .3s ease-in-out;
+  /* border: none; */
+  background: none;
+  outline: none;
+  border: 1px solid #FF3100;
+  border-radius: 20px;
+  /* overflow: hidden; */
+}
+
+.button:hover {
+  background-color: var(--hover);
+}
+
+/*#endregion*/
+
+
+/*#region _______________________________ Play Buttons ________________________________*/
+
+.play-button {
+  border: 0;
+  background: transparent;
+  box-sizing: border-box;
+  width: 0;
+  height: 3.5rem;
+  border-color: transparent transparent transparent var(--font);
+  transition: 100ms all ease;
+  cursor: pointer;
+  border-style: solid;
+  border-width: 1.7rem 0 1.7rem 3rem;
+  margin-left: 0.6rem; /* Shift to the right */
+}
+.play-button.playing {
+  border-style: double;
+  border-width: 0 0 0 3rem;
+  margin-left: 0;
+}
+.play-button:hover {
+  border-color: transparent transparent transparent var(--hover);
+}
+
+/*#endregion*/
+
+
+/*#region ______________________________ Responsiveness _______________________________*/
+
+@media (min-width: 40rem) {
+  #sounds {
+      grid-template-columns: 1fr 1fr; /* TODO: This could be done with repeat(auto-fit, minmax(40rem, 1fr)); */
+  }
+}
+
+@media (min-width: 58rem) {
+  #sounds {
+      grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media (min-width: 76rem) {
+  #sounds {
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}
+
+@media (min-width: 94rem) {
+  #sounds {
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  }
+}
+
+
+/*#region ___________________________ From React Template ____________________________*/
+
+.logo {
+  height: 40vmin;
+  pointer-events: none;
+  animation: spin infinite 20s linear;
+}
+
+.myclass {
+  /* background-color: #282c34; */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.hyperlink {
+  color: #61dafb;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/*#endregion*/

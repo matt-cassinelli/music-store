@@ -1,16 +1,31 @@
-// Top level component - where all other components meet
+//import './App.css';
+import SoundList from './components/SoundList';
+import React, { useState, useEffect } from "react";
 
-import logo from './logo.svg';
-import './App.css';
+const HOST = "https://localhost:5001";
 
-function App() { // React Components must start with a capital letter.
+export default function App() {
+  const [sounds, setSoundsState] = useState([]); //useState([]);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch(`${HOST}/sounds`);
+      const data = await response.json(); // Do we really need a second await?
+      //console.log(data); // Array
+      setSoundsState(data);
+    }
+    catch (error) {
+      console.log("error", error);
+    }
+  };
+
+  useEffect(() => { // Fetch initial data
+    fetchData();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="myclass">
-        <img src={logo} className="logo" alt="logo" />
-      </header>
+    <div id="main-container">
+      <SoundList sounds={sounds}/>
     </div>
   );
 }
-
-export default App;
