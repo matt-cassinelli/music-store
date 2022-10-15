@@ -1,23 +1,19 @@
 import './Sound.css';
 
-export default function Sound(props) {
-  //console.log(sound)
+export default function Sound( {sound} ) { // Deconstruction
+  //console.log(props)
 
   function formatPrice (price) {
-    return price ? "£" + props.sound.price?.toFixed(2) : "FREE"
+    return price ? "£" + sound.price?.toFixed(2) : "FREE"
   }
 
   return (
     <article className="card">
-      <h2>{props.sound.title}</h2> 
-      {/* [todo] Remove stupid nesting */}
-
+      <h2>{sound.title /* [old] props.sound.title */}</h2> 
       <button className="play-button" title="Preview" />
-      {/* onClick={playOrStopSound} */}
-
       <div className="card-footer">
         <h4 className="price"> 
-          {formatPrice(props.sound.price)}
+          {formatPrice(sound.price) /* [old] props.sound.price */}
         </h4>
         <button type="submit" className="button">
           ADD TO CART
