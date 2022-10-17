@@ -1,16 +1,27 @@
 import './Sound.css';
 
 export default function Sound( {sound} ) { // Deconstruction
-  //console.log(props)
+  // [dbg] console.log(props)
 
   function formatPrice (price) {
     return price ? "£" + sound.price?.toFixed(2) : "FREE"
   }
 
+  function handleClick (e) {
+    // [dbg] console.log(e.target);
+    // [todo] this would better be done with state or context
+    if (e.target.classList.contains("playing")) {
+      e.target.classList.remove("playing");
+    }
+    else {
+      e.target.classList.add("playing")
+    }
+  }
+
   return (
     <article className="card">
       <h2>{sound.title /* [old] props.sound.title */}</h2> 
-      <button className="play-button" title="Preview" />
+      <button className="play-button" title="Preview" onClick={handleClick}/>
       <div className="card-footer">
         <h4 className="price"> 
           {formatPrice(sound.price) /* [old] props.sound.price */}

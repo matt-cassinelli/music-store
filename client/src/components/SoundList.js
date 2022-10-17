@@ -7,11 +7,9 @@ export default function SoundList(props) {
   //console.log(props.sounds) // Object (no idea why)
   return (
     <section id="sounds">
-      {
-        props.sounds.map((sound) => { // [todo] Remove one level of nesting.
-            return <Sound sound={sound} key={sound.id} />;
-        })
-      }
+      {props.sounds.map((s) => { // [todo] Remove one level of nesting.
+        return <Sound sound={s} key={s.id} />;
+      })}
     </section>
   );
 }
