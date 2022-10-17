@@ -4,33 +4,47 @@ import SoundList from './components/SoundList';
 import TagList from './components/TagList';
 import Header from './components/Header';
 
-
 const HOST = "https://localhost:5001";
 
 export default function App() {
-  const [sounds, setSoundsState] = useState([]); //useState([]);
 
-  const fetchData = async () => {
+  const [sounds, setSounds] = useState([]);
+  const [tags, setTags] = useState([]);
+
+  const fetchSounds = async () => {
     try {
       const response = await fetch(`${HOST}/sounds`);
       const data = await response.json(); // Do we really need a second await?
       //console.log(data); // Array
-      setSoundsState(data);
+      setSounds(data);
     }
     catch (error) {
       console.log("error", error);
     }
   };
 
-  useEffect(() => { // Fetch initial data
-    fetchData();
+  const fetchTags = async () => {
+    try {
+      const response = await fetch(`${HOST}/tags`);
+      const data = await response.json(); // Do we really need a second await?
+      //console.log(data); // Array
+      setTags(data);
+    }
+    catch (error) {
+      console.log("error", error);
+    }
+  };
+
+  useEffect(() => { // Initial render
+    fetchSounds();
+    fetchTags();
   }, []);
 
   return (
     <div id="main-container">
       <Header />
-      <TagList />
-      <SoundList sounds={sounds} />
+      <TagList tags={tags}/>
+      <SoundList sounds={sounds} selectedTag={null}/>
     </div>
   );
 }

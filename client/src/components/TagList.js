@@ -1,18 +1,19 @@
 import './TagList.css';
 import Tag from './Tag';
-//import React, { useState, useEffect } from "react";
+// import React, { useState, useEffect } from "react";
+// [todo] Put selected tag in Context?
 
-export default function SoundList(props) {
-  //const [activePlaying, setActivePlaying] = useState(null);
-  //console.log(props.sounds) // Object (no idea why)
+export default function TagList(props) {
+
   return (
     <section id="tags">
-      {/* {
-        props.tags.map((tag) => { // [todo] Remove one level of nesting.
-            return <Tag>
-        })
-      } */}
-      <Tag/>
+      <Tag name="All"/>
+      {props.tags.map((t) => {
+        return <Tag key={t.id} {...t}/> // The spread operator will add all of the properties of that object.
+        //old// return <Tag key={t.id} name={t.name}/>
+      })}
+      {/* tags.map((tag) => {console.log(name)}) */}
+      {/* props.tags.map((tag) => {return <Tag tagname={tag.name}/>}) */}
     </section>
   );
 }
