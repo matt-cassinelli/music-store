@@ -1,9 +1,9 @@
 import './Tag.css';
 
-export default function Tag( {id, name, rank} ) { // Destructuring. Names must match the props supplied.
+export default function Tag( {id, name, rank, onTagClick} ) { // Destructuring. Names must match the props supplied.
   return (
     <div className="tag">
-      <input id={name} name='group1' type='radio' defaultChecked={name === "all" /* Expression */}/>
+      <input id={name} name='group1' type='radio' onClick={() => onTagClick(id) /* Closure */} defaultChecked={name === "all" /* Expression */}/>
       <label htmlFor={name}>{name}</label>
     </div>
   );
