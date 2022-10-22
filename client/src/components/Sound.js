@@ -1,27 +1,42 @@
 import './Sound.css';
+import { useEffect } from "react";
 
-export default function Sound( {sound} ) { // Deconstruction
+export default function Sound( {sound, isPlaying, playingSoundId, setPlayingSoundId} ) { // Deconstruction
   // [dbg] console.log(props)
 
   function formatPrice (price) {
     return price ? "£" + sound.price?.toFixed(2) : "FREE"
   }
 
-  function handleClick (e) {
+  // [idea]
+  // useEffect(() => {
+  //   if (sound.id === playingSoundId) {
+  //   }
+  // }, [playingSoundId]);
+
+  function handleMediaClick () { // [old] handleMediaClick (e)
     // [dbg] console.log(e.target);
-    // [todo] this would better be done with state or context
-    if (e.target.classList.contains("playing")) {
-      e.target.classList.remove("playing");
-    }
-    else {
-      e.target.classList.add("playing")
+
+    // [old]
+    // if (e.target.classList.contains("playing")) {
+    //   e.target.classList.remove("playing");
+    // }
+    // else {
+    //   e.target.classList.add("playing")
+    // }
+
+    // [new] Stateful version. Could be better done with Context?
+    if (playingSoundId === sound.id) {
+      setPlayingSoundId(null)
+    } else {
+      setPlayingSoundId(sound.id)
     }
   }
 
   return (
     <article className="card">
       <h2>{sound.title /* [old] props.sound.title */}</h2> 
-      <button className="play-button" title="Preview" onClick={handleClick}/>
+      <button className={"play-button" + (sound.id === playingSoundId ? " playing" : "")} title="Preview" onClick={handleMediaClick}/>
       <div className="card-footer">
         <h4 className="price"> 
           {formatPrice(sound.price) /* [old] props.sound.price */}
@@ -34,9 +49,7 @@ export default function Sound( {sound} ) { // Deconstruction
   );
 };
 
-// [todo] Play/pause sound when clicked
-// playButtonElem.addEventListener('click', playOrStopSound);
-
+// [old]
 // function playOrStopSound() {
 //     if (this.classList.contains("playing")) { // We use the 'playing' class to control visuals/CSS and audio playback.
 //         this.classList.remove("playing");
@@ -47,12 +60,12 @@ export default function Sound( {sound} ) { // Deconstruction
 //         audioElem.pause();
 
 //         if (!audioElem.src || audioElem.src !== "./media/mp3/21-10-06.mp3") {
-//             audioElem.src = "./media/mp3/21-10-06.mp3"; // TODO: Get the source with "this.parentNode.data-preview".
+//             audioElem.src = "./media/mp3/21-10-06.mp3"; // [todo] Get the source with "this.parentNode.data-preview".
 //         }
 
-//         this.classList.add("playing"); // TODO: Add Try/Catch so if it doesn't play, visuals don't change.
+//         this.classList.add("playing"); // [todo] Add Try/Catch so if it doesn't play, visuals don't change.
 //         audioElem.play(); // Play the audible sound.
-//         // ARCHIVE: this.classList.toggle("playing");
+//         // [old] this.classList.toggle("playing");
 //     }
-//     // DEBUG: console.log(this.id);
+//     // [dbg] console.log(this.id);
 // }

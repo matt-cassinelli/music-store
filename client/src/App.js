@@ -17,8 +17,8 @@ export default function App() {
     try {
       const response = await fetch(url);
       if (response.ok === false) { throw Error(response.status) }
-      const data = await response.json(); // Do we really need a second await?
-      //console.log(data); // Array
+      const data = await response.json(); // Why do we need a second await?
+      // [dbg] console.log(data); // data is an array.
       setSounds(data);
     }
     catch (error) {
@@ -38,7 +38,7 @@ export default function App() {
     }
   };
 
-  useEffect(() => { // Runs on mount.
+  useEffect(() => { // Runs on component mount.
     fetchSounds();
     fetchTags();
   }, []);
@@ -50,7 +50,7 @@ export default function App() {
   return (
     <div id="main-container">
       <Header />
-      <TagList tags={tags} onTagClick={setSelectedTagId}/>
+      <TagList tags={tags} setSelectedTagId={setSelectedTagId}/>
       <SoundList sounds={sounds} selectedTag={selectedTagId}/>
     </div>
   );
