@@ -19,10 +19,7 @@
 }
   
 .card:hover {
-    margin: 0.6rem;
-    width: 94%;
-    height: 14.7rem;
-    /* margin-top: -5px; */
+    transform: scale(1.04, 1.04)
 }
   
 .card-footer {
