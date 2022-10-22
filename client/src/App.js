@@ -8,9 +8,10 @@ const HOST = "https://localhost:5001";
 
 export default function App() {
 
-  const [sounds, setSounds] = useState([]);
-  const [tags, setTags] = useState([]);
+  const [sounds,        setSounds]        = useState([]);
+  const [tags,          setTags]          = useState([]);
   const [selectedTagId, setSelectedTagId] = useState();
+  const [isLoading,     setIsLoading]     = useState(true);
 
   const fetchSounds = async (tagId) => {
     let url = (tagId === undefined) ? `${HOST}/sounds` : `${HOST}/sounds?tagId=${tagId}`

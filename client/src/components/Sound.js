@@ -1,7 +1,7 @@
 import './Sound.css';
-import { useEffect } from "react";
 
-export default function Sound( {sound, isPlaying, playingSoundId, setPlayingSoundId} ) { // Deconstruction
+export default function Sound( {sound, playingSound, setPlayingSound} ) { // Deconstruction
+  
   // [dbg] console.log(props)
 
   function formatPrice (price) {
@@ -26,17 +26,17 @@ export default function Sound( {sound, isPlaying, playingSoundId, setPlayingSoun
     // }
 
     // [new] Stateful version. Could be better done with Context?
-    if (playingSoundId === sound.id) {
-      setPlayingSoundId(null)
+    if (playingSound === sound) { // [old] (playingSound.id === sound.id)
+      setPlayingSound(null)
     } else {
-      setPlayingSoundId(sound.id)
+      setPlayingSound(sound)
     }
   }
 
   return (
     <article className="card">
       <h2>{sound.title /* [old] props.sound.title */}</h2> 
-      <button className={"play-button" + (sound.id === playingSoundId ? " playing" : "")} title="Preview" onClick={handleMediaClick}/>
+      <button className={"play-button" + (sound === playingSound ? " playing" : "")} title="Preview" onClick={handleMediaClick}/>
       <div className="card-footer">
         <h4 className="price"> 
           {formatPrice(sound.price) /* [old] props.sound.price */}
@@ -48,24 +48,3 @@ export default function Sound( {sound, isPlaying, playingSoundId, setPlayingSoun
     </article>
   );
 };
-
-// [old]
-// function playOrStopSound() {
-//     if (this.classList.contains("playing")) { // We use the 'playing' class to control visuals/CSS and audio playback.
-//         this.classList.remove("playing");
-//         audioElem.pause();
-//     }
-//     else {
-//         document.querySelectorAll('.play-button').forEach(b => {b.classList.remove("playing");})
-//         audioElem.pause();
-
-//         if (!audioElem.src || audioElem.src !== "./media/mp3/21-10-06.mp3") {
-//             audioElem.src = "./media/mp3/21-10-06.mp3"; // [todo] Get the source with "this.parentNode.data-preview".
-//         }
-
-//         this.classList.add("playing"); // [todo] Add Try/Catch so if it doesn't play, visuals don't change.
-//         audioElem.play(); // Play the audible sound.
-//         // [old] this.classList.toggle("playing");
-//     }
-//     // [dbg] console.log(this.id);
-// }
