@@ -2,23 +2,29 @@
 
 ![screenshot-sounds-1](https://user-images.githubusercontent.com/67283034/178149055-fbaff8ca-07b2-41b9-83e7-153fa36fa8a5.png)
 
-# Dependencies
+## Tech used
 
-* .NET 6 (download [here](https://dotnet.microsoft.com/en-us/download))
-* SQL Server (free Express edition [here](https://go.microsoft.com/fwlink/?linkid=866658))
-* Entity Framework (install with ```dotnet tool install --global dotnet-ef```)
-* AutoMapper (install with ```dotnet restore``` in the ```./API/``` directory)
+* .NET 6
+* SQL Server
+* Entity Framework
+* AutoMapper
+* React
 
-# Start the API
+## How to build it locally
 
-1. Start SQL Server.
-2. Change the connection string in ```./server/Models/MyDbContext.cs``` to point to your server.
-3. In CMD or PowerShell, navigate to the ```./server/``` folder and call:
-    1. ```dotnet ef migrations add v1```
-    2. ```dotnet ef database update```
-    3. ```dotnet run```
+1. Download & start SQL Server (free Express edition [here](https://go.microsoft.com/fwlink/?linkid=866658))
+2. Start the API:  
+    1. Download and install [.NET 6](https://dotnet.microsoft.com/en-us/download)  
+    1. Edit the connection string in `./server/Models/MyDbContext.cs` to point to your SQL server  
+    2. From a terminal, navigate to the `./server/` folder and call:  
+        1. `dotnet restore` (to install dependencies)  
+        1. `dotnet ef migrations add v1` (to create a [migration](https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations))  
+        2. `dotnet ef database update` (to execute the migration)  
+        3. `dotnet run` (to run the server)  
+3. Start the frontend  
+    1. `npm install` (to install dependencies)  
+    2. `npm start`  
 
-# Start the frontend
+## Design notes
 
-1. npm install
-2. npm start
+The front end was initially written in vanilla javascript, but as the project grew I migrated the code to React to make life easier.
