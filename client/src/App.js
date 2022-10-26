@@ -18,8 +18,8 @@ export default function App() {
     try {
       const response = await fetch(url);
       if (response.ok === false) { throw Error(response.status) }
-      const data = await response.json(); // Why do we need a second await?
-      // [dbg] console.log(data); // data is an array.
+      const data = await response.json(); // [todo] Why do we need a second await?
+      // [dbg] console.log(data); // 'data' is an array.
       setSounds(data);
     }
     catch (error) {

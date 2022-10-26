@@ -13,7 +13,7 @@ public class MyDbContext : DbContext // EF uses this class to access the databas
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) // Override DbContext's OnConfiguring method to add our connection string.
     {
         optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=SoundStore;Integrated Security=true");
-        // TODO: Move this out of the source code. https://docs.microsoft.com/en-gb/ef/core/miscellaneous/connection-strings
+        // [todo] Move this out of the source code. https://docs.microsoft.com/en-gb/ef/core/miscellaneous/connection-strings
 
         optionsBuilder.EnableSensitiveDataLogging(); // See Id conflicts. Dev only.
         optionsBuilder.LogTo(Console.WriteLine); // Log SQL queries that EF generates. Dev only.

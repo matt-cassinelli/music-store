@@ -13,7 +13,7 @@ public class Sound
 
     [Key] public Guid Id { get; set; }
     [Column(TypeName="datetime2(0)")] public DateTime UploadedOn { get; set; } // Required (can be server generated).
-    [Column(TypeName="varchar(255)")] public string Title { get; set; } = null!; // Silence the null warning. // ARCHIVE: [MaxLength(255)]
+    [Column(TypeName="varchar(255)")] public string Title { get; set; } = null!; // Silence the null warning. // [old] [MaxLength(255)]
     [Column(TypeName="varchar(4000)")] public string? Description { get; set; }
     public byte? Duration { get; set; } // Seconds.
     [Column(TypeName="decimal(4, 2)")] public decimal? Price { get; set; } // GBP.
@@ -21,9 +21,9 @@ public class Sound
     [Column(TypeName="varchar(255)")] public string? ImageThumb { get; set; }
     [Column(TypeName="varchar(255)")] public string? Structure { get; set; }
     public byte? Rank { get; set; }
-    // TODO: Add ImageFull property.
+    // [todo] Add ImageFull property.
     public virtual ICollection<Tag> Tags { get; set; } // virtual makes it lazy load.
-        //  = new HashSet<Tag>();  // Initialise to an empty collection to avoid null reference issues.
+        // [old] = new HashSet<Tag>();  // Initialise to an empty collection to avoid null reference issues.
     // A HashSet is type of ICollection that optimises insert & delete and enforces referential integrity. This is supposed to be better than a List which can't be added to / modified.
 }
 
@@ -48,7 +48,7 @@ public class ReadSoundDto
     public byte? Rank { get; set; }
 
     public virtual ICollection<TagSimpleDto>? Tags { get; set; } // Doesn't contain a list of sounds - this prevents recursion (a Tag has Sounds, which have Tags...)
-        // = new HashSet<TagSimpleDto>();
+        // [old] = new HashSet<TagSimpleDto>();
 }
 
 public class ReadSoundsDto
@@ -69,7 +69,7 @@ public class CreateSoundDto
     }
 
     public DateTime? UploadedOn { get; set; } // Optional (can be server generated).
-    [Required] public string Title { get; set; } = null!; // TODO: Test there is a 400 error when length exceeded.
+    [Required] public string Title { get; set; } = null!; // [todo] Test there is a 400 error when length exceeded.
     public string? Description { get; set; }
     public byte? Duration { get; set; }
     public decimal? Price { get; set; }
@@ -78,7 +78,7 @@ public class CreateSoundDto
     public string? Structure { get; set; }
     public byte? Rank { get; set; }
     public virtual ICollection<short> Tags { get; set; } // When a navigation property is set to virtual, EF turns on lazy loading for it.
-        // = new HashSet<short>();
+        // [old] = new HashSet<short>();
 }
 
 public class UpdateSoundDto
