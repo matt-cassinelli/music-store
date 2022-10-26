@@ -22,12 +22,12 @@ export default function Tag( {id, name, rank, setSelectedTagId} ) { // Destructu
 //         audioElem.pause();
 
 //         if (!audioElem.src || audioElem.src !== "./media/mp3/21-10-06.mp3") {
-//             audioElem.src = "./media/mp3/21-10-06.mp3"; // TODO: Get the source with "this.parentNode.data-preview".
+//             audioElem.src = "./media/mp3/21-10-06.mp3"; // [todo] Get the source with "this.parentNode.data-preview".
 //         }
 
-//         this.classList.add("playing"); // TODO: Add Try/Catch so if it doesn't play, visuals don't change.
+//         this.classList.add("playing"); // [todo] Add Try/Catch so if it doesn't play, visuals don't change.
 //         audioElem.play(); // Play the audible sound.
-//         // ARCHIVE: this.classList.toggle("playing");
+//         // [old] this.classList.toggle("playing");
 //     }
-//     // DEBUG: console.log(this.id);
+//     // [dbg] console.log(this.id);
 // }

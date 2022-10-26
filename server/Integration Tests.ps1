@@ -150,6 +150,7 @@ $body = '{
 $response = Invoke-WebRequest -Method 'POST' -Uri "$baseUri/tags" -Body $body
 if ($response.StatusCode -ne 201) {throw}
 
+# [todo]
 # Happy
 # Motivational
 # Corporate
@@ -311,7 +312,7 @@ $response.Content | ConvertFrom-Json
 
 $response = Invoke-WebRequest -Method 'GET' -Uri "$baseUri/sounds?tagId=1&tagId=2"
 $response.Content | ConvertFrom-Json
-# TODO: Describe / check what each should return
+# [todo] Describe / check what each should return
 
 
 

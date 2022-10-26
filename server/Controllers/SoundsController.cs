@@ -23,7 +23,7 @@ public class SoundsController : ControllerBase // ControllerBase gives us common
     }
 
     [HttpGet] // Match the route https://host/sounds with optional ?tagId=1&tagId=2
-    public async Task<ActionResult<IEnumerable<ReadSoundsDto>>> ReadList([FromQuery] short? tagId) // TODO: Implement paging, top 15 results. TODO: Allow requests for other ordering options e.g. price.
+    public async Task<ActionResult<IEnumerable<ReadSoundsDto>>> ReadList([FromQuery] short? tagId) // [todo] Implement paging, top 15 results. [todo] Allow requests for other ordering options e.g. price.
     {
         IQueryable<Sound> query; // Initialise empty query chain that we will build up.
 
@@ -52,11 +52,11 @@ public class SoundsController : ControllerBase // ControllerBase gives us common
     [HttpGet("{id}")] // Match the route https://host/sounds/(id)
     public async Task<ActionResult<ReadSoundDto>> Read(Guid id)
     {
-        // ARCHIVE:
+        // [old]
         // var sound = await _context.Sounds.FindAsync(id);
         // return Ok(_mapper.Map<ReadSoundDto>(sound));
 
-        // ARCHIVE:
+        // [old]
         // var sound = await _context.Sounds
         //     .Where(s => s.Id == id)
         //     .Select(s => _mapper.Map<ReadSoundDto>(s))
@@ -74,7 +74,7 @@ public class SoundsController : ControllerBase // ControllerBase gives us common
     [HttpPost]
     public async Task<ActionResult<ReadSoundDto>> Create([FromBody] CreateSoundDto input)
     {
-        if (input.UploadedOn == null) { input.UploadedOn = DateTime.Now; } // TODO: Would DateTime.UtcNow or a timespan be better? Also should we allow the client to change the UploadedOn or have it server generated only?
+        if (input.UploadedOn == null) { input.UploadedOn = DateTime.Now; } // [todo] Would DateTime.UtcNow or a timespan be better? Also should we allow the client to change the UploadedOn or have it server generated only?
 
         var sound = _mapper.Map<Sound>(input); // This mapping ignores tags. Instead they are mapped in a custom way below.
 
@@ -89,7 +89,7 @@ public class SoundsController : ControllerBase // ControllerBase gives us common
 
         await _context.SaveChangesAsync();
 
-        return CreatedAtAction(nameof(Read), new {id = sound.Id}, _mapper.Map<ReadSoundDto>(sound)); // TODO: Try return CreatedAtAction(nameof(Get), new {id = sound.Id});
+        return CreatedAtAction(nameof(Read), new {id = sound.Id}, _mapper.Map<ReadSoundDto>(sound)); // [todo] Try return CreatedAtAction(nameof(Get), new {id = sound.Id});
         // returns a 201 status code. 1st arg: The action you can use to get the resource.
         // 2nd arg: The id or route. 3rd arg: The newly created resource.
         // Another option would be to return just the id or location instead of the entire resource. Which option you choose should depend on what the client will do after creation.
@@ -100,7 +100,7 @@ public class SoundsController : ControllerBase // ControllerBase gives us common
     {
         if (id != input.Id) { return BadRequest("Id's must match."); }
 
-        var entityToUpdate = await _context.Sounds // Does this have to be async? Without async, will the next line execute before the data is loaded?
+        var entityToUpdate = await _context.Sounds // [todo] Does this have to be async? Without async, will the next line execute before the data is loaded?
             .Include(s => s.Tags) // Eagerly load the tags, otherwise the engine think there are none.
             .FirstOrDefaultAsync(s => s.Id == id); // For some reason FindAsync() was incompatible with .Include()
 

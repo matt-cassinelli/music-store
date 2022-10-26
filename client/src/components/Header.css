@@ -5,7 +5,7 @@ header {
     display: flex;
     justify-content: space-evenly; /* Horizontal centre */
     align-items: center; /* Vertical centre */
-    /* overflow:hidden; */
+    /* overflow: hidden; */
     flex-wrap: nowrap;
     /* padding: 20px 10px; */
     /* padding: 20px 0; */
@@ -26,7 +26,7 @@ header {
 #logo {
     object-fit: cover;
     min-width: 2.5em;
-    /* height:auto; */
+    /* height: auto; */
     /* margin-left: auto; */
     /* margin-right: auto; */
     /* position: absolute; */

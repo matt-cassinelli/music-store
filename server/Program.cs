@@ -24,7 +24,7 @@ builder.Services.AddCors(options => // Configure CORS
 
 builder.Services.AddControllers(options =>
 {
-    options.ReturnHttpNotAcceptable = true; // Allow only JSON. TODO: Is this is for the input (Content-Type header) or output (Accept header)?
+    options.ReturnHttpNotAcceptable = true; // Allow only JSON // [todo] Is this is for the input (Content-Type header) or output (Accept header)?
 }).AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 builder.Services.AddEndpointsApiExplorer();

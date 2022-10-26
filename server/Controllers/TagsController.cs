@@ -23,7 +23,7 @@ public class TagsController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<TagSimpleDto>>> ReadList()
     {
-        // ARCHIVE: var tags = await _context.Tags.Select(t => _mapper.Map<TagSimpleDto>(t)).ToListAsync();
+        // [old] var tags = await _context.Tags.Select(t => _mapper.Map<TagSimpleDto>(t)).ToListAsync();
         
         var query = _context.Tags
             .AsNoTracking()
@@ -35,7 +35,7 @@ public class TagsController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<TagSimpleDto>> Read(short id)
     {
-        // ARCHIVE:
+        // [old]
         // var tag = await _context.Tags.FindAsync(id);
         // if (tag != null) {
         //     return Ok(_mapper.Map<ReadTagDto>(tag));
@@ -50,7 +50,7 @@ public class TagsController : ControllerBase
         return Ok(tag);
     }
 
-    // TODO: Implement get tags by page.
+    // [todo] Implement get tags by page.
 
     [HttpPost]
     public async Task<ActionResult<TagSimpleDto>> Create([FromBody] CreateTagDto input)
