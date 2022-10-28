@@ -54,12 +54,13 @@ export default function App() {
     else { setIsLoading(true) }
   }, [sounds, tags]);
 
-  return (
-    <div id="main-container">
-      <Header />
-      {isLoading && <Spinner />}
+  return <>
+    <Header />
+    {isLoading && <Spinner />}
+    {!isLoading && <>
       <TagList tags={tags} setSelectedTagId={setSelectedTagId}/>
       <SoundList sounds={sounds} selectedTag={selectedTagId}/>
-    </div>
-  );
+    </>}
+  </>;
+
 }
