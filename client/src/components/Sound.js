@@ -5,7 +5,7 @@ export default function Sound( {sound, playingSound, setPlayingSound} ) { // Dec
   // [dbg] console.log(props)
 
   function formatPrice (price) {
-    return price ? "£" + sound.price?.toFixed(2) : "FREE"
+    return price ? "£" + (sound.price / 100).toFixed(2) : "FREE"
   }
 
   // [idea]

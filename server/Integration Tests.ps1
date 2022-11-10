@@ -171,13 +171,12 @@ if ($response.StatusCode -ne 201) {throw}
 
 #_______________________________ READ TAG ________________________________#
 
-$tempId = ($response.Content | ConvertFrom-Json).id
+# [old]
+# $tempId = ($response.Content | ConvertFrom-Json).id
+# $response = Invoke-WebRequest -Method 'GET' -Uri "$baseUri/tags/$tempId"
 
-#$response = Invoke-WebRequest -Method 'GET' -Uri "$baseUri/tags/$tempId"
 $response = Invoke-WebRequest -Method 'GET' -Uri "$baseUri/tags/1"
-
 if ($response.StatusCode -ne 200) {throw}
-
 if (-not $response.Content) {throw}
 
 
@@ -187,13 +186,14 @@ $response = Invoke-WebRequest -Method 'GET' -Uri "$baseUri/tags"
 
 if ($response.StatusCode -ne 200) {throw}
 
-if ( ($response.Content | ConvertFrom-Json).Count -ne 3 ) {throw}
+# There should be 9 tags
+if ( ($response.Content | ConvertFrom-Json).Count -ne 9 ) {throw}
 
 
 #______________________________ CREATE SOUND ______________________________#
 
 $body = '{
-    "title": "Test Sound 0",
+    "title": "Ocean Waves",
     "description": "No tags",
     "preview": "/media/mp3/blabla.mp3"
 }'
@@ -205,7 +205,7 @@ $body = '{
     "title": "Test Sound 1",
     "description": "No tags",
     "duration": 28,
-    "price": 5.00,
+    "price": 500,
     "preview": "/media/mp3/blabla.mp3",
     "imagethumb": "/media/img-thumb/21-10-06.jpg",
     "structure": "aba",
@@ -232,7 +232,7 @@ $body = '{
   "title": "Test Sound 3",
   "description": "Tags 1 and 2.",
   "duration": 88,
-  "price": 7.00,
+  "price": 700,
   "preview": "/media/mp3/21-10-06.mp3",
   "imagethumb": "/media/img-thumb/21-10-06.jpg",
   "structure": "aba",
@@ -250,7 +250,7 @@ $body = '{
   "title": "Test Sound 4",
   "description": "Tags 1, 2 & 3.",
   "duration": 43,
-  "price": 5.00,
+  "price": 500,
   "preview": "/media/mp3/21-10-06.mp3",
   "imagethumb": "/media/img-thumb/21-10-06.jpg",
   "structure": "a",
@@ -269,7 +269,7 @@ $body = '{
   "title": "Test Sound 5",
   "description": "Only tag 3.",
   "duration": 54,
-  "price": 10.00,
+  "price": 1000,
   "preview": "/media/mp3/21-10-12.mp3",
   "imagethumb": "/media/img-thumb/21-10-12.jpg",
   "structure": "abaca",
@@ -320,10 +320,10 @@ $response.Content | ConvertFrom-Json
 
 $body = '{
   "id":"$tempId",
-  "title": "Test Sound 5",
+  "title": "Test Sound 5 Updated",
   "description": "Only tag 7.",
   "duration": 54,
-  "price": 12.34,
+  "price": 1234,
   "preview": "/media/mp3/21-10-12.mp3",
   "imagethumb": "/media/img-thumb/21-10-12.jpg",
   "structure": "abaca",
@@ -338,6 +338,8 @@ $body = $ExecutionContext.InvokeCommand.ExpandString($body) # https://stackoverf
 $response = Invoke-WebRequest -Method 'PUT' -Uri "$baseUri/sounds/$tempId" -Body $body
 
 if ($response.StatusCode -ne 204) {throw}
+
+if ( ((Invoke-WebRequest -Method 'GET' -Uri "$baseUri/sounds/$tempId").Content | ConvertFrom-Json).title -ne "Test Sound 5 Updated" ) {throw}
 
 #________________________________ READING ________________________________#
 
