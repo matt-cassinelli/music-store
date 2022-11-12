@@ -4,10 +4,13 @@ import logo from '../assets/img-app/logo.svg';
 
 export default function Header() {
 
-    useEffect(() => { // On mount
+    useEffect(() => {
         const storedTheme = localStorage.getItem("theme");
         if (storedTheme) {
             document.documentElement.setAttribute("data-theme", storedTheme);
+        }
+        else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+            document.documentElement.setAttribute("data-theme", "dark");
         }
     }, []);
 
