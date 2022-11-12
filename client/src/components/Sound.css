@@ -14,7 +14,7 @@
     background: var(--panel);
     /* background: linear-gradient(15deg, #191a19 40%, #02271c); */
     border-radius: 1.2rem;
-    box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.15);
     transition: 0.2s all ease-in-out;
 }
   
@@ -33,7 +33,7 @@
   
 .price {
     /* float: left; */
-    color: #FF3100;
+    color: var(--accent2);
     font-size: 22px;
     font-weight: 900;
     transition: color .3s ease-in-out;
@@ -54,14 +54,14 @@
     /* display: inline-block; */
     font-size: 13px;
     font-weight: 900;
-    color: #FF3100;
+    color: var(--accent2);
     padding: 0.6rem 1rem;
     cursor: pointer;
     transition: all .3s ease-in-out;
     /* border: none; */
     background: none;
     outline: none;
-    border: 1px solid #FF3100;
+    border: 1px solid var(--accent2);
     border-radius: 20px;
     /* overflow: hidden; */
 }
