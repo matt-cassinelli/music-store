@@ -18,6 +18,7 @@ export default function App() {
  
   const fetchSounds = async (tagId) => {
     let url = (tagId === undefined) ? `${HOST}/sounds` : `${HOST}/sounds?tagId=${tagId}`
+    console.log(`fetching ${url}`)
     try {
       const response = await fetch(url);
       if (response.ok === false) { throw Error(response.status) }
