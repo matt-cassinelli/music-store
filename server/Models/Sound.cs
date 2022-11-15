@@ -16,7 +16,7 @@ public class Sound
     [Column(TypeName="varchar(255)")] public string Title { get; set; } = null!; // Silence the null warning. // [old] [MaxLength(255)]
     [Column(TypeName="varchar(4000)")] public string? Description { get; set; }
     public byte? Duration { get; set; } // Seconds.
-    [Column(TypeName="decimal(4, 2)")] public decimal? Price { get; set; } // GBP.
+    public short? Price { get; set; } // Pence. // [old] decimal(4, 2)
     [Column(TypeName="varchar(255)")] public string? Preview { get; set; }
     [Column(TypeName="varchar(255)")] public string? ImageThumb { get; set; }
     [Column(TypeName="varchar(255)")] public string? Structure { get; set; }
@@ -41,7 +41,7 @@ public class ReadSoundDto
     public string Title { get; set; } = null!;
     public string? Description { get; set; }
     public byte? Duration { get; set; }
-    public decimal? Price { get; set; }
+    public short? Price { get; set; }
     public string? Preview { get; set; }
     public string? ImageThumb { get; set; }
     public string? Structure { get; set; }
@@ -55,7 +55,7 @@ public class ReadSoundsDto
 {
     public Guid? Id { get; set; }
     public string? Title { get; set; }
-    public decimal? Price { get; set; }
+    public short? Price { get; set; }
     public string? Preview { get; set; }
     public string? ImageThumb { get; set; }
     public byte? Rank { get; set; }
@@ -72,7 +72,7 @@ public class CreateSoundDto
     [Required] public string Title { get; set; } = null!; // [todo] Test there is a 400 error when length exceeded.
     public string? Description { get; set; }
     public byte? Duration { get; set; }
-    public decimal? Price { get; set; }
+    public short? Price { get; set; }
     public string? Preview { get; set; }
     public string? ImageThumb { get; set; }
     public string? Structure { get; set; }
@@ -93,7 +93,7 @@ public class UpdateSoundDto
     [Required(ErrorMessage = "Title is required")] public string Title { get; set; } = null!;
     public string? Description { get; set; }
     public byte? Duration { get; set; }
-    public decimal? Price { get; set; }
+    public short? Price { get; set; }
     public string? Preview { get; set; }
     public string? ImageThumb { get; set; }
     public string? Structure { get; set; }

@@ -67,7 +67,7 @@ header {
 }
 
 #nav-active { /* TODO: Fix. */
-    color: var(--primary);
+    color: var(--accent1);
     transition-duration: 0.3s;
     cursor: context-menu;
 }

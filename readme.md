@@ -17,13 +17,13 @@
     1. Download and install [.NET 6](https://dotnet.microsoft.com/en-us/download)  
     1. Edit the connection string in `./server/Models/MyDbContext.cs` to point to your SQL server  
     2. From a terminal, navigate to the `./server/` folder and call:  
-        1. `dotnet restore` (to install dependencies)  
-        1. `dotnet ef migrations add v1` (to create a [migration](https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations))  
-        2. `dotnet ef database update` (to execute the migration)  
-        3. `dotnet run` (to run the server)  
-3. Start the frontend  
-    1. `npm install` (to install dependencies)  
-    2. `npm start`  
+        1. `dotnet restore` (installs dependencies)  
+        1. `dotnet ef migrations add v1` (creates a [migration](https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations))  
+        2. `dotnet ef database update` (executes the migration)  
+        3. `dotnet run` (starts server)  
+3. Start the frontend:  
+    1. `npm install` (installs dependencies)  
+    2. `npm start` (starts a dev server)  
 
 ## Design notes
 

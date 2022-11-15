@@ -50,11 +50,11 @@ font: inherit; /* Inputs and buttons should inheret font styles */
 /*#region __________________________________ Themes ___________________________________*/
 
 :root {
-  --primary: #12852d; /* #9A97F3; */
-  --secondary: #818cab;
+  --accent1: #12852d; /* #9A97F3; */
+  --accent2: #6b6cf2; /* #818cab; #FF3100; */
   --font: #e1e1ff;
-  --bg: #282c34; /* #2c302d; #242424; */
-  --panel: #171717;
+  --bg: #212023; /* #282c34; #2c302d; #242424; */
+  --panel: #29282b; /* #171717; */
   --hover: #606060;
   --theme-label-image: url('./assets/img-app/sun.svg');
   --loading-image: url('./assets/img-app/loading-dark.png');
@@ -62,8 +62,8 @@ font: inherit; /* Inputs and buttons should inheret font styles */
 }
 
 [data-theme="light"] {
-  --primary: #13ad37;
-  --secondary: #e77421;
+  --accent1: #13ad37;
+  --accent2: #e77421; /* #e77421; */
   --font: #424242;
   --bg: rgb(235, 235, 235);
   --panel: #fff;
