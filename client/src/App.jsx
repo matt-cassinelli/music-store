@@ -1,72 +1,52 @@
-import './App.css';
+import {createBrowserRouter, RouterProvider} from 'react-router-dom';
+import ServicesPage from "./pages/ServicesPage";
+import ContactPage from "./pages/ContactPage";
+import SoundsPage from "./pages/SoundsPage";
+import BasketPage from "./pages/BasketPage";
+import ErrorPage from "./pages/ErrorPage";
 import Header from './components/Header';
-import Spinner from './components/Spinner';
-import TagList from './components/TagList';
-import SoundList from './components/SoundList';
-import React, { useState, useEffect } from "react";
+import './App.css';
 
-const HOST = "https://localhost:5001";
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <SoundsPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/services",
+    element: <ServicesPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/contact",
+    element: <ContactPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/basket",
+    element: <BasketPage />,
+    errorElement: <ErrorPage />,
+  },
+]);
+
+// [idea]
+// const router = createBrowserRouter([
+//   {
+//     element: <AppLayout />,
+//     children: [
+//       {
+//         path: "/",
+//         element: <SoundsPage />,
+//         errorElement: <ErrorPage />,
+//       },
+//       ...
+//   },
+// ]);
 
 export default function App() {
-
-  const [sounds,          setSounds]          = useState([]);
-  const [tags,            setTags]            = useState([]);
-  const [selectedTagId,   setSelectedTagId]   = useState();
-  const [tagsAreLoaded,   setTagsAreLoaded]   = useState(false);
-  const [soundsAreLoaded, setSoundsAreLoaded] = useState(false);
-  // [idea] const [theme,   setTheme]     = useState('dark');
- 
-  const fetchSounds = async (tagId) => {
-    let url = (tagId === undefined) ? `${HOST}/sounds` : `${HOST}/sounds?tagId=${tagId}`
-    console.log(`fetching ${url}`)
-    try {
-      const response = await fetch(url);
-      if (response.ok === false) { throw Error(response.status) }
-      const data = await response.json(); // [todo] Why do we need a second await?
-      // [dbg] console.log(data); // 'data' is an array.
-      setSoundsAreLoaded(true);
-      setSounds(data);
-    }
-    catch (error) {
-      console.log("error", error);
-    }
-  };
-
-  const fetchTags = async () => {
-    try {
-      const response = await fetch(`${HOST}/tags`);
-      if (response.ok === false) { throw Error(response.status) }
-      const data = await response.json();
-      setTagsAreLoaded(true);
-      setTags(data);
-    }
-    catch (error) {
-      console.log("error", error);
-    }
-  };
-
-  useEffect(() => { // Runs on component mount.
-    fetchSounds();
-    fetchTags();
-  }, []);
-
-  useEffect(() => { // Runs when selectedTag changes.
-    fetchSounds(selectedTagId);
-  }, [selectedTagId]);
-
-  // [old]
-  // useEffect(() => { // Runs when either 'sounds' or 'tags' changes.
-  //   if (sounds?.length > 0 && tags?.length > 0) { setIsLoading(false) }
-  //   else { setIsLoading(true) }
-  // }, [sounds, tags]);
-
   return <>
     <Header />
-    {!tagsAreLoaded && !soundsAreLoaded && <Spinner />}
-    {tagsAreLoaded && soundsAreLoaded && <>
-      <TagList tags={tags} setSelectedTagId={setSelectedTagId}/>
-      <SoundList sounds={sounds} selectedTag={selectedTagId}/>
-    </>}
+    <RouterProvider router={router} />
   </>;
-
 }
