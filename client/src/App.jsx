@@ -2,11 +2,11 @@ import {createBrowserRouter, RouterProvider, Outlet} from 'react-router-dom';
 import ServicesPage from "./pages/ServicesPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import ContactPage from "./pages/ContactPage";
-import SoundsPage from "./pages/sounds/SoundsPage";
+import SoundsPage from "./pages/SoundsPage/SoundsPage";
 import BasketPage from "./pages/BasketPage";
 import ErrorPage from "./pages/ErrorPage";
-import Sidebar from './components/navbar/Sidebar';
-import Navbar from './components/navbar/Navbar';
+import Sidebar from './components/Navbar/Sidebar';
+import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer';
 import './App.css';
 

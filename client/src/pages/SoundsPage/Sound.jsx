@@ -42,7 +42,7 @@ export default function Sound( {sound, playingSound, setPlayingSound} ) { // Dec
           {formatPrice(sound.price) /* [old] props.sound.price */}
         </h4>
         <button type="submit" className="button">
-          ADD TO CART
+          ADD TO BASKET
         </button>
       </div>
     </article>

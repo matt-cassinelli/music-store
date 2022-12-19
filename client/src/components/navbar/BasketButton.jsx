@@ -1,4 +1,4 @@
-import { ReactComponent as BasketIcon } from '../../assets/img-app/basket.svg';
+import { ReactComponent as BasketIcon } from './basket.svg';
 import { Link } from 'react-router-dom';
 import './BasketButton.css';
 

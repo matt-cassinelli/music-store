@@ -60,8 +60,8 @@ font: inherit; /* Inputs and buttons should inheret font styles */
   --bg: #18191a; /* #282c34; #2c302d; #242424; #212023; */
   --panel: #242526; /* #171717; #29282b; */
   --hover: #606060;
-  --theme-label-image: url('./assets/img-app/sun.svg');
-  --loading-image: url('./assets/img-app/loading-dark.png');
+  --theme-label-image: url('./components/Navbar/sun.svg');
+  --loading-image: url('./components/loading-dark.png');
   /* --details-bg: #09c6454c; */
 }
 
@@ -72,8 +72,8 @@ font: inherit; /* Inputs and buttons should inheret font styles */
   --bg: rgb(235, 235, 235);
   --panel: #fff;
   --hover: #afafaf; /* #606060; */
-  --theme-label-image: url('./assets/img-app/moon.svg');
-  --loading-image: url('./assets/img-app/loading-light.png');
+  --theme-label-image: url('./components/Navbar/moon.svg');
+  --loading-image: url('./components/loading-light.png');
   /* --details-bg: #21d65a94; */
 }
 

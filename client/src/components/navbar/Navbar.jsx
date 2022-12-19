@@ -2,9 +2,9 @@ import './Navbar.css';
 import React from 'react';
 import { Link } from 'react-router-dom';
 //import CartButton from './CartButton';
-import logo from '../../assets/img-app/logo.svg';
+import logo from '../logo.svg';
 // import menu from '../assets/img-app/menu.svg';
-import { ReactComponent as MenuIcon } from '../../assets/img-app/menu.svg';
+import { ReactComponent as MenuIcon } from './menu.svg';
 import ThemeButton from './ThemeButton';
 import BasketButton from './BasketButton';
 
