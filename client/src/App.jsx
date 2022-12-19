@@ -1,52 +1,61 @@
-import {createBrowserRouter, RouterProvider} from 'react-router-dom';
+import {createBrowserRouter, RouterProvider, Outlet} from 'react-router-dom';
 import ServicesPage from "./pages/ServicesPage";
+import CheckoutPage from "./pages/CheckoutPage";
 import ContactPage from "./pages/ContactPage";
-import SoundsPage from "./pages/SoundsPage";
+import SoundsPage from "./pages/sounds/SoundsPage";
 import BasketPage from "./pages/BasketPage";
 import ErrorPage from "./pages/ErrorPage";
-import Header from './components/Header';
+import Sidebar from './components/navbar/Sidebar';
+import Navbar from './components/navbar/Navbar';
+import Footer from './components/Footer';
 import './App.css';
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <SoundsPage />,
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: "/services",
-    element: <ServicesPage />,
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: "/contact",
-    element: <ContactPage />,
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: "/basket",
-    element: <BasketPage />,
-    errorElement: <ErrorPage />,
-  },
-]);
+const Layout = () => (<>
+  <Navbar />
+  <Outlet />
+  <Footer />
+</>)
 
-// [idea]
-// const router = createBrowserRouter([
-//   {
-//     element: <AppLayout />,
-//     children: [
-//       {
-//         path: "/",
-//         element: <SoundsPage />,
-//         errorElement: <ErrorPage />,
-//       },
-//       ...
-//   },
-// ]);
+const router = createBrowserRouter([{
+  element: <Layout />,
+  children: [
+    {
+      path: "/",
+      element: <SoundsPage />,
+    },
+    {
+      path: "/sounds",
+      element: <SoundsPage />,
+    },
+    {
+      path: "/sounds/:id",
+      element: <SoundsPage />,
+    },
+    {
+      path: "/services",
+      element: <ServicesPage />,
+    },
+    {
+      path: "/contact",
+      element: <ContactPage />,
+    },
+    {
+      path: "/basket",
+      element: <BasketPage />,
+    },
+    {
+      path: "/checkout",
+      element: <CheckoutPage />,
+    },
+    {
+      path: "*",
+      element: <ErrorPage /> 
+    }
+  ]
+}]);
 
 export default function App() {
-  return <>
-    <Header />
+  return (
     <RouterProvider router={router} />
-  </>;
+  );
 }
