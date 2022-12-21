@@ -1,4 +1,4 @@
-import React from 'react'; // [todo] Might not be necessary since React 17?
+import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 

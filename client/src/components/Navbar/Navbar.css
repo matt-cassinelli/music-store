@@ -33,10 +33,11 @@ header {
 margin: 0.5rem;
 }
 
-#logo {
+.logo {
     object-fit: contain;
     height: 2.2rem;
     display: block;
+    justify-self: center;
 }
 
 .menu-button {
@@ -92,4 +93,10 @@ margin: 0.5rem;
     .cart-btn-wrapper {
         display: grid;
    }
+}
+
+@media (max-width: 62rem) {
+    .hide-on-min-width {
+        display: none !important;
+    }
 }

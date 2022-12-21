@@ -14,7 +14,7 @@ export default function Navbar() {
         <header>
 
             <div className='header-side'>
-                <Link to="/"> <img id="logo" src={logo} alt="Home"/> </Link>
+                <Link to="/"> <img className="logo" src={logo} alt="Home"/> </Link>
             </div>
             
             <ul className="nav-links">
@@ -25,7 +25,7 @@ export default function Navbar() {
 
             <div className='header-side'>
                 <ThemeButton />
-                <BasketButton />
+                <BasketButton className="hide-on-min-width"/>
                 <button type='button' className='menu-button'> {/* Can I use a <button> for the theme btn too? */}
                     {/* <img src={menu} alt="Menu"/> */}
                     <MenuIcon className='menu-svg' alt="Menu"/>

@@ -5,12 +5,13 @@ import ContactPage from "./pages/ContactPage";
 import SoundsPage from "./pages/SoundsPage/SoundsPage";
 import BasketPage from "./pages/BasketPage";
 import ErrorPage from "./pages/ErrorPage";
-import Sidebar from './components/Navbar/Sidebar';
+import Menu from './components/Navbar/Menu';
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer';
 import './App.css';
 
 const Layout = () => (<>
+  <Menu /> {/* [todo] rename to PopoutMenu? */}
   <Navbar />
   <Outlet />
   <Footer />
