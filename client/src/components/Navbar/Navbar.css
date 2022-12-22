@@ -40,20 +40,6 @@ margin: 0.5rem;
     justify-self: center;
 }
 
-.menu-button {
-    background: transparent;
-    border: transparent;
-    color: var(--clr-primary-5);
-    cursor: pointer;
-}
-
-.menu-button > svg {
-    height: 1.6rem;
-    color: var(--font);
-    fill: currentColor;
-    stroke: var(--font);
-}
-
 .nav-links {
     display: none;
 }
@@ -66,9 +52,6 @@ margin: 0.5rem;
 }
 
 @media (min-width: 992px) {
-    .menu-button {
-        display: none;
-   }
     .nav-center {
         display: grid;
         grid-template-columns: auto 1fr auto;
