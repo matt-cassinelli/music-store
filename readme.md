@@ -2,13 +2,14 @@
 
 ![screenshot-sounds-1](https://user-images.githubusercontent.com/67283034/178149055-fbaff8ca-07b2-41b9-83e7-153fa36fa8a5.png)
 
-## Tech used
+## Tech stack used:
 
 * .NET 6
 * SQL Server
 * Entity Framework
 * AutoMapper
 * React
+* Redux
 
 ## How to build it locally
 
@@ -28,3 +29,5 @@
 ## Design notes
 
 The front end was initially written in vanilla javascript, but as the project grew I migrated the code to React to make life easier.
+
+To avoid excessive prop drilling, Redux was added. React Context was another option but seemed to cause unnecessary re-renders.
