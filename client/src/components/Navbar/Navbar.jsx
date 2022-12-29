@@ -1,15 +1,13 @@
 import './Navbar.css';
-import React from 'react';
+import React from "react";
 import { Link } from 'react-router-dom';
-//import CartButton from './CartButton';
 import logo from '../logo.svg';
-// import menu from '../assets/img-app/menu.svg';
 import MenuButton from './MenuButton';
 import ThemeButton from './ThemeButton';
 import BasketButton from './BasketButton';
 
-
 export default function Navbar() {
+
     return (
         <header>
 
@@ -26,7 +24,7 @@ export default function Navbar() {
             <div className='header-side'>
                 <ThemeButton />
                 <BasketButton className="hide-on-min-width"/>
-                <MenuButton />
+                <MenuButton/>
             </div>
 
         </header>

@@ -1,28 +1,28 @@
 import './Menu.css';
-import React from 'react'
+import React from "react";
 import logo from '../logo.svg'
 import { Link } from 'react-router-dom'
-//import { useProductsContext } from '../context/products_context'
-//import { FaTimes } from 'react-icons/fa'
-//import { links } from '../utils/constants'
-//import styled from 'styled-components'
-import BasketButton from './BasketButton'
 import CloseButton from './CloseButton'
-//import { useUserContext } from '../context/user_context'
+import BasketButton from './BasketButton'
+import { useSelector, useDispatch } from 'react-redux';
+import { toggle, selectMenuState } from '../../redux/menuSlice';
 
 export default function Menu() {
-    const isOpen = true;
+
+    const visibility = useSelector(selectMenuState);
+    const dispatch = useDispatch();
+
     return (
-        <aside className={`${isOpen ? 'menu show-menu' : 'menu'}`}>
+        <aside className={`${visibility ? 'menu show-menu' : 'menu'}`}>
             <div className="menu-header">
                 <img src={logo} className="logo" alt="Sound Store" />
-                <CloseButton />
+                <CloseButton onClick={() => dispatch(toggle())}/>
             </div>
             <ul className='menu-links'>
-                <li key={1}> <Link to='/sounds'> Sounds </Link> </li>
-                <li key={2}> <Link to='/services'> Services </Link> </li>
-                <li key={3}> <Link to='/contact'> Contact </Link> </li>
-                <li key={4}> <Link to='/checkout'> Checkout </Link> </li>
+                <li key={1}> <Link to='/sounds'   onClick={() => dispatch(toggle())}> Sounds   </Link> </li>
+                <li key={2}> <Link to='/services' onClick={() => dispatch(toggle())}> Services </Link> </li>
+                <li key={3}> <Link to='/contact'  onClick={() => dispatch(toggle())}> Contact  </Link> </li>
+                <li key={4}> <Link to='/checkout' onClick={() => dispatch(toggle())}> Checkout </Link> </li>
             </ul>
             <div className='menu-lower-btns'>
                 <BasketButton />
