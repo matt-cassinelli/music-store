@@ -2,7 +2,7 @@
 
 ![screenshot-sounds-1](https://user-images.githubusercontent.com/67283034/178149055-fbaff8ca-07b2-41b9-83e7-153fa36fa8a5.png)
 
-## Tech stack used:
+## Tech stack used
 
 * .NET 6
 * SQL Server

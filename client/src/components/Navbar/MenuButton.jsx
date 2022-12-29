@@ -7,7 +7,7 @@ export default function MenuButton() {
     const dispatch = useDispatch();
 
     return (
-        <button type='button' className='menu-button' onClick={() => dispatch(toggle())}> {/* Could I use a <button> for the theme btn too? */}
+        <button type='button' className='menu-button' onClick={() => dispatch(toggle())}>
             {/* <img src={menu} alt="Menu"/> */}
             {/* <MenuIcon className='menu-svg' alt="Menu"/> */}
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 92.8 92.8">

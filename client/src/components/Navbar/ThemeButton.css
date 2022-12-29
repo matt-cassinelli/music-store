@@ -1,14 +1,16 @@
-#theme-btn-container {
+.theme-btn {
     display: flex;
     justify-content: right;
+    align-items: center;
+    text-decoration: none;
 }
 
-#theme-checkbox {
+.theme-btn > input {
 	display: none;
     /* float: right; */
 }
 
-#theme-label {
+.theme-btn > label {
 	width: 2rem;
 	height: 2rem;
 	cursor: pointer;	
@@ -20,8 +22,14 @@
     /* margin-right: 10px; */
 }
 
+/* .theme-svg {
+    height: 1.7rem;
+    fill: var(--font);
+    stroke: var(--font);
+} */
+
 @media (max-width: 62rem) {
-    #theme-btn-container {
+    .theme-btn {
         display: none;
    }
 }

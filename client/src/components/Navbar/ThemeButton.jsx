@@ -27,13 +27,13 @@ export default function ThemeButton() {
     };
 
     return (
-        <div id="theme-btn-container">
-            <label id="theme-label" htmlFor="theme-checkbox"></label>
+        <button type='button' className="theme-btn">
+            <label htmlFor="theme-checkbox"></label>
             <input
                 id="theme-checkbox"
                 type="checkbox"
                 onChange={toggleTheme}
             />
-        </div>
+        </button>
     )
 }
