@@ -13,7 +13,9 @@ import './App.css';
 const Layout = () => (<>
   <Menu /> {/* [todo] rename to PopoutMenu? */}
   <Navbar />
-  <Outlet />
+  <main>
+    <Outlet />
+  </main>
   <Footer />
 </>)
 
