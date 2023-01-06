@@ -2,11 +2,10 @@
     display: flex;
     flex-wrap: wrap;
     padding: 1.7rem;
-    max-width: 110rem;
     column-gap: 1.1rem;
     row-gap: 0.8rem;
     margin: auto;
-    max-width: 100rem;
+    max-width: var(--max-width); /* [old] 110rem; */
     /* justify-content: center; */
 }
 

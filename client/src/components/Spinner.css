@@ -1,8 +1,8 @@
 #loading {
     width: 3em;
     margin: 2rem auto; /* Add space above and below element. The sides are set to auto so that it gets centred. */
-    content: var(--loading-image); /* Equivalent to "src" in html */
-    animation: spin 0.8s infinite linear;
+    animation: spin 1s infinite linear;
+    color: var(--font);
 }
 
 @keyframes spin {

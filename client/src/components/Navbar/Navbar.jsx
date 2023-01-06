@@ -1,6 +1,6 @@
 import './Navbar.css';
 import React from "react";
-import { Link } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import logo from './logo.svg';
 import MenuButton from './MenuButton';
 import ThemeButton from './ThemeButton';
@@ -10,25 +10,21 @@ export default function Navbar() {
 
     return (
         <header>
-
             <div className='header-left-side'>
                 <Link to="/">
                     <img className="logo" src={logo} alt="Home"/>
                 </Link>
             </div>
-            
-            <ul className="nav-links hide-under-max-width">
-                <li key={1}> <Link to='/sounds'> Sounds </Link> </li>
-                <li key={2}> <Link to='/services'> Services </Link> </li>
-                <li key={3}> <Link to='/contact'> Contact </Link> </li>
+            <ul className="nav-links hide-under-width-breakpoint">
+                <li key={1}> <NavLink to='/sounds'> Sounds </NavLink> </li>
+                <li key={2}> <NavLink to='/services'> Services </NavLink> </li>
+                <li key={3}> <NavLink to='/contact'> Contact </NavLink> </li>
             </ul>
-
             <div className='header-right-side'>
-                <ThemeButton />
-                <BasketButton className="hide-under-max-width"/>
+                <ThemeButton className="hide-under-width-breakpoint"/>
+                <BasketButton className="hide-under-width-breakpoint"/>
                 <MenuButton/>
             </div>
-
         </header>
     )
 }

@@ -27,9 +27,3 @@
     fill: var(--font);
     stroke: var(--font);
 } */
-
-@media (max-width: 62rem) {
-    .theme-btn {
-        display: none;
-   }
-}

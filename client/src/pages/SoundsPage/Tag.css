@@ -12,7 +12,7 @@
     padding: 0.5em 1em; /* Space between button's content & border */
     cursor: pointer;
     color: var(--font);
-    box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.15);
+    box-shadow: var(--light-shadow);
     /* margin-right: 0.5em; */
     /* margin-left: 0.5em; */
     /* margin: 0.6em; */
@@ -24,7 +24,6 @@
 
 .tag input[type=radio]:checked + label {
     background-color: var(--accent1);
-    box-shadow: 0 1px 1px rgba(0,0,0,0.12)
     /* border-color: #c3c2c2; */
     /* border: 1px solid #5fc0dc; */
 }

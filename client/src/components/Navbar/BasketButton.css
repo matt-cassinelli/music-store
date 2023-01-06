@@ -2,20 +2,17 @@
   display: flex;
   align-items: center;
   text-decoration: none;
-}
-
-.basket-btn-container > * {
-  margin: 0.18rem;
+  gap: 0.18rem;
 }
 
 .basket-svg {
     height: 1.7rem;
     fill: var(--font);
-    stroke: var(--font);
     /* margin-left: 5px; */
 }
 
 .basket-btn-container > span {
-  color: var(--font);
+  color: var(--accent1);
   font-size: 1rem;
+  font-weight: 800;
 }

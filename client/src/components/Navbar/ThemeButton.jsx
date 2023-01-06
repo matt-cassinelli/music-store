@@ -3,8 +3,9 @@ import './ThemeButton.css';
 // import {ReactComponent as SunIcon} from '../assets/img-app/sun.svg';
 // import {ReactComponent as MoonIcon} from '../assets/img-app/moon.svg';
 
+// CSS className can be passed through as a prop, allowing the component to be customised.
 
-export default function ThemeButton() {
+export default function ThemeButton({className}) {
 
     useEffect(() => {
         const storedTheme = localStorage.getItem("theme");
@@ -27,7 +28,7 @@ export default function ThemeButton() {
     };
 
     return (
-        <button type='button' className="theme-btn">
+        <button type='button' className={'theme-btn ' + (className || "")}>
             <label htmlFor="theme-checkbox"></label>
             <input
                 id="theme-checkbox"

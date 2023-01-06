@@ -1,16 +1,6 @@
-.menu-button {
-    color: var(--clr-primary-5);
-}
-
-.menu-button > svg {
+.menu-icon-svg {
     height: 1.6rem;
     color: var(--font);
     fill: currentColor;
     stroke: var(--font);
-}
-
-@media (min-width: 992px) {
-    .menu-button {
-        display: none;
-    }
 }
