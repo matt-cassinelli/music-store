@@ -1,6 +1,5 @@
-import './Navbar.css';
 import React from "react";
-import { NavLink, Link } from 'react-router-dom';
+import Link from 'next/link';
 import logo from './logo.svg';
 import MenuButton from './MenuButton';
 import ThemeButton from './ThemeButton';
@@ -11,14 +10,14 @@ export default function Navbar() {
     return (
         <header>
             <div className='header-left-side'>
-                <Link to="/">
+                <Link href="/">
                     <img className="logo" src={logo} alt="Home"/>
                 </Link>
             </div>
             <ul className="nav-links hide-under-width-breakpoint">
-                <li key={1}> <NavLink to='/sounds'> Sounds </NavLink> </li>
-                <li key={2}> <NavLink to='/services'> Services </NavLink> </li>
-                <li key={3}> <NavLink to='/contact'> Contact </NavLink> </li>
+                <li key={1}> <Link href='/sounds'> Sounds </Link> </li>
+                <li key={2}> <Link href='/services'> Services </Link> </li>
+                <li key={3}> <Link href='/contact'> Contact </Link> </li>
             </ul>
             <div className='header-right-side'>
                 <ThemeButton className="hide-under-width-breakpoint"/>

@@ -1,12 +1,11 @@
-import { Link } from 'react-router-dom';
-import './BasketButton.css';
+import Link from 'next/link';
 
 // CSS className can be passed through as a prop, allowing the component to be extended/customised.
 
 export default function BasketButton({className}) {
     // [dbg] console.log(className)
     return (
-        <Link to="/basket" className={'basket-btn-container ' + (className || "")}>
+        <Link href="/basket" className={'basket-btn-container ' + (className || "")}>
             {/* <img src={basket} alt="basket" /> */}
             <svg id="layer-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 902.86 748.42" className='basket-svg'>
                 <path d="M231.36,577.83H828.11L902.86,178.7l-703.13.5-26-102H0v68H120.87L231.36,577.83ZM820.93,246.76,771.66,509.83H284.17L217.09,247.19Z" transform="translate(0 -77.22)"/>

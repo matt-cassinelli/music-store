@@ -104,7 +104,7 @@ header, hgroup, html, iframe, label, legend, li, main, menu, nav, ol, section, u
   --bg: #18191a; /* #282c34; #2c302d; #242424; #212023; */
   --panel: #242526; /* #171717; #29282b; */
   --hover: #606060;
-  --theme-label-image: url('./components/Navbar/sun.svg');
+  --theme-label-image: url('../components/Navbar/sun.svg');
   --light-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.1);
   /* --heavy-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); */
   /* --details-bg: #09c6454c; */
@@ -117,7 +117,7 @@ header, hgroup, html, iframe, label, legend, li, main, menu, nav, ol, section, u
   --bg: rgb(235, 235, 235);
   --panel: #fff;
   --hover: #afafaf; /* #606060; */
-  --theme-label-image: url('./components/Navbar/moon.svg');
+  --theme-label-image: url('../components/Navbar/moon.svg');
   --light-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.1);
   /* --details-bg: #21d65a94; */
 }

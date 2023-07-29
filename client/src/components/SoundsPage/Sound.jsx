@@ -1,5 +1,3 @@
-import './Sound.css';
-
 export default function Sound( {sound, playingSound, setPlayingSound} ) { // Deconstruction
   
   // [dbg] console.log(props)

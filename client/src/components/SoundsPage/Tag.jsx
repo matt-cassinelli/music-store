@@ -1,5 +1,3 @@
-import './Tag.css';
-
 export default function Tag( {id, name, rank, setSelectedTagId} ) { // Destructuring. Names must match the props supplied.
   return (
     <div className="tag">

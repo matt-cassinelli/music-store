@@ -9,3 +9,4 @@ server/Migrations
 client/build
 client/node_modules
 client/package-lock.json
+client/.next

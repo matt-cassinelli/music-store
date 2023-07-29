@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import SoundList from './SoundList';
-import Spinner from '../../components/Spinner';
-import TagList from './TagList';
+import SoundList from '../components/SoundsPage/SoundList';
+import Spinner from '../components/Spinner';
+import TagList from '../components/SoundsPage/TagList';
 
 const HOST = "https://localhost:5001";
 

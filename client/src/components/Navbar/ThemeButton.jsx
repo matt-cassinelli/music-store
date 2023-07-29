@@ -1,5 +1,4 @@
 import {useEffect, useState} from "react"; // [idea] ChangeEventHandler
-import './ThemeButton.css';
 // import {ReactComponent as SunIcon} from '../assets/img-app/sun.svg';
 // import {ReactComponent as MoonIcon} from '../assets/img-app/moon.svg';
 

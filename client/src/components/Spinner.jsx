@@ -1,9 +1,4 @@
-import './Spinner.css';
-
 export default function Spinner() {
-  
-    // [dbg] console.log(props)
-
     return (
         <svg id="loading" alt="loading" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
             <path 

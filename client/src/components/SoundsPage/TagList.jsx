@@ -1,4 +1,3 @@
-import './TagList.css';
 import Tag from './Tag';
 // [old] import React, { useState, useEffect } from "react";
 // [todo] Put selected tag in Context instead of prop drilling? const SelectedTag = React.createContext();

@@ -4,16 +4,15 @@
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.1",
+    "next": "^13.4.12",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-redux": "^8.0.5",
-    "react-router-dom": "^6.4.3",
-    "react-scripts": "5.0.1"
+    "react-redux": "^8.0.5"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "eject": "react-scripts eject"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
   },
   "eslintConfig": {
     "extends": [

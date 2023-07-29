@@ -55,7 +55,7 @@
     font-size: 13px;
     font-weight: 900;
     color: var(--accent1);
-    padding: 0.6rem 1rem;
+    padding: 0.4rem 0.6rem;
     cursor: pointer;
     transition: all .3s ease-in-out;
     /* border: none; */

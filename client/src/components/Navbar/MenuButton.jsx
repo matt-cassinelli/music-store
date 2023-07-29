@@ -1,4 +1,3 @@
-import './MenuButton.css';
 import { useDispatch } from 'react-redux';
 import { toggleMenu } from '../../redux/menuSlice';
 

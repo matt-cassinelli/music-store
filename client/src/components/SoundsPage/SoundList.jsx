@@ -1,4 +1,3 @@
-import './SoundList.css';
 import Sound from './Sound';
 import React, { useState, useEffect, useRef } from "react"; 
 

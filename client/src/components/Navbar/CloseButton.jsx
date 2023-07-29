@@ -1,5 +1,3 @@
-import './CloseButton.css';
-
 // onClick is passed through as a prop, allowing the component to be reused for different use-cases.
 
 export default function CloseButton({onClick}) {
