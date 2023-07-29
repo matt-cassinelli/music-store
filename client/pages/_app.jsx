@@ -1,6 +1,6 @@
 import './_app.css';
 import React from 'react';
-import store from '../redux/store';
+import store from '../src/redux/store';
 import { Provider } from 'react-redux';
 import Menu from '../components/Navbar/Menu';
 import Navbar from '../components/Navbar/Navbar';

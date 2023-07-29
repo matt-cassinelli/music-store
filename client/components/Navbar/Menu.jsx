@@ -5,7 +5,7 @@ import CloseButton from './CloseButton';
 import ThemeButton from './ThemeButton';
 import BasketButton from './BasketButton';
 import { useSelector, useDispatch } from 'react-redux';
-import { toggleMenu, selectMenuState } from '../../redux/menuSlice';
+import { toggleMenu, selectMenuState } from '../../src/redux/menuSlice';
 
 export default function Menu() {
 
