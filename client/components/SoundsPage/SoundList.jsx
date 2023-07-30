@@ -1,7 +1,7 @@
-import Sound from './Sound';
+import Sound from "./Sound";
 import React, { useState, useEffect, useRef } from "react"; 
 
-const MEDIA_ROOT = "http://localhost:3000"; // [todo] put this in useContext https://beta.reactjs.org/apis/react/useContext // [todo] Why doesn't https work?
+const MEDIA_ROOT = "http://localhost:3000";
 
 export default function SoundList(props) {
 
@@ -11,14 +11,13 @@ export default function SoundList(props) {
 
   const audioPlayer = useRef(new Audio());
 
-  useEffect(() => { // Runs when playingSound changes.
+  useEffect(() => {
     if (playingSound === null) {
-      audioPlayer.current.pause()
+      audioPlayer.current.pause();
     } else {
-      console.log("Attempting to play " + MEDIA_ROOT + playingSound.preview)
-      // [old] audioPlayer.src = MEDIA_ROOT + playingSound.preview
+      console.log("Attempting to play " + MEDIA_ROOT + playingSound.preview);
       audioPlayer.current = new Audio(MEDIA_ROOT + playingSound.preview);
-      audioPlayer.current.play()
+      audioPlayer.current.play();
     }
   }, [playingSound]);
 
