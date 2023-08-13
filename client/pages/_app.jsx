@@ -1,4 +1,4 @@
-import "./_app.css";
+import "../styles/globals.css";
 import React from "react";
 import store from "../redux/store";
 import { Provider } from "react-redux";
@@ -16,7 +16,7 @@ export default function MyApp({ Component, pageProps }) {
     <Provider store={store}>
       <Menu /> {/* The pop-out menu */}
       <Navbar />
-      <main>
+      <main className="mb-auto grow">
         <Component {...pageProps} />
       </main>
       <Footer />

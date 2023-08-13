@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Uncomment to enable debugging aid */
+/* * {
+    outline: 1px solid #ff000060;
+    outline-offset: -1px;
+    background-color: #ff000004;
+} */

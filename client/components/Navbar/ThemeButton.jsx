@@ -1,8 +1,8 @@
-import {useEffect, useState} from "react"; // [idea] ChangeEventHandler
+// import Image from "next/image";
+import classNames from "@/utils/classNames";
+import {useEffect, useState} from "react";
 // import {ReactComponent as SunIcon} from '../assets/img-app/sun.svg';
 // import {ReactComponent as MoonIcon} from '../assets/img-app/moon.svg';
-
-// CSS className can be passed through as a prop, allowing the component to be customised.
 
 export default function ThemeButton({className}) {
 
@@ -27,11 +27,16 @@ export default function ThemeButton({className}) {
   };
 
   return (
-    <button type='button' className={"theme-btn " + (className || "")}>
-      <label htmlFor="theme-checkbox"></label>
+    <button type='button' className={classNames("flex items-center", className)}>
+      <label
+        htmlFor="theme-checkbox"
+        className="cursor-pointer w-7 h-7 bg-[url('/moon.svg')] dark:bg-[url('/sun.svg')] bg-no-repeat text-primary"
+      >
+      </label>
       <input
         id="theme-checkbox"
         type="checkbox"
+        className="hidden"
         onChange={toggleTheme}
       />
     </button>

@@ -3,7 +3,7 @@ import SoundList from "../components/SoundsPage/SoundList";
 import Spinner from "../components/Spinner";
 import TagList from "../components/SoundsPage/TagList";
 
-const HOST = "https://localhost:5001";
+const HOST = "https://localhost:52358";
 
 export default function SoundsPage() {
 

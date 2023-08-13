@@ -1,6 +1,12 @@
 export default function Spinner() {
   return (
-    <svg id="loading" alt="loading" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+    <svg
+      alt="loading"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      className="w-12 my-8 mx-auto animate-spin fill-primary"
+    >
       <path 
         fill="currentColor"
         fillRule="evenodd"

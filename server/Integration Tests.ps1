@@ -60,6 +60,19 @@ if ( (Test-DatabaseConnection) -eq $false ) {
 
 Set-Location (Get-ScriptRoot)
 
+function Test-DotnetToolIsInstalled ($packageId) {
+  $rawOutput = dotnet tool list -g
+  return $rawOutput.Split(' ').Contains($packageId)
+}
+
+if ((Test-DotnetToolIsInstalled "dotnet-ef") -eq $false) {
+  dotnet tool install --global dotnet-ef --version 6.*
+
+  if ((Test-DotnetToolIsInstalled "dotnet-ef") -eq $false) {
+    throw "Unable to install dotnet-ef"
+  }
+}
+
 # Delete database.
 dotnet ef database drop
 
@@ -81,8 +94,9 @@ Disable-SslCertificateChecks
 # Avoid having to write these params with each Invoke-WebRequest.
 $PSDefaultParameterValues.Add('Invoke-WebRequest:ContentType', 'application/json')
 $PSDefaultParameterValues.Add('Invoke-WebRequest:DisableKeepAlive', $true)
+$PSDefaultParameterValues.Add('Invoke-WebRequest:UseBasicParsing', $true)
 
-$baseUri = 'https://localhost:5001'
+$baseUri = 'https://localhost:52358'
 
 
 #_______________________________ CREATE TAG _______________________________#

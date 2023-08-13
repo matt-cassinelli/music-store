@@ -6,6 +6,8 @@ import ThemeButton from "./ThemeButton";
 import BasketButton from "./BasketButton";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleMenu, selectMenuState } from "../../redux/menuSlice";
+import { links } from "./links";
+import classNames from "@/utils/classNames";
 
 export default function Menu() {
 
@@ -13,18 +15,29 @@ export default function Menu() {
   const dispatch = useDispatch();
 
   return (
-    <aside className={`${visibility ? "menu show-menu" : "menu"}`}>
-      <div className="menu-top">
-        <img src={logo} className="logo" alt="Sound Store" />
+    <aside className={classNames(
+      "fixed top-0 left-0 w-full h-full bg-panel transition-all text-center lg:hidden",
+      (visibility ? "translate-x-0 translate-y-0 z-50" : "translate-x-full translate-y-full -z-10")
+    )}>
+      <div className="flex justify-between items-center p-4">
+        <img src={logo} className="logo" alt="Sound Store"/>
         <CloseButton onClick={() => dispatch(toggleMenu())} />
       </div>
-      <ul className='menu-links'>
-        <li key={1}> <Link href='/sounds'   onClick={() => dispatch(toggleMenu())}> Sounds   </Link> </li>
-        <li key={2}> <Link href='/services' onClick={() => dispatch(toggleMenu())}> Services </Link> </li>
-        <li key={3}> <Link href='/contact'  onClick={() => dispatch(toggleMenu())}> Contact  </Link> </li>
-        <li key={4}> <Link href='/checkout' onClick={() => dispatch(toggleMenu())}> Checkout </Link> </li>
+      <ul className='mb-8'>
+
+        {links.map((link) =>
+          <li key={link.key}>
+            <Link
+              className="block text-left capitalize p-5 text-primary transition-all tracking-wider no-underline hover:pl-8 hover:text-bg hover:bg-primary"
+              href={link.href}
+              onClick={() => dispatch(toggleMenu())}
+            >
+              {link.title}
+            </Link>
+          </li>
+        )}
       </ul>
-      <div className='menu-lower'>
+      <div className='flex justify-center gap-12'>
         <ThemeButton />
         <BasketButton />
       </div>
