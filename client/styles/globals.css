@@ -2,6 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+:root { 
+    --color-primary: #404040;
+    --color-accent1: #13ad37;
+    --color-panel: #ffffff;
+    --color-bg: #e7e7e8;
+    --color-red: #bb2525;
+    --color-grey: #afafaf;
+}
+:root[data-theme="dark"] {
+    --color-primary: #ffffff;
+    --color-accent1: #12852d;
+    --color-panel: #242526;
+    --color-bg: #18191a;
+    --color-red: #bb2525;
+    --color-grey: #606060;
+}
+
 /* Uncomment to enable debugging aid */
 /* * {
     outline: 1px solid #ff000060;

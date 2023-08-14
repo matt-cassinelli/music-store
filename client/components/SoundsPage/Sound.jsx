@@ -15,7 +15,7 @@ export default function Sound( {sound, playingSound, setPlayingSound} ) { // Dec
   }
 
   return (
-    <article className="h-52 m-2 lg:m-4 p-4 flex flex-col justify-between items-center bg-panel text-center rounded-2xl shadow-lg shadow-gray-200 dark:shadow-gray-900 hover:-translate-y-1 duration-300">
+    <article className="h-52 m-2 lg:m-4 p-4 flex flex-col justify-between items-center bg-panel rounded-2xl shadow-lg hover:-translate-y-1 duration-300">
       <h2>{sound.title}</h2> 
       <button
         title="Preview"
@@ -33,10 +33,10 @@ export default function Sound( {sound, playingSound, setPlayingSound} ) { // Dec
         }
       </button>
       <div className="flex justify-between items-center w-full">
-        <h4 className="text-secondary font-extrabold transition-all"> 
+        <h4 className="text-accent1 font-extrabold transition-all"> 
           {formatPrice(sound.price)}
         </h4>
-        <button type="submit" className="text-sm font-semibold text-secondary py-2 px-4 cursor-pointer transition-all border border-secondary rounded-xl hover:bg-secondary hover:text-bg">
+        <button type="submit" className="text-sm font-semibold text-accent1 py-2 px-4 cursor-pointer transition-all border border-accent1 rounded-xl hover:bg-accent1 hover:text-bg">
           Details
         </button>
       </div>

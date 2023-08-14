@@ -22,7 +22,7 @@ export default function SoundList(props) {
   }, [playingSound]);
 
   return (
-    <section className="grid grid-flow-row text-neutral-600 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <section className="grid grid-flow-row sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {props.sounds.map((s) => {
         return <Sound sound={s} key={s.id} setPlayingSound={setPlayingSound} playingSound={playingSound} />;
       })}

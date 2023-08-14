@@ -11,7 +11,7 @@ export default function Tag( {id, name, rank, setSelectedTagId} ) {
       />
       <label
         htmlFor={name}
-        className="bg-panel rounded-full px-3 py-1 cursor-pointer text-sm tracking-tight text-primary shadow-sm transition-all hover:brightness-95 peer-checked:bg-secondary"
+        className="bg-panel rounded-full px-3 py-1 cursor-pointer text-sm tracking-tight shadow-sm transition-all hover:brightness-95 peer-checked:bg-accent1"
       >
         {name}
       </label>
