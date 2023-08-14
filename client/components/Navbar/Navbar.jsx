@@ -9,15 +9,15 @@ import { links } from "./links";
 
 export default function Navbar() {
   return (
-    <header className="flex mx-auto justify-between items-center p-4 h-12">
+    <header className="flex justify-between items-center p-4 h-12">
       <Link href="/">
         <Image className="h-9 w-9" src={logo} alt="Home"/>
       </Link>
-      <ul className="hidden md:flex gap-4">
+      <ul className="hidden md:flex gap-7">
         {links.map((link) =>
           <li key={link.key}>
             <Link
-              className="tracking-widest p-2 font-semibold text-lg hover:underline"
+              className="tracking-widest font-semibold text-xl hover:underline"
               href={link.href}
             >
               {link.title}

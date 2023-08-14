@@ -9,7 +9,7 @@ export default function Document() {
         <link rel="icon" href="%PUBLIC_URL%/logo.svg" />
         <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo.svg" />
       </Head>
-      <body className="flex flex-col min-h-screen h-screen container mx-auto px-4 md:px-12 text-primary">
+      <body>
         <Main/>
         <NextScript />
       </body>

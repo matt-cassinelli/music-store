@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+/* This is required because NextJS automatically adds a div under the <body> element. */
+/* If this was not the case, I'd place these styles directly on the body. */
+#__next {
+    @apply flex flex-col min-h-screen container mx-auto px-4 md:px-12 text-primary relative
+}
+
+
+/* Color variables used in tailwind.config.js */
 :root { 
     --color-primary: #404040;
     --color-accent1: #13ad37;

@@ -17,7 +17,6 @@ export default function ThemeButton({className}) {
 
   // When theme state changes
   useEffect(() => {
-    console.log(`Theme: ${theme}`);
     if (theme !== undefined) {
       document.documentElement.setAttribute("data-theme", theme);
       localStorage.setItem("theme", theme);
