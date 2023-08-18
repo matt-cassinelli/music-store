@@ -1,5 +1,5 @@
 import Link from "next/link";
-import classNames from "@/utils/classNames";
+import classNames from "utils/classNames";
 
 export default function BasketButton({className}) {
   return (

@@ -1,4 +1,4 @@
-import Tag from "./Tag";
+import Tag from "components/SoundsPage/Tag";
 
 export default function TagList( {tags, setSelectedTagId} ) {
   return (

@@ -1,12 +1,12 @@
-import { Disclosure, Transition } from '@headlessui/react';
 import Link from "next/link";
 import Image from "next/image";
-import ThemeButton from "./ThemeButton";
-import BasketButton from "./BasketButton";
-import CloseIcon from "./CloseIcon";
-import MenuIcon from "./MenuIcon";
-import logo from "./logo.svg";
-import { links } from "./links";
+import { Disclosure, Transition } from '@headlessui/react';
+import ThemeButton from "components/Navbar/ThemeButton";
+import BasketButton from "components/Navbar/BasketButton";
+import CloseIcon from "components/Navbar/CloseIcon";
+import MenuIcon from "components/Navbar/MenuIcon";
+import logo from "components/Navbar/logo.svg";
+import { links } from "components/Navbar/links";
 
 export default function Navbar() {
   return (
@@ -34,7 +34,6 @@ export default function Navbar() {
               <BasketButton className="hidden md:flex"/>
             </li>
             <li>
-              {/* Mobile menu button*/}
               <Disclosure.Button className="flex md:hidden p-2 rounded-md text-primary focus:ring-2 focus:ring-accent1">
                 <span className="sr-only">Open main menu</span>
                 {open ? (

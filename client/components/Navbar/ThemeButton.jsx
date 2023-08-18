@@ -1,4 +1,4 @@
-import classNames from "@/utils/classNames";
+import classNames from "utils/classNames";
 import {useEffect, useState} from "react";
 
 export default function ThemeButton({className}) {

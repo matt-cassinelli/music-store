@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import SoundList from "../components/SoundsPage/SoundList";
-import Spinner from "../components/Spinner";
-import TagList from "../components/SoundsPage/TagList";
+import SoundList from "components/SoundsPage/SoundList";
+import Spinner from "components/Spinner";
+import TagList from "components/SoundsPage/TagList";
 
 const HOST = "https://localhost:52358";
 
@@ -42,7 +42,7 @@ export default function SoundsPage() {
     }
   };
   
-  useEffect(() => { // Runs on component mount.
+  useEffect(() => {
     fetchSounds();
     fetchTags();
   }, []);

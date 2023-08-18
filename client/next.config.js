@@ -3,11 +3,9 @@
 module.exports = {
   reactStrictMode: true,
   output: "export", // https://nextjs.org/docs/pages/building-your-application/deploying/static-exports
-  images: { unoptimized: true },
+  // images: { unoptimized: true },
   env: {
-    contactEmail: "enquiries@link-tp.com",
+    title: "Music Store",
+    contactEmail: "enquiries@acme.com",
   },
-  // assetPrefix: './',
 };
-
-// const withPWA = require('next-pwa')

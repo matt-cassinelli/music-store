@@ -1,5 +1,5 @@
-import Sound from "./Sound";
-import React, { useState, useEffect, useRef } from "react"; 
+import Sound from "components/SoundsPage/Sound";
+import React, { useState, useEffect, useRef } from "react";
 
 const MEDIA_ROOT = "http://localhost:3000";
 
