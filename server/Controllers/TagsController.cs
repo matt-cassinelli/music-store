@@ -1,8 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
 using AutoMapper;
 using SoundStore.API.Models;
 namespace SoundStore.API.Controllers;
@@ -23,8 +20,6 @@ public class TagsController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<TagSimpleDto>>> ReadList()
     {
-        // [old] var tags = await _context.Tags.Select(t => _mapper.Map<TagSimpleDto>(t)).ToListAsync();
-        
         var query = _context.Tags
             .AsNoTracking()
             .OrderByDescending(s => s.Rank);
@@ -35,13 +30,6 @@ public class TagsController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<TagSimpleDto>> Read(short id)
     {
-        // [old]
-        // var tag = await _context.Tags.FindAsync(id);
-        // if (tag != null) {
-        //     return Ok(_mapper.Map<ReadTagDto>(tag));
-        // }
-        // return NotFound();
-
         var query = _context.Tags
             .AsNoTracking()
             .Where(s => s.Id == id);

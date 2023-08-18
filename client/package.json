@@ -1,24 +1,26 @@
 {
   "name": "client",
-  "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
   "dependencies": {
-    "@reduxjs/toolkit": "^1.9.1",
+    "next": "13.4.17",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-redux": "^8.0.5",
-    "react-router-dom": "^6.4.3",
-    "react-scripts": "5.0.1"
+    "@headlessui/react": "^1.7.17"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app"
-    ]
+  "devDependencies": {
+    "autoprefixer": "^10.4.14",
+    "eslint": "^8.42.0",
+    "eslint-config-next": "^13.4.5",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-react": "^7.33.1",
+    "postcss": "^8.4.24",
+    "tailwindcss": "^3.3.2"
   },
   "browserslist": {
     "production": [
