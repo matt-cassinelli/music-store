@@ -1,10 +1,7 @@
 import "../styles/globals.css";
-import React from "react";
-import store from "../redux/store";
-import { Provider } from "react-redux";
+import Head from "next/head";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer";
-import Head from "next/head";
 
 export default function MyApp({ Component, pageProps }) {
   return (<>
@@ -12,12 +9,10 @@ export default function MyApp({ Component, pageProps }) {
       <title>Sound Store</title>
       <meta name="viewport" content="width=device-width, initial-scale=1" />
     </Head>
-    <Provider store={store}>
-      <Navbar />
-      <main className="mb-auto grow">
-        <Component {...pageProps} />
-      </main>
-      <Footer />
-    </Provider>
+    <Navbar />
+    <main className="mb-auto grow">
+      <Component {...pageProps} />
+    </main>
+    <Footer />
   </>);
 }
