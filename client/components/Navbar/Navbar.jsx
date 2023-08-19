@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { Disclosure, Transition } from '@headlessui/react';
 import ThemeButton from "components/Navbar/ThemeButton";
 import BasketButton from "components/Navbar/BasketButton";
@@ -7,8 +8,12 @@ import CloseIcon from "components/Navbar/CloseIcon";
 import MenuIcon from "components/Navbar/MenuIcon";
 import logo from "components/Navbar/logo.svg";
 import { links } from "components/Navbar/links";
+import classNames from "utils/classNames";
 
 export default function Navbar() {
+
+  const pathname = usePathname();
+
   return (
     <Disclosure as="nav">
       {({ open, close }) => (<>
@@ -20,7 +25,10 @@ export default function Navbar() {
             {links.map((link) =>
               <li key={link.key}>
                 <Link
-                  className="hidden md:flex tracking-widest font-semibold text-xl hover:underline"
+                  className={classNames(
+                    "hidden md:flex tracking-widest font-semibold text-xl hover:underline",
+                    pathname == link.href && "underline"
+                  )} 
                   href={link.href}
                 >
                   {link.title}
@@ -58,12 +66,14 @@ export default function Navbar() {
               {links.map((link) => (
                 <Disclosure.Button
                   key={link.key}
-                  className='w-full block px-3 py-4 font-medium border-b border-grey'
+                  className={classNames(
+                    "w-full block px-3 py-4 font-medium border-b border-grey hover:bg-grey",
+                    pathname == link.href && "bg-grey"
+                  )} 
                 >
                   <Link
                     href={link.href}
                     passHref
-                    className='hover:text-palette-dark'
                     onClick={close}
                   >
                     {link.title}
