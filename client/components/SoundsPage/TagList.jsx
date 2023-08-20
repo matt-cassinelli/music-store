@@ -1,12 +1,41 @@
-import Tag from "components/SoundsPage/Tag";
+import { Fragment } from 'react';
+import { RadioGroup } from '@headlessui/react';
+import classNames from 'utils/classNames';
 
-export default function TagList( {tags, setSelectedTagId} ) {
+export default function TagList({tags, selectedTagId, setSelectedTagId}) {
   return (
-    <ul className="flex flex-wrap p-4 gap-4 m-auto">
-      <Tag name="All" setSelectedTagId={setSelectedTagId}/>
-      {tags.map((t) => {
-        return <Tag key={t.id} {...t} setSelectedTagId={setSelectedTagId}/>; // The spread operator adds all of the properties of that object.
-      })}
-    </ul>
+    <RadioGroup
+      value={selectedTagId}
+      onChange={(value) => setSelectedTagId(value)}
+      className="flex flex-wrap p-4 gap-4 m-auto list-none"
+      aria-label='Tag'
+      as='ul'
+    >
+      <Tag key={"All"} label={"All"} value={null} />
+      {tags.map((tag) => (
+        <Tag key={tag.name} label={tag.name} value={tag.id} />
+      ))}
+    </RadioGroup>
+  );
+}
+
+function Tag({label, value}) {
+  return (
+    <RadioGroup.Option
+      as={Fragment}
+      key={label}
+      value={value}
+    >
+      {({ checked }) => (
+        <li
+          className={classNames(
+            "rounded-full px-3 py-1 text-sm tracking-tight shadow-sm hover:brightness-95",
+            checked ? "bg-accent1" : "bg-panel cursor-pointer"
+          )}
+        >
+          {label}
+        </li>
+      )}
+    </RadioGroup.Option>
   );
 }

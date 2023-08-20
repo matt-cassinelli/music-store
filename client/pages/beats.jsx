@@ -9,12 +9,12 @@ export default function SoundsPage() {
 
   const [sounds,          setSounds]          = useState([]);
   const [tags,            setTags]            = useState([]);
-  const [selectedTagId,   setSelectedTagId]   = useState();
+  const [selectedTagId,   setSelectedTagId]   = useState(null);
   const [tagsAreLoaded,   setTagsAreLoaded]   = useState(false);
   const [soundsAreLoaded, setSoundsAreLoaded] = useState(false);
    
   const fetchSounds = async (tagId) => {
-    const url = (tagId === undefined) ? `${HOST}/sounds` : `${HOST}/sounds?tagId=${tagId}`;
+    const url = (tagId === undefined || tagId === null) ? `${HOST}/sounds` : `${HOST}/sounds?tagId=${tagId}`;
     console.log(`fetching ${url}`);
     try {
       const response = await fetch(url);
@@ -54,8 +54,8 @@ export default function SoundsPage() {
   return <>
     {!tagsAreLoaded && !soundsAreLoaded && <Spinner />}
     {tagsAreLoaded && soundsAreLoaded && <>
-      <TagList tags={tags} setSelectedTagId={setSelectedTagId}/>
-      <SoundList sounds={sounds} selectedTag={selectedTagId}/>
+      <TagList tags={tags} selectedTagId={selectedTagId} setSelectedTagId={setSelectedTagId}/>
+      <SoundList sounds={sounds}/>
     </>}
   </>;
 }
