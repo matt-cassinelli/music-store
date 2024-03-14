@@ -2,11 +2,13 @@
 .vscode
 private
 
-server/bin
-server/obj
-server/Migrations
+bin
+obj
+*/Migrations/*
 
-client/build
-client/node_modules
-client/package-lock.json
-client/.next
+*Client/build
+*Client/node_modules
+*Client/package-lock.json
+*Client/.next
+
+!.gitkeep
