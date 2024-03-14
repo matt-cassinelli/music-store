@@ -55,7 +55,7 @@ public class SoundsController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPost("api/sounds/{id}")]
+    [HttpPost("api/sounds")]
     public async Task<ActionResult<ReadSoundDto>> CreateSound([FromBody] CreateSoundDto input)
     {
         if (input.UploadedOn == null) { input.UploadedOn = DateTime.UtcNow; }
@@ -86,7 +86,7 @@ public class SoundsController : ControllerBase
     }
 
     [HttpPut("api/sounds/{id}")]
-    public async Task<ActionResult> Update([FromBody] UpdateSoundDto input, Guid id)
+    public async Task<ActionResult> UpdateSound([FromBody] UpdateSoundDto input, Guid id)
     {
         if (id != input.Id) { return BadRequest("Id's must match."); }
 
@@ -122,7 +122,7 @@ public class SoundsController : ControllerBase
     }
 
     [HttpDelete("api/sounds/{id}")]
-    public async Task<ActionResult> Delete(Guid id)
+    public async Task<ActionResult> DeleteSound(Guid id)
     {
         var entityToDelete = await _context.Sounds.FindAsync(id);
 

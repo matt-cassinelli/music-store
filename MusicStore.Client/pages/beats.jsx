@@ -54,7 +54,7 @@ export default function SoundsPage() {
   return <>
     {!tagsAreLoaded && !soundsAreLoaded && <Spinner />}
     {tagsAreLoaded && soundsAreLoaded && <>
-      <TagList tags={tags} setSelectedTagId={setSelectedTagId}/>
+      <TagList tags={tags} selectedTagId={selectedTagId} setSelectedTagId={setSelectedTagId}/>
       <SoundList sounds={sounds} selectedTag={selectedTagId}/>
     </>}
   </>;

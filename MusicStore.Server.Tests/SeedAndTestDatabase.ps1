@@ -1,33 +1,3 @@
-#____________________________ SETUP/ BEFORE ALL ____________________________#
-
-function Get-ScriptRoot {
-  if ($PSScriptRoot) { 
-    $PSScriptRoot
-  }
-  elseif ($psISE) {
-    Split-Path -Path $psISE.CurrentFile.FullPath
-  }
-  elseif ($profile -match "VScode") {
-    Split-Path $psEditor.GetEditorContext().CurrentFile.Path
-  }
-  else { 
-    throw "Script path not detected"
-  } 
-}
-
-function Test-DatabaseConnection {
-  $stateString = (Invoke-Command {SQLLocalDB info MSSQLLocalDB})[10]
-  if ( $stateString.Contains('Running') ) {
-    return $true
-  }
-  elseif ( $stateString.Contains('Stopped') ) {
-    return $false
-  }
-  else {
-    throw "Please install SQLLocalDB and create an instance."
-  }
-}
-
 function Disable-SslCertificateChecks {
 Add-Type @"
 using System.Net;
@@ -47,59 +17,21 @@ public class TrustAllCertsPolicy : ICertificatePolicy
 [System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
 }
 
-# Halt the script at any error.
-$ErrorActionPreference = 'Stop'
-
-# Check / start database server.
-if ( (Test-DatabaseConnection) -eq $false ) {
-  Invoke-Command {SQLLocalDB start}
-  if ( (Test-DatabaseConnection) -eq $false ) {
-    throw "Unable to start database"
-  }
-}
-
-Set-Location (Get-ScriptRoot)
-
-function Test-DotnetToolIsInstalled ($packageId) {
-  $rawOutput = dotnet tool list -g
-  return $rawOutput.Split(' ').Contains($packageId)
-}
-
-if ((Test-DotnetToolIsInstalled "dotnet-ef") -eq $false) {
-  dotnet tool install --global dotnet-ef --version 6.*
-
-  if ((Test-DotnetToolIsInstalled "dotnet-ef") -eq $false) {
-    throw "Unable to install dotnet-ef"
-  }
-}
-
-# Delete database.
-dotnet ef database drop
-
-# Delete migrations folder.
-if (Test-Path .\Migrations) {Remove-Item .\Migrations -Recurse}
-
-# Create initial migration.
-dotnet ef migrations add v1
-
-# Execute migration / create database.
-dotnet ef database update
-
-# Start API in new window (for logging). Alternatively, manually run in new window
-Start-Process powershell {dotnet run}
-
 # Tell Invoke-WebRequest not to check certificates. Equivalant to "-k" in curl
 Disable-SslCertificateChecks
+
+# Halt the script at any error.
+$ErrorActionPreference = 'Stop'
 
 # Avoid having to write these params with each Invoke-WebRequest.
 $PSDefaultParameterValues.Add('Invoke-WebRequest:ContentType', 'application/json')
 $PSDefaultParameterValues.Add('Invoke-WebRequest:DisableKeepAlive', $true)
 $PSDefaultParameterValues.Add('Invoke-WebRequest:UseBasicParsing', $true)
 
-$baseUri = 'https://localhost:52358'
+$baseUri = 'https://localhost:52358/api'
 
 
-#_______________________________ CREATE TAG _______________________________#
+#_______________________________ CREATE TAGS _______________________________#
 
 $body = '{
   "name": "Ambient",
@@ -164,32 +96,11 @@ $body = '{
 $response = Invoke-WebRequest -Method 'POST' -Uri "$baseUri/tags" -Body $body
 if ($response.StatusCode -ne 201) {throw}
 
-# [todo]
-# Happy
-# Motivational
-# Corporate
-# Children
-# Cute
-# Vlog
-# Cooking
-# Bright
-# Intro
-# Piano
-# Technology
-# Chill
-# Funky
-# Christmas
-# Energetic
-# Acoustic
-
 
 #_______________________________ READ TAG ________________________________#
 
-# [old]
-# $tempId = ($response.Content | ConvertFrom-Json).id
-# $response = Invoke-WebRequest -Method 'GET' -Uri "$baseUri/tags/$tempId"
-
-$response = Invoke-WebRequest -Method 'GET' -Uri "$baseUri/tags/1"
+$tempId = ($response.Content | ConvertFrom-Json).id
+$response = Invoke-WebRequest -Method 'GET' -Uri "$baseUri/tags/$tempId"
 if ($response.StatusCode -ne 200) {throw}
 if (-not $response.Content) {throw}
 
@@ -197,14 +108,11 @@ if (-not $response.Content) {throw}
 #_______________________________ READ TAGS _______________________________#
 
 $response = Invoke-WebRequest -Method 'GET' -Uri "$baseUri/tags"
-
 if ($response.StatusCode -ne 200) {throw}
-
-# There should be 9 tags
 if ( ($response.Content | ConvertFrom-Json).Count -ne 9 ) {throw}
 
 
-#______________________________ CREATE SOUND ______________________________#
+#______________________________ CREATE SOUNDS ______________________________#
 
 $body = '{
     "title": "Ocean Waves",
@@ -300,7 +208,6 @@ if (-not $response.Content) {throw}
 #_______________________________ READ SOUND _______________________________#
 
 $tempId = ($response.Content | ConvertFrom-Json).id
-
 $response = Invoke-WebRequest -Method 'GET' -Uri "$baseUri/sounds/$tempId"
 if ($response.StatusCode -ne 200) {throw}
 if (-not $response.Content) {throw}
@@ -326,8 +233,7 @@ $response.Content | ConvertFrom-Json
 
 $response = Invoke-WebRequest -Method 'GET' -Uri "$baseUri/sounds?tagId=1&tagId=2"
 $response.Content | ConvertFrom-Json
-# [todo] Describe / check what each should return
-
+# [todo] Assert
 
 
 #______________________________ UPDATE SOUND ______________________________#
@@ -354,9 +260,3 @@ $response = Invoke-WebRequest -Method 'PUT' -Uri "$baseUri/sounds/$tempId" -Body
 if ($response.StatusCode -ne 204) {throw}
 
 if ( ((Invoke-WebRequest -Method 'GET' -Uri "$baseUri/sounds/$tempId").Content | ConvertFrom-Json).title -ne "Test Sound 5 Updated" ) {throw}
-
-#________________________________ READING ________________________________#
-
-# https://gist.github.com/bryan-c-oconnell/4ae84d5253cf6f434750#file-restapitest-ps1
-# https://spr.com/test-your-restful-api-using-powershell/
-# https://pester-docs.netlify.app/
