@@ -1,4 +1,4 @@
-export default function Tag( {id, name, rank, setSelectedTagId} ) {
+export default function Tag({ id, name, setSelectedTagId }) {
   return (
     <div>
       <input

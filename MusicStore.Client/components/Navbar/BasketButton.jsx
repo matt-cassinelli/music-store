@@ -1,7 +1,7 @@
 import Link from "next/link";
 import joinWithSpaces from "utils/joinWithSpaces";
 
-export default function BasketButton({className}) {
+export default function BasketButton({ className }) {
   return (
     <Link href="/basket" className={joinWithSpaces("flex items-center gap-1", className)}>
       <svg id="layer-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 902.86 748.42" className='h-7 fill-primary'>

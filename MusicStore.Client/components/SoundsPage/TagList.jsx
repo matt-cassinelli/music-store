@@ -1,8 +1,8 @@
-import { Fragment } from 'react';
-import { RadioGroup } from '@headlessui/react';
-import joinWithSpaces from 'utils/joinWithSpaces';
+import { Fragment } from "react";
+import { RadioGroup } from "@headlessui/react";
+import joinWithSpaces from "utils/joinWithSpaces";
 
-export default function TagList( {tags, selectedTagId, setSelectedTagId} ) {
+export default function TagList({ tags, selectedTagId, setSelectedTagId }) {
   return (
     <RadioGroup
       value={selectedTagId}
@@ -19,7 +19,7 @@ export default function TagList( {tags, selectedTagId, setSelectedTagId} ) {
   );
 }
 
-function Tag({label, value}) {
+function Tag({ label, value }) {
   return (
     <RadioGroup.Option
       as={Fragment}

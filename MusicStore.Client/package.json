@@ -4,7 +4,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint **/*.js **/*.jsx .",
     "export": "next export",
     "clean-win": "if exist .next ( rmdir /s /q .next )",
     "clean-unix": "rm -rf .next/*",

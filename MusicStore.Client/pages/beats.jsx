@@ -12,7 +12,7 @@ export default function SoundsPage() {
   const [selectedTagId,   setSelectedTagId]   = useState();
   const [tagsAreLoaded,   setTagsAreLoaded]   = useState(false);
   const [soundsAreLoaded, setSoundsAreLoaded] = useState(false);
-   
+
   const fetchSounds = async (tagId) => {
     const url = (tagId === undefined) ? `${HOST}/sounds` : `${HOST}/sounds?tagId=${tagId}`;
     console.log(`fetching ${url}`);
@@ -28,7 +28,7 @@ export default function SoundsPage() {
       console.log("error", error);
     }
   };
-  
+
   const fetchTags = async () => {
     try {
       const response = await fetch(`${HOST}/tags`);
@@ -41,12 +41,12 @@ export default function SoundsPage() {
       console.log("error", error);
     }
   };
-  
+
   useEffect(() => {
     fetchSounds();
     fetchTags();
   }, []);
-  
+
   useEffect(() => {
     fetchSounds(selectedTagId);
   }, [selectedTagId]);

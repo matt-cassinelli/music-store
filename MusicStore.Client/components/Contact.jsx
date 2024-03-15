@@ -1,7 +1,7 @@
 "use client";
-import { useForm, ValidationError } from '@formspree/react';
-import Link from 'next/link';
-import { CheckIcon } from '@heroicons/react/24/solid';
+import { useForm, ValidationError } from "@formspree/react";
+import Link from "next/link";
+import { CheckIcon } from "@heroicons/react/24/solid";
 
 export default function Contact() {
   const [state, handleSubmit] = useForm("xrgwbgqw");
@@ -43,75 +43,75 @@ export default function Contact() {
 
   return (<>
 
-      <form name='contact' id='contact' className="w-full px-4 mx-auto max-w-2xl" onSubmit={handleSubmit}>
+    <form name='contact' id='contact' className="w-full px-4 mx-auto max-w-2xl" onSubmit={handleSubmit}>
 
-        <label className="label label-text pt-0" htmlFor="name">
+      <label className="label label-text pt-0" htmlFor="name">
           What is your name?
-        </label>
-        <input
-          className="form-input input input-bordered w-full focus:outline-none placeholder-gray-300"
-          id="name"
-          type="text"
-          name="name"
-          placeholder="John Doe"
-          required
-          // onChange={(e) => setName(e.target.value)}
-        />
-        <ValidationError 
-          prefix="Name" 
-          field="name"
-          errors={state.errors}
-        />
+      </label>
+      <input
+        className="form-input input input-bordered w-full focus:outline-none placeholder-gray-300"
+        id="name"
+        type="text"
+        name="name"
+        placeholder="John Doe"
+        required
+        // onChange={(e) => setName(e.target.value)}
+      />
+      <ValidationError
+        prefix="Name"
+        field="name"
+        errors={state.errors}
+      />
 
-        <label className="label label-text mt-6" htmlFor="name">
+      <label className="label label-text mt-6" htmlFor="name">
           Your email
-        </label>
-        <input
-          className="form-input input input-bordered w-full focus:outline-none placeholder-gray-300"
-          id="email"
-          type="email"
-          name="email"
-          placeholder="johndoe@acme.com"
-          required
-          // onChange={(e) => setEmail(e.target.value)}
-        />
-        <ValidationError 
-          prefix="Email" 
-          field="email"
-          errors={state.errors}
-        />
+      </label>
+      <input
+        className="form-input input input-bordered w-full focus:outline-none placeholder-gray-300"
+        id="email"
+        type="email"
+        name="email"
+        placeholder="johndoe@acme.com"
+        required
+        // onChange={(e) => setEmail(e.target.value)}
+      />
+      <ValidationError
+        prefix="Email"
+        field="email"
+        errors={state.errors}
+      />
 
-        <label className="label label-text mt-6" htmlFor="message">
+      <label className="label label-text mt-6" htmlFor="message">
           Your enquiry
-        </label>
-        <textarea
-          className="textarea textarea-bordered w-full focus:outline-none"
-          id="message"
-          name="message"
-          rows="5"
-          required
-          // onChange={(e) => setMessage(e.target.value)}
-        />
-        <ValidationError 
-          prefix="Message" 
-          field="message"
-          errors={state.errors}
-        />
+      </label>
+      <textarea
+        className="textarea textarea-bordered w-full focus:outline-none"
+        id="message"
+        name="message"
+        rows="5"
+        required
+        // onChange={(e) => setMessage(e.target.value)}
+      />
+      <ValidationError
+        prefix="Message"
+        field="message"
+        errors={state.errors}
+      />
 
-        <div className="flex justify-between items-center mt-6">
-          <button
-            type='submit'
-            disabled={state.submitting}
-            className="btn btn-active btn-primary"
-          >
+      <div className="flex justify-between items-center mt-6">
+        <button
+          type='submit'
+          disabled={state.submitting}
+          className="btn btn-active btn-primary"
+        >
             Submit
-          </button>
-          <p className="align-middle text-sm text-right">
+        </button>
+        <p className="align-middle text-sm text-right">
             Alternatively, email us at <Link href={`mailto:${process.env.contactEmail}`} className='underline'>
-              {process.env.contactEmail}
-            </Link>
-            </p>
-        </div>
-      </form>
-  </>)
+            {process.env.contactEmail}
+          </Link>
+        </p>
+      </div>
+    </form>
+  </>);
 }

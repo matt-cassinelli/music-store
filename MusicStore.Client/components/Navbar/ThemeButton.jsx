@@ -1,7 +1,7 @@
+import { useEffect, useState } from "react";
 import joinWithSpaces from "utils/joinWithSpaces";
-import {useEffect, useState} from "react";
 
-export default function ThemeButton({className}) {
+export default function ThemeButton({ className }) {
   const [theme, setTheme] = useState("");
 
   // When component mounts

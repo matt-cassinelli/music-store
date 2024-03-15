@@ -1,4 +1,4 @@
-export default function CloseButton({onClick}) {
+export default function CloseButton({ onClick }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
