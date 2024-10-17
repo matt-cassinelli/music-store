@@ -1,102 +1,62 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using AutoMapper;
 using MusicStore.Server.Models;
+using MusicStore.Server.Services;
+using System.Net;
 
 namespace MusicStore.Server.Controllers;
 
 [ApiController]
-public class TagsController : ControllerBase
+public class TagsController(TagService service) : ControllerBase
 {
-    private readonly AppDbContext _context;
-    private readonly IMapper _mapper;
-
-    public TagsController(AppDbContext context, IMapper mapper)
-    {
-        _context = context;
-        _mapper = mapper;
-    }
+    private readonly TagService _service = service;
 
     [HttpGet("api/tags")]
-    public async Task<ActionResult<IEnumerable<TagSimpleDto>>> GetTags()
+    public async Task<ActionResult> GetAll()
     {
-        var query = _context.Tags
-            .AsNoTracking()
-            .OrderByDescending(s => s.Rank);
-
-        var tags = await _mapper.ProjectTo<TagSimpleDto>(query).ToListAsync();
-
-        return Ok(tags);
+        var response = await _service.GetAll();
+        return Ok(response);
     }
 
     [HttpGet("api/tags/{id}")]
-    public async Task<ActionResult<TagSimpleDto>> GetTag(short id)
+    public async Task<ActionResult> Get(Guid id)
     {
-        var query = _context.Tags
-            .AsNoTracking()
-            .Where(s => s.Id == id);
+        var result = await _service.Get(id);
 
-        var tag = await _mapper.ProjectTo<TagSimpleDto>(query).FirstOrDefaultAsync();
+        if (result.IsFailure)
+            return StatusCode((int)result.Error.StatusCode, result.Error.ToApiResponse());
 
-        if (tag == null)
-        {
-            return NotFound();
-        }
-
-        return Ok(tag);
+        return Ok(result.Value);
     }
 
     [HttpPost("api/tags")]
-    public async Task<ActionResult<TagSimpleDto>> CreateTag([FromBody] CreateTagDto input)
+    public async Task<ActionResult> Add([FromBody] AddTagRequest input)
     {
-        if (input is null)
-        { 
-            throw new ArgumentException(nameof(input));
-        }
+        var result = await _service.Add(input);
 
-        var tag = _mapper.Map<Tag>(input);
+        if (result.IsFailure)
+            return StatusCode((int)result.Error.StatusCode, result.Error.ToApiResponse());
 
-        _context.Tags.Add(tag);
-
-        await _context.SaveChangesAsync();
-
-        return CreatedAtAction(nameof(GetTag), new { id = tag.Id }, _mapper.Map<TagSimpleDto>(tag));
+        return CreatedAtAction(nameof(Get), new { Id = result.Value.Id } , null);
     }
 
     [HttpPut("api/tags/{id}")]
-    public async Task<ActionResult> UpdateTag([FromBody] TagSimpleDto input, short id)
+    public async Task<ActionResult> Update([FromBody] Tag input, Guid id)
     {
-        if (id != input.Id) { return BadRequest("Id's must match."); }
+        var result = await _service.Update(input, id);
 
-        var entityToUpdate = await _context.Tags.FindAsync(id);
-
-        if (entityToUpdate == null)
-        {
-            return NotFound();
-        }
-
-        _mapper.Map(input, entityToUpdate);
-
-        _context.Entry(entityToUpdate).State = EntityState.Modified;
-
-        await _context.SaveChangesAsync();
+        if (result.IsFailure)
+            return StatusCode((int)result.Error.StatusCode, result.Error.ToApiResponse());
 
         return NoContent();
     }
 
     [HttpDelete("api/tags/{id}")]
-    public async Task<ActionResult> Delete(short id)
+    public async Task<ActionResult> Delete(Guid id)
     {
-        var toDelete = await _context.Tags.FindAsync(id);
+        var result = await _service.Delete(id);
 
-        if (toDelete is null)
-        { 
-            return NotFound();
-        }
-
-        _context.Tags.Remove(toDelete);
-
-        await _context.SaveChangesAsync();
+        if (result.IsFailure)
+            return StatusCode((int)result.Error.StatusCode, result.Error.ToApiResponse());
 
         return NoContent();
     }

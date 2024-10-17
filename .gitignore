@@ -4,11 +4,12 @@ private
 
 bin
 obj
-*/Migrations/*
 
-*Client/build
-*Client/node_modules
-*Client/package-lock.json
-*Client/.next
+MusicStore.Server/EntityFramework/Migrations/*
+
+MusicStore.Client/build
+MusicStore.Client/node_modules
+MusicStore.Client/package-lock.json
+MusicStore.Client/.next
 
 !.gitkeep

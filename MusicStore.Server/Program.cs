@@ -1,30 +1,34 @@
-using MusicStore.Server.Models;
-using MusicStore.Server.AutoMapperProfiles;
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
+using MusicStore.Server.EntityFramework;
+using MusicStore.Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 
+var connectionString = builder.Configuration.GetConnectionString("Database");
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("Database")));
+    options.UseNpgsql(connectionString!));
+
+builder.Services.AddTransient<SoundService>();
+builder.Services.AddTransient<TagService>();
 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: "MyCorsPolicy", policy => {
-        policy.AllowAnyOrigin();
+        policy.WithOrigins("https://localhost:52358", "http://localhost:52220");
     });
 });
 
-builder.Services.AddControllers().AddJsonOptions(
-    options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+builder.Services
+    .AddControllers()
+    .AddJsonOptions(opt =>
+        opt.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-builder.Services.AddAutoMapper(cfg => cfg.AddProfile<AutoMapperProfile>());
 
 var app = builder.Build();
 
@@ -37,12 +41,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-//app.UseRouting();
-
 app.UseCors("MyCorsPolicy");
 
 app.UseAuthorization();
 
-app.MapControllers(); // Since this is a REST API, we use Attribute Routing instead of Conventional Routing.
+app.MapControllers();
 
 app.Run();

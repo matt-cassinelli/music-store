@@ -1,3 +1,5 @@
+# Requires PowerShell v7+ due to -SkipHttpErrorCheck parameter
+
 function Disable-SslCertificateChecks {
 Add-Type @"
 using System.Net;
@@ -23,10 +25,10 @@ Disable-SslCertificateChecks
 # Halt the script at any error.
 $ErrorActionPreference = 'Stop'
 
-# Avoid having to write these params with each Invoke-WebRequest.
 $PSDefaultParameterValues.Add('Invoke-WebRequest:ContentType', 'application/json')
 $PSDefaultParameterValues.Add('Invoke-WebRequest:DisableKeepAlive', $true)
 $PSDefaultParameterValues.Add('Invoke-WebRequest:UseBasicParsing', $true)
+$PSDefaultParameterValues.Add('Invoke-WebRequest:SkipHttpErrorCheck', $true)
 
 $baseUri = 'https://localhost:52358/api'
 
@@ -97,6 +99,14 @@ $response = Invoke-WebRequest -Method 'POST' -Uri "$baseUri/tags" -Body $body
 if ($response.StatusCode -ne 201) {throw}
 
 
+#_______________________________ READ TAGS _______________________________#
+
+$response = Invoke-WebRequest -Method 'GET' -Uri "$baseUri/tags"
+if ($response.StatusCode -ne 200) {throw}
+$tags = ($response.Content | ConvertFrom-Json).tags
+if ($tags.Count -ne 9) {throw}
+
+
 #_______________________________ READ TAG ________________________________#
 
 $tempId = ($response.Content | ConvertFrom-Json).id
@@ -105,155 +115,154 @@ if ($response.StatusCode -ne 200) {throw}
 if (-not $response.Content) {throw}
 
 
-#_______________________________ READ TAGS _______________________________#
-
-$response = Invoke-WebRequest -Method 'GET' -Uri "$baseUri/tags"
-if ($response.StatusCode -ne 200) {throw}
-if ( ($response.Content | ConvertFrom-Json).Count -ne 9 ) {throw}
-
-
 #______________________________ CREATE SOUNDS ______________________________#
 
 $body = '{
     "title": "Ocean Waves",
     "description": "No tags",
-    "preview": "/media/mp3/blabla.mp3"
+    "previewUrl": "/media/mp3/blabla.mp3"
 }'
 $response = Invoke-WebRequest -Method 'POST' -Uri "$baseUri/sounds" -Body $body
 if ($response.StatusCode -ne 201) {throw}
-if (-not $response.Content) {throw}
 
 $body = '{
     "title": "Test Sound 1",
     "description": "No tags",
-    "duration": 28,
-    "price": 500,
-    "preview": "/media/mp3/blabla.mp3",
-    "imagethumb": "/media/img-thumb/21-10-06.jpg",
+    "durationInSeconds": 28,
+    "priceInPence": 500,
+    "previewUrl": "/media/mp3/blabla.mp3",
+    "imageUrl": "/media/img-thumb/21-10-06.jpg",
     "structure": "aba",
     "rank": 100
 }'
 $response = Invoke-WebRequest -Method 'POST' -Uri "$baseUri/sounds" -Body $body
 if ($response.StatusCode -ne 201) {throw}
-if (-not $response.Content) {throw}
 
-$body = '{
-    "title": "Test Sound 2",
-    "description": "This sound has only tag 1",
-    "duration": 50,
-    "rank": 123,
-    "tags": [
-        1
-    ]
-}'
+$body = @"
+{
+  "title": "Test Sound 2",
+  "description": "This sound has only tag 1",
+  "durationInSeconds": 50,
+  "rank": 123,
+  "tags": [
+    "$($tags | where {$_.name -eq "Ambient"} | select -expand id)"
+  ]
+}
+"@
 $response = Invoke-WebRequest -Method 'POST' -Uri "$baseUri/sounds" -Body $body
 if ($response.StatusCode -ne 201) {throw}
-if (-not $response.Content) {throw}
 
-$body = '{
+$body = @"
+{
   "title": "Test Sound 3",
   "description": "Tags 1 and 2.",
-  "duration": 88,
-  "price": 700,
-  "preview": "/media/mp3/21-10-06.mp3",
-  "imagethumb": "/media/img-thumb/21-10-06.jpg",
+  "durationInSeconds": 88,
+  "priceInPence": 700,
+  "previewUrl": "/media/mp3/21-10-06.mp3",
+  "imageUrl": "/media/img-thumb/21-10-06.jpg",
   "structure": "aba",
   "rank": 140,
   "tags":[
-    1,
-    2
+    "$($tags | where {$_.name -eq "Ambient"} | select -expand id)",
+    "$($tags | where {$_.name -eq "Cinematic"} | select -expand id)"
   ]
-}'
+}
+"@
 $response = Invoke-WebRequest -Method 'POST' -Uri "$baseUri/sounds" -Body $body
 if ($response.StatusCode -ne 201) {throw}
-if (-not $response.Content) {throw}
 
-$body = '{
+$body = @"
+{
   "title": "Test Sound 4",
   "description": "Tags 1, 2 & 3.",
-  "duration": 43,
-  "price": 500,
-  "preview": "/media/mp3/21-10-06.mp3",
-  "imagethumb": "/media/img-thumb/21-10-06.jpg",
+  "durationInSeconds": 43,
+  "priceInPence": 500,
+  "previewUrl": "/media/mp3/21-10-06.mp3",
+  "imageUrl": "/media/img-thumb/21-10-06.jpg",
   "structure": "a",
   "rank": 200,
   "tags":[
-    1,
-    2,
-    3
+    "$($tags | where {$_.name -eq "Ambient"} | select -expand id)",
+    "$($tags | where {$_.name -eq "Cinematic"} | select -expand id)",
+    "$($tags | where {$_.name -eq "Hiphop"} | select -expand id)"
   ]
-}'
+}
+"@
 $response = Invoke-WebRequest -Method 'POST' -Uri "$baseUri/sounds" -Body $body
 if ($response.StatusCode -ne 201) {throw}
-if (-not $response.Content) {throw}
 
-$body = '{
+$body = @"
+{
   "title": "Test Sound 5",
   "description": "Only tag 3.",
-  "duration": 54,
-  "price": 1000,
-  "preview": "/media/mp3/21-10-12.mp3",
-  "imagethumb": "/media/img-thumb/21-10-12.jpg",
+  "durationInSeconds": 54,
+  "priceInPence": 1000,
+  "previewUrl": "/media/mp3/21-10-12.mp3",
+  "imageUrl": "/media/img-thumb/21-10-12.jpg",
   "structure": "abaca",
   "rank": 49,
   "tags":[
-    3
+    "$($tags | where {$_.name -eq "Hiphop"} | select -expand id)"
   ]
-}'
+}
+"@
 $response = Invoke-WebRequest -Method 'POST' -Uri "$baseUri/sounds" -Body $body
 if ($response.StatusCode -ne 201) {throw}
-if (-not $response.Content) {throw}
-
-
-#_______________________________ READ SOUND _______________________________#
-
-$tempId = ($response.Content | ConvertFrom-Json).id
-$response = Invoke-WebRequest -Method 'GET' -Uri "$baseUri/sounds/$tempId"
-if ($response.StatusCode -ne 200) {throw}
-if (-not $response.Content) {throw}
 
 
 #____________________________ READ ALL SOUNDS ____________________________#
 
 $response = Invoke-WebRequest -Method 'GET' -Uri "$baseUri/sounds"
 if ($response.StatusCode -ne 200) {throw}
-if ( ($response.Content | ConvertFrom-Json).Count -ne 6 ) {throw}
+if ( ($response.Content | ConvertFrom-Json).sounds.Count -ne 6 ) {throw}
+
+
+#_______________________________ READ SOUND _______________________________#
+
+$tempId = ($response.Content | ConvertFrom-Json).sounds[2].id
+$response = Invoke-WebRequest -Method 'GET' -Uri "$baseUri/sounds/$tempId"
+if ($response.StatusCode -ne 200) {throw}
+if (-not $response.Content) {throw}
 
 
 #__________________________ READ SOUNDS BY TAGS __________________________#
 
-$response = Invoke-WebRequest -Method 'GET' -Uri "$baseUri/sounds?tagId=1"
-$response.Content | ConvertFrom-Json
+$response = Invoke-WebRequest -Method 'GET' -Uri `
+    "$baseUri/sounds?tagId=$($tags | where {$_.name -eq "Ambient"} | select -expand id)"
+($response.Content | ConvertFrom-Json).sounds
 
-$response = Invoke-WebRequest -Method 'GET' -Uri "$baseUri/sounds?tagId=2"
-$response.Content | ConvertFrom-Json
+$response = Invoke-WebRequest -Method 'GET' -Uri `
+    "$baseUri/sounds?tagId=$($tags | where {$_.name -eq "Cinematic"} | select -expand id)"
+    ($response.Content | ConvertFrom-Json).sounds
 
-$response = Invoke-WebRequest -Method 'GET' -Uri "$baseUri/sounds?tagId=3"
-$response.Content | ConvertFrom-Json
+$response = Invoke-WebRequest -Method 'GET' -Uri `
+    "$baseUri/sounds?tagId=$($tags | where {$_.name -eq "Hiphop"} | select -expand id)"
+    ($response.Content | ConvertFrom-Json).sounds
 
-$response = Invoke-WebRequest -Method 'GET' -Uri "$baseUri/sounds?tagId=1&tagId=2"
-$response.Content | ConvertFrom-Json
-# [todo] Assert
+$response = Invoke-WebRequest -Method 'GET' -Uri `
+    "$baseUri/sounds?tagId=$($tags | where {$_.name -eq "Ambient"} | select -expand id)&tagId=$($tags | where {$_.name -eq "Cinematic"} | select -expand id)"
+    ($response.Content | ConvertFrom-Json).sounds
 
 
 #______________________________ UPDATE SOUND ______________________________#
 
-$body = '{
-  "id":"$tempId",
+$body = @"
+{
+  "id": "$tempId",
+  "uploadedOn": "2024-01-13T19:45:08",
   "title": "Test Sound 5 Updated",
   "description": "Only tag 7.",
-  "duration": 54,
-  "price": 1234,
-  "preview": "/media/mp3/21-10-12.mp3",
-  "imagethumb": "/media/img-thumb/21-10-12.jpg",
+  "durationInSeconds": 54,
+  "priceInPence": 1234,
+  "previewUrl": "/media/mp3/21-10-12.mp3",
+  "imageUrl": "/media/img-thumb/21-10-12.jpg",
   "structure": "abaca",
   "rank": 49,
   "tags":[
-    7
+    "$($tags | where {$_.name -eq "Folk"} | select -expand id)"
   ]
-}'
-
-$body = $ExecutionContext.InvokeCommand.ExpandString($body) # https://stackoverflow.com/questions/59819225/
+}
+"@
 
 $response = Invoke-WebRequest -Method 'PUT' -Uri "$baseUri/sounds/$tempId" -Body $body
 
