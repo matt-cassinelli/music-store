@@ -77,7 +77,7 @@ public class TagService(AppDbContext context)
             return Result.Failure(error);
         }
 
-        _context.Entry(entityToUpdate).CurrentValues.SetValues(input);
+        _context.Entry(entityToUpdate).CurrentValues.SetValues(input); // TODO: Is this best practice?
         await _context.SaveChangesAsync();
         return Result.Success();
     }

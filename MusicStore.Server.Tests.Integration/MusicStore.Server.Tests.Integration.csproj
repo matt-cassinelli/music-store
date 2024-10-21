@@ -27,4 +27,16 @@
 	  <Using Include="FluentAssertions" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Files\20-10-25.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Files\21-10-06.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Files\21-10-12.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

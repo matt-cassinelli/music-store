@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Azure.Storage.Blobs;
 using Microsoft.EntityFrameworkCore;
 using MusicStore.Server.EntityFramework;
 using MusicStore.Server.Services;
@@ -8,17 +9,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 
-var connectionString = builder.Configuration.GetConnectionString("Database");
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(connectionString!));
-
-builder.Services.AddTransient<SoundService>();
-builder.Services.AddTransient<TagService>();
-
-builder.Services.AddCors(options =>
-{
+builder.Services.AddCors(options => {
     options.AddPolicy(name: "MyCorsPolicy", policy => {
-        policy.WithOrigins("https://localhost:52358", "http://localhost:52220");
+        policy.WithOrigins("https://localhost:52358", "http://localhost:52220", "http://localhost:3000");
+        policy.WithMethods("*");
+        policy.WithHeaders("*");
     });
 });
 
@@ -30,6 +25,19 @@ builder.Services
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+var connectionString = builder.Configuration.GetConnectionString("Database");
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(connectionString!));
+
+builder.Services.AddScoped<BlobService>(_ => {
+    var connectionString = builder.Configuration.GetConnectionString("Blob");
+    var client = new BlobServiceClient(connectionString);
+    return new BlobService(client);
+});
+
+builder.Services.AddTransient<SoundService>();
+builder.Services.AddTransient<TagService>();
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -40,11 +48,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseCors("MyCorsPolicy");
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();

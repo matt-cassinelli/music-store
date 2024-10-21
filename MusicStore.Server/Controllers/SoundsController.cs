@@ -28,7 +28,7 @@ public class SoundsController(SoundService service) : ControllerBase
     }
 
     [HttpPost("api/sounds")]
-    public async Task<ActionResult> Add([FromBody] AddSoundRequest input)
+    public async Task<ActionResult> Add([FromForm] AddSoundRequest input)
     {
         var result = await _service.Add(input);
 

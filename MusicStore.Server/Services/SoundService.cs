@@ -2,13 +2,15 @@
 using MusicStore.Server.EntityFramework;
 using MusicStore.Server.Models;
 using MusicStore.Server.Results;
+using MusicStore.Server.Constants;
 using System.Net;
 
 namespace MusicStore.Server.Services;
 
-public class SoundService(AppDbContext context)
+public class SoundService(AppDbContext context, BlobService blobService)
 {
     private readonly AppDbContext _context = context;
+    private readonly BlobService _blobService = blobService;
 
     public async Task<GetSoundsResponse> GetMany(Guid? tagId)
     {
@@ -44,33 +46,39 @@ public class SoundService(AppDbContext context)
         return Result<GetSoundResponse>.Success(output);
     }
 
-
     public async Task<Result<AddSoundResponse>> Add(AddSoundRequest input)
     {
         // TODO: Validation
 
+        var id = Guid.NewGuid();
+
+        var url = await _blobService.Upload(
+            file: input.File.OpenReadStream(),
+            fileName: $"{id}.mp3",
+            containerName: ContainerName.PreviewClips);
+
         var sound = new Sound
         {
-            Id = Guid.NewGuid(),
+            Id = id,
             Description = input.Description,
             DurationInSeconds = input.DurationInSeconds,
             PriceInPence = input.PriceInPence,
-            PreviewUrl = input.PreviewUrl,
+            PreviewUrl = url.ToString(),
             ImageUrl = input.ImageUrl,
             Structure = input.Structure,
-            Rank = input.Rank,
+            Rank = input.Rank ?? 127,
             Tags = [],
             Title = input.Title,
             UploadedOn = input.UploadedOn ?? DateTime.UtcNow
         };
 
-        foreach (var id in input.Tags)
+        foreach (var tagId in input.Tags)
         {
-            var tag = await _context.Tags.FirstOrDefaultAsync(t => t.Id == id);
+            var tag = await _context.Tags.FirstOrDefaultAsync(t => t.Id == tagId);
 
             if (tag == null)
             {
-                var error = new Error($"Tag {id} not found.", HttpStatusCode.BadRequest);
+                var error = new Error($"Tag {tagId} not found.", HttpStatusCode.BadRequest);
                 return Result<AddSoundResponse>.Failure(error);
             }
 
@@ -104,14 +112,12 @@ public class SoundService(AppDbContext context)
         // TODO: Validation
 
         sound.Title = request.Title;
-        sound.Rank = request.Rank;
+        sound.Rank = request.Rank ?? 127;
         sound.Structure = request.Structure;
         sound.PreviewUrl = request.PreviewUrl;
         sound.ImageUrl = request.ImageUrl;
 
         sound.Tags.Clear();
-        // To delete the actual tag (rather than the relation), you can write:
-        // entityToUpdate.Tags.ToList().ForEach(t => _context.Remove(t));
 
         foreach (var tagId in request.Tags)
         {
