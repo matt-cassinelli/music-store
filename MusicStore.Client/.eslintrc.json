@@ -20,7 +20,6 @@
     "quotes": ["warn", "double"],
     "prefer-const": "warn",
     "semi": "warn",
-    "indent": ["warn", 2],
     "no-unused-vars": "warn",
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
@@ -28,6 +27,7 @@
     "@stylistic/no-multiple-empty-lines": "warn",
     "@stylistic/no-trailing-spaces": "warn",
     "@stylistic/object-curly-spacing": ["warn", "always"],
-    "@stylistic/object-curly-newline": "warn"
+    "@stylistic/object-curly-newline": "warn",
+    "@stylistic/indent": ["warn", 2, {"ignoredNodes": ["ConditionalExpression"]}]
   }
 }

@@ -4,25 +4,31 @@
 
 /* These should ideally be applied to the body, but NextJS automatically adds a div under the <body> element. */
 #__next {
-    @apply flex flex-col min-h-screen container mx-auto px-4 md:px-12 text-primary relative
+    @apply flex flex-col min-h-screen container mx-auto px-4 md:px-12 relative
 }
 
-/* Color variables used in tailwind.config.js */
+.focusable {
+    @apply focus:outline-none focus:ring-primary focus:ring-2
+}
+
+/* https://tailwindcss.com/docs/customizing-colors#using-css-variables */
 :root { 
-    --color-primary: #404040;
-    --color-accent1: #13ad37;
-    --color-panel: #ffffff;
-    --color-bg: #e7e7e8;
+    --color-bg1: #ffffff;
+    --color-bg2: 240 240 240;
+    --color-fg: 17 23 16;
+    --color-primary: 8 139 0;
+    --color-secondary: 114 203 123;
+    --color-accent: 92 119 255;
     --color-red: #bb2525;
-    --color-grey: #afafaf;
 }
 :root[data-theme="dark"] {
-    --color-primary: #ffffff;
-    --color-accent1: #12852d;
-    --color-panel: #242526;
-    --color-bg: #18191a;
+    --color-bg1: #262931;
+    --color-bg2: 13 13 13;
+    --color-fg: 232 238 231;
+    --color-primary: 64 204 57;
+    --color-secondary: 70 139 77;
+    --color-accent: 114 137 255;
     --color-red: #bb2525;
-    --color-grey: #606060;
 }
 
 /* Uncomment for debugging aid */

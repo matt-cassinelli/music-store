@@ -5,7 +5,7 @@ export default function Spinner() {
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
-      className="w-12 my-8 mx-auto animate-spin fill-primary"
+      className="w-11 my-8 mx-auto animate-spin fill-fg"
     >
       <path
         fill="currentColor"

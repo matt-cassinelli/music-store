@@ -1,8 +1,8 @@
 import { Fragment } from "react";
-import { RadioGroup } from "@headlessui/react";
-import joinWithSpaces from "utils/joinWithSpaces";
+import { RadioGroup, Radio } from "@headlessui/react";
+import clsx from "clsx";
 
-export default function TagList({ tags, selectedTagId, setSelectedTagId }) {
+export default function TagList({ tags, selectedTagId, setSelectedTagId, handleAddTagClick }) {
   return (
     <RadioGroup
       value={selectedTagId}
@@ -15,27 +15,33 @@ export default function TagList({ tags, selectedTagId, setSelectedTagId }) {
       {tags.map((tag) => (
         <Tag key={tag.name} label={tag.name} value={tag.id} />
       ))}
+      <button
+        className="rounded-full px-3 py-1 text-sm tracking-tight shadow-lg hover:brightness-95 bg-bg1 cursor-pointer"
+        onClick={handleAddTagClick}
+      >
+        +
+      </button>
     </RadioGroup>
   );
 }
 
 function Tag({ label, value }) {
   return (
-    <RadioGroup.Option
+    <Radio
       as={Fragment}
       key={label}
       value={value}
     >
       {({ checked }) => (
         <li
-          className={joinWithSpaces(
-            "rounded-full px-3 py-1 text-sm tracking-tight shadow-sm hover:brightness-95",
-            checked ? "bg-accent1" : "bg-panel cursor-pointer"
+          className={clsx(
+            "rounded-full px-3 py-1 text-sm tracking-tight hover:brightness-95 shadow-md",
+            checked ? "bg-green-200 dark:bg-green-800 cursor-default" : "bg-bg1 cursor-pointer"
           )}
         >
           {label}
         </li>
       )}
-    </RadioGroup.Option>
+    </Radio>
   );
 }

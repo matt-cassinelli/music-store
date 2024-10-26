@@ -1,5 +1,4 @@
 .vs
-.vscode
 private
 
 bin
@@ -11,5 +10,9 @@ MusicStore.Client/build
 MusicStore.Client/node_modules
 MusicStore.Client/package-lock.json
 MusicStore.Client/.next
+
+__azurite*
+__blobstorage*
+__queuestorage*
 
 !.gitkeep

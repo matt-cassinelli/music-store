@@ -16,7 +16,7 @@
 
 1. Download and install [.NET 6](https://dotnet.microsoft.com/en-us/download)
 2. Download and start [Docker Desktop](https://www.docker.com/products/docker-desktop/)
-3. Start Azurite (included with Visual Studio 2022)
+3. Start Azurite as admin (included with VS 2022)
 4. Download and start [Azure Storage Explorer](https://azure.microsoft.com/en-us/products/storage/storage-explorer/#Download-4)
 5. Under 'Emulator - Default Ports' > Blob Containers, create a new container named 'preview-clips'
 6. Open a terminal and `cd` to `\MusicStore.Server\`

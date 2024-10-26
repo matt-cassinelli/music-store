@@ -11,9 +11,10 @@ builder.Logging.AddConsole();
 
 builder.Services.AddCors(options => {
     options.AddPolicy(name: "MyCorsPolicy", policy => {
-        policy.WithOrigins("https://localhost:52358", "http://localhost:52220", "http://localhost:3000");
-        policy.WithMethods("*");
-        policy.WithHeaders("*");
+        policy
+        .WithOrigins("https://localhost:52358", "http://localhost:52220", "http://localhost:3000")
+        .WithMethods("*")
+        .WithHeaders("*");
     });
 });
 

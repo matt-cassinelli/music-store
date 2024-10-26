@@ -4,11 +4,11 @@ import { useRouter } from "next/router";
 import { Disclosure, Transition } from "@headlessui/react";
 import ThemeButton from "components/Navbar/ThemeButton";
 import BasketButton from "components/Navbar/BasketButton";
-import CloseIcon from "components/Navbar/CloseIcon";
-import MenuIcon from "components/Navbar/MenuIcon";
-import logo from "components/Navbar/logo.svg";
+import CloseIcon from "icons/CloseIcon";
+import MenuIcon from "icons/MenuIcon";
+import logo from "icons/logo.svg";
 import { links } from "components/Navbar/links";
-import joinWithSpaces from "utils/joinWithSpaces";
+import clsx from "clsx";
 
 export default function Navbar() {
 
@@ -25,7 +25,7 @@ export default function Navbar() {
             {links.map((link) =>
               <li key={link.key}>
                 <Link
-                  className={joinWithSpaces(
+                  className={clsx(
                     "hidden md:flex tracking-widest font-semibold text-xl hover:underline",
                     router.asPath == link.href && "underline"
                   )}
@@ -42,7 +42,7 @@ export default function Navbar() {
               <BasketButton className="hidden md:flex"/>
             </li>
             <li>
-              <Disclosure.Button className="flex md:hidden p-2 rounded-md text-primary focus:ring-2 focus:ring-accent1">
+              <Disclosure.Button className="flex md:hidden p-2 rounded-md text-fg focus:ring-2 focus:ring-primary">
                 <span className="sr-only">Open main menu</span>
                 {open ? (
                   <MenuIcon/>
@@ -66,7 +66,7 @@ export default function Navbar() {
               {links.map((link) => (
                 <Disclosure.Button
                   key={link.key}
-                  className={joinWithSpaces(
+                  className={clsx(
                     "w-full block px-3 py-4 font-medium border-b border-grey hover:bg-grey",
                     router.asPath == link.href && "bg-grey"
                   )}
